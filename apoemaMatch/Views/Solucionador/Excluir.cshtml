@@ -1,0 +1,75 @@
+﻿@model Solucionador
+
+@{
+    ViewData["Title"] = "Excluir Solucionador";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Excluir @Model.Nome</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                    <div class="form-group text-center">
+                        <img class="border-info rounded-circle" style="max-width: 150px" id="ImagemURLPreview" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImagemURL" class="control-label"></label>
+                        <input asp-for="ImagemURL" class="form-control" readonly/>
+                        <span asp-validation-for="ImagemURL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Nome" class="control-label"></label>
+                        <input asp-for="Nome" class="form-control" readonly/>
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" readonly/>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Telefone" class="control-label"></label>
+                        <input asp-for="Telefone" class="form-control" readonly/>
+                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Formacao" class="control-label"></label>
+                        <input asp-for="Formacao" class="form-control" readonly/>
+                        <span asp-validation-for="Formacao" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AreaDePesquisa" class="control-label"></label>
+                        <input asp-for="AreaDePesquisa" class="form-control" readonly/>
+                        <span asp-validation-for="AreaDePesquisa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CurriculoLattes" class="control-label"></label>
+                        <input asp-for="CurriculoLattes" class="form-control" readonly/>
+                        <span asp-validation-for="CurriculoLattes" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MiniBio" class="control-label"></label>
+                        <input asp-for="MiniBio" class="form-control" readonly/>
+                        <span asp-validation-for="MiniBio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <form asp-action="Excluir">
+                            <input type="hidden" asp-for="Id"/>
+                            <input type="submit" value="Confirmar" class="btn btn-danger float-right"/>
+                        </form>
+                        <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todos</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ImagemURLPreview');
+            output.src = $('#ImagemURL').val();
+        })
+    </script>
+}

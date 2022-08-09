@@ -1,0 +1,98 @@
+﻿@using apoemaMatch.Data
+@model DemandaViewModel
+
+@{
+    ViewData["Title"] = "Criar nova demanda";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Criar nova demanda</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <form asp-action="Cadastrar">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="NomeDemandante" class="control-label"></label>
+                                <input asp-for="NomeDemandante" class="form-control" />
+                                <span asp-validation-for="NomeDemandante" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Telefone" class="control-label"></label>
+                                <input asp-for="Telefone" class="form-control" />
+                                <span asp-validation-for="Telefone" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ImagemURL" class="control-label"></label>
+                                <input asp-for="ImagemURL" class="form-control" />
+                                <span asp-validation-for="ImagemURL" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="EnumAreaSolucaoBuscada" class="control-label"></label>
+                                <select asp-for="EnumAreaSolucaoBuscada" class="form-control" asp-items="Html.GetEnumSelectList<EnumAreaSolucaoBuscada>()"></select>
+                                <span asp-validation-for="EnumAreaSolucaoBuscada" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EnumObjetivoParceria" class="control-label"></label>
+                                <select asp-for="EnumObjetivoParceria" class="form-control" asp-items="Html.GetEnumSelectList<EnumObjetivoParceria>()"></select>
+                                <span asp-validation-for="EnumObjetivoParceria" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EnumRamoDeAtuacao" class="control-label"></label>
+                                <select asp-for="EnumRamoDeAtuacao" class="form-control" asp-items="Html.GetEnumSelectList<EnumRamoDeAtuacao>()"></select>
+                                <span asp-validation-for="EnumRamoDeAtuacao" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EnumSegmentoDeMercado" class="control-label"></label>
+                                <select asp-for="EnumSegmentoDeMercado" class="form-control" asp-items="Html.GetEnumSelectList<EnumSegmentoDeMercado>()"></select>
+                                <span asp-validation-for="EnumSegmentoDeMercado" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Descricao" class="control-label"></label>
+                                <textarea asp-for="Descricao" class="form-control"></textarea>
+                                <span asp-validation-for="Descricao" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 offset-4 text-center">
+                        <img width="100%" id="ImagemURLPreview" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Cadastrar" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todas</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                var output = document.getElementById('ImagemURLPreview');
+                output.src = $('#ImagemURL').val();
+            })
+            $('#ImagemURL').on("change", function () {
+                var output = document.getElementById('ImagemURLPreview');
+                output.src = $(this).val();
+            })
+        </script>
+    }
