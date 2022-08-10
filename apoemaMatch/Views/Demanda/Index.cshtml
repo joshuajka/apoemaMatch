@@ -16,9 +16,9 @@
                                 <h5 class="card-title">
                                     @item.NomeEmpresa
                                     @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                    {
-                                        <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
-                                    }*@
+                                        {
+                                            <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                        }*@
                                 </h5>
                             </p>
                         </div>
@@ -54,11 +54,11 @@
                                     <i class="bi bi-eye-fill"></i> Detalhes
                                 </a>
                                 @*<a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
-                                   asp-controller="Orders"
-                                   asp-action="AddItemToShoppingCart"
-                                   asp-route-id="@item.Id">
-                                    <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
-                                </a>*@
+                                       asp-controller="Orders"
+                                       asp-action="AddItemToShoppingCart"
+                                       asp-route-id="@item.Id">
+                                        <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
+                                    </a>*@
                             </p>
                         </div>
                     </div>
@@ -67,5 +67,5 @@
         </div>
     }
 </div>
-
+@await Html.PartialAsync("_CadastrarItem", "Demanda")
 

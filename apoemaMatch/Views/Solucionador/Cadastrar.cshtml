@@ -1,6 +1,7 @@
-﻿@model Solucionador 
+﻿@model Solucionador
+@using apoemaMatch.Data
 
-@{ 
+@{
     ViewData["Title"] = "Cadastro Solucionador";
 }
 
@@ -43,7 +44,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="AreaDePesquisa" class="control-label"></label>
-                        <input asp-for="AreaDePesquisa" class="form-control" />
+                        <select asp-for="AreaDePesquisa" class="form-control" asp-items="Html.GetEnumSelectList<EnumAreaSolucaoBuscada>()"></select>
                         <span asp-validation-for="AreaDePesquisa" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -76,4 +77,4 @@
             output.src = $(this).val();
         })
     </script>
- }
+}

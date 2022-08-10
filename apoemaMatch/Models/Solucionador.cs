@@ -31,12 +31,15 @@ namespace apoemaMatch.Models
         public string Telefone { get; set; }
 
         [Required(ErrorMessage = "Formação é obrigatório")]
+        [Display(Name = "Formação")]
         public string Formacao { get; set; }
 
         [Required(ErrorMessage = "Área de pesquisa é obrigatória")]
+        [Display(Name = "Área de Pesquisa")]
         public EnumAreaSolucaoBuscada AreaDePesquisa { get; set; }
 
         [Required(ErrorMessage = "Currículo Lattes é obrigatório")]
+        [Display(Name = "Currículo Lattes")]
         public string CurriculoLattes { get; set; }
 
         [Display(Name = "Bio")]

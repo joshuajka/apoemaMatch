@@ -42,7 +42,4 @@
     </div>
 </div>
 
-<div  class="text-white text-center">
-    <a asp-controller="Solucionador" asp-action="Cadastrar" class="btn btn-success">
-    <i class="bi bi-plus-circle">Adicionar novo</i></a>
-</div>
+@await Html.PartialAsync("_CadastrarItem", "Solucionador") 

@@ -1,4 +1,5 @@
 ﻿using apoemaMatch.Data.Base;
+using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace apoemaMatch.Data.Services
 {
-    public class DemandaService:EntityBaseRepository<Demanda>,IDemandaService
+    public class DemandaService : EntityBaseRepository<Demanda>, IDemandaService
     {
         private readonly AppDbContext _context;
 
-        public DemandaService(AppDbContext context):base(context)
+        public DemandaService(AppDbContext context) : base(context)
         {
             _context = context;
         }
@@ -25,5 +26,16 @@ namespace apoemaMatch.Data.Services
             return demandaDetalhes;
 
         }
+
+        public async Task<DemandaDropDownViewModel> GetSolucionadoresDropDown()
+        {
+            var response = new DemandaDropDownViewModel()
+            {
+                Solucionadores = await _context.Solucionadores.OrderBy(n => n.Nome).ToListAsync()
+            };
+            return response;
+        }
+                
+        
     }
 }

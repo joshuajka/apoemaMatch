@@ -35,6 +35,9 @@ namespace apoemaMatch.Controllers
         //GET: Demanda/Cadastrar
         public IActionResult Cadastrar()
         {
+            //var demandaDropDown = await _service.GetSolucionadoresDropDown();
+            // ViewBag.SolucionadorId = new SelectList(demandaDropDown.Solucionadores, "Id", "Nome");
+
             return View();
         }
 
