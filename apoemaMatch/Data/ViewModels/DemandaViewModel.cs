@@ -10,6 +10,8 @@ namespace apoemaMatch.Models
 {
     public class DemandaViewModel
     {
+
+        public int Id { get; set; }
         public bool DemandaAberta { get; set; }
 
         [Display(Name = "Foto")]

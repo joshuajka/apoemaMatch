@@ -55,5 +55,60 @@ namespace apoemaMatch.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //GET: Demanda/Editar
+        public async Task<IActionResult> Editar(int id)
+        {
+            //var demandaDropDown = await _service.GetSolucionadoresDropDown();
+            // ViewBag.SolucionadorId = new SelectList(demandaDropDown.Solucionadores, "Id", "Nome");
+            var demanda = await _service.GetDemandaByIdAsync(id);
+            if(demanda == null)
+            {
+                View("NotFound");
+            }
+
+            var response = new DemandaViewModel()
+            {
+                Id = demanda.Id,
+                DemandaAberta = true,
+                ImagemURL = demanda.ImagemURL,
+                Email = demanda.Email,
+                NomeDemandante = demanda.NomeDemandante,
+                Telefone = demanda.Telefone,
+                NomeEmpresa = demanda.NomeEmpresa,
+                CargoDemandante = demanda.CargoDemandante,
+                TempoDeMercado = demanda.TempoDeMercado,
+                PorteDaEmpresa = demanda.PorteDaEmpresa,
+                RamoDeAtuacao = demanda.RamoDeAtuacao,
+                SegmentoDeMercado = demanda.SegmentoDeMercado,
+                LinhaDeAtuacaoTI = demanda.LinhaDeAtuacaoTI,
+                RegimeDeTributacao = demanda.RegimeDeTributacao,
+                LeiDeInformatica = demanda.LeiDeInformatica,
+                ObjetivoParceria = demanda.ObjetivoParceria,
+                AreaSolucaoBuscada = demanda.AreaSolucaoBuscada,
+                Descricao = demanda.Descricao
+            };
+
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Editar(int id,DemandaViewModel novaDemanda)
+        {
+            if(id != novaDemanda.Id)
+            {
+                return View("NotFound");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(novaDemanda);
+            }
+
+            await _service.UpdateDemandaAsync(novaDemanda);
+
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

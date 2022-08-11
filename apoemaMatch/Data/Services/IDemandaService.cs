@@ -14,5 +14,9 @@ namespace apoemaMatch.Data.Services
         Task<DemandaDropDownViewModel> GetSolucionadoresDropDown();
 
         Task AdicionarDemandaAsync(DemandaViewModel demanda);
+
+        Task UpdateDemandaAsync(DemandaViewModel demanda);
+
+        
     }
 }
