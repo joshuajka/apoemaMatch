@@ -27,10 +27,10 @@
                     <div class="col-md-8 offset-2">
                         <div class="card-body">
                             <p class="card-text">@Model.Descricao</p>
-                            <p class="card-text"><b>Cinema: </b>Campo 1</p>
-                            <p class="card-text"><b>Category: </b>Campo 2</p>
-                            <p class="card-text"><b>Start Date: </b>Campo 3</p>
-                            <p class="card-text"><b>End Date: </b>Campo 4</p>
+                            <p class="card-text"><b>Ramo de atuação: </b>Campo 1</p>
+                            <p class="card-text"><b>Segmento de mercado: </b>Campo 2</p>
+                            <p class="card-text"><b>Objetivo: </b>Campo 3</p>
+                            <p class="card-text"><b>Área solução buscada: </b>Campo 4</p>
                             <p class="card-text ">
                                 <b>Status: </b>
                                 @if (Model.DemandaAberta)
@@ -48,13 +48,13 @@
                                 <b>Solucionadores</b>
                                 <hr />
                                 <div class="row">
-                                    @foreach(var solucionador in Model.DemandaSolucionador)
+                                    @foreach (var solucionador in Model.DemandaSolucionador)
                                     {
-                                      <div class="card-columns text-center">
-                                          <img class="border-info rounded-circle" src="@solucionador.Solucionador.ImagemURL" style="max-width: 150px"/>
-                                          <br />
-                                          <a asp-controller="Solucionador" asp-action="Detalhes" asp-route-id="@solucionador.Solucionador.Id">@solucionador.Solucionador.Nome</a>
-                                      </div>  
+                                        <div class="card-columns text-center">
+                                            <img class="border-info rounded-circle" src="@solucionador.Solucionador.ImagemURL" style="max-width: 150px" />
+                                            <br />
+                                            <a asp-controller="Solucionador" asp-action="Detalhes" asp-route-id="@solucionador.Solucionador.Id">@solucionador.Solucionador.Nome</a>
+                                        </div>
                                     }
                                 </div>
                             </p>
