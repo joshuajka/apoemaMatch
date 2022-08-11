@@ -1,4 +1,5 @@
-﻿using apoemaMatch.Models;
+﻿using apoemaMatch.Data.Enums;
+using apoemaMatch.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;

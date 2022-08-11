@@ -61,8 +61,26 @@ namespace apoemaMatch.Controllers
         {
             if (!ModelState.IsValid)
             {
+                novaDemanda.AreaSolucaoBuscada = novaDemanda.EnumAreaSolucaoBuscada;
+                novaDemanda.LeiDeInformatica = novaDemanda.EnumLeiDeInformatica;
+                novaDemanda.LinhaDeAtuacaoTI = novaDemanda.EnumLinhaDeAtuacaoTI;
+                novaDemanda.ObjetivoParceria = novaDemanda.EnumObjetivoParceria;
+                novaDemanda.PorteDaEmpresa = novaDemanda.EnumPorteDaEmpresa;
+                novaDemanda.RamoDeAtuacao = novaDemanda.EnumRamoDeAtuacao;
+                novaDemanda.SegmentoDeMercado = novaDemanda.EnumSegmentoDeMercado;
+                novaDemanda.RegimeDeTributacao = novaDemanda.EnumTributacao;
                 return View(novaDemanda);
             }
+
+            novaDemanda.AreaSolucaoBuscada = novaDemanda.EnumAreaSolucaoBuscada;
+            novaDemanda.LeiDeInformatica = novaDemanda.EnumLeiDeInformatica;
+            novaDemanda.LinhaDeAtuacaoTI = novaDemanda.EnumLinhaDeAtuacaoTI;
+            novaDemanda.ObjetivoParceria = novaDemanda.EnumObjetivoParceria;
+            novaDemanda.PorteDaEmpresa = novaDemanda.EnumPorteDaEmpresa;
+            novaDemanda.RamoDeAtuacao = novaDemanda.EnumRamoDeAtuacao;
+            novaDemanda.SegmentoDeMercado = novaDemanda.EnumSegmentoDeMercado;
+            novaDemanda.RegimeDeTributacao = novaDemanda.EnumTributacao;
+
             await _service.AdicionarDemandaAsync(novaDemanda);
 
 
@@ -77,7 +95,7 @@ namespace apoemaMatch.Controllers
             var demanda = await _service.GetDemandaByIdAsync(id);
             if(demanda == null)
             {
-                View("NotFound");
+                return View("NotFound");
             }
 
             var response = new DemandaViewModel()

@@ -1,4 +1,4 @@
-﻿using apoemaMatch.Data;
+﻿using apoemaMatch.Data.Enums;
 using apoemaMatch.Data.Base;
 using System;
 using System.Collections.Generic;

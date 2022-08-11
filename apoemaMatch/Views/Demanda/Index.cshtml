@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Demanda>
+﻿@using apoemaMatch.Data.Enums
+@model IEnumerable<Demanda>
 
 @{
     ViewData["Title"] = "Lista de Demandas";
@@ -29,10 +30,10 @@
                     <div class="col-md-6">
                         <div class="card-body">
                             <p class="card-text">@item.Descricao</p>
-                            <p class="card-text"><b>Ramo de atuação: </b>Campo 1</p>
-                            <p class="card-text"><b>Segmento de mercado: </b>Campo 2</p>
-                            <p class="card-text"><b>Objetivo: </b>Campo 3</p>
-                            <p class="card-text"><b>Área solução buscada: </b>Campo 4</p>
+                            <p class="card-text"><b>Ramo de atuação: </b>@Extensions.GetEnumDisplayName((EnumRamoDeAtuacao)item.RamoDeAtuacao)</p>
+                            <p class="card-text"><b>Segmento de mercado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
+                            <p class="card-text"><b>Objetivo: </b>@Extensions.GetEnumDisplayName((EnumObjetivoParceria)item.ObjetivoParceria)</p>
+                            <p class="card-text"><b>Área solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>
                             <p class="card-text ">
                                 <b>Status: </b>
                                 @if (item.DemandaAberta)

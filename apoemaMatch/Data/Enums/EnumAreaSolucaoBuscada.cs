@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace apoemaMatch.Data
+namespace apoemaMatch.Data.Enums
 {
     public enum EnumAreaSolucaoBuscada
     {

@@ -1,84 +1,85 @@
-﻿@model Demanda
+﻿@using apoemaMatch.Data.Enums
+@model Demanda
 
 @{
     ViewData["Title"] = "Detalhes Demanda";
 }
 
 <div class="row">
-        <div class="col-md-8 offset-2">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-12">
-                        <div class="card-header text-white bg-info">
-                            <p class="card-text">
-                                <h5 class="card-title">
-                                    @Model.NomeEmpresa
-                                    @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                        {
-                                            <a class="text-white float-right" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil-square"></i></a>
-                                        }*@
-                                </h5>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <img src="@Model.ImagemURL" width="100%" alt="@Model.NomeEmpresa">
-                    </div>
-                    <div class="col-md-8 offset-2">
-                        <div class="card-body">
-                            <p class="card-text">@Model.Descricao</p>
-                            <p class="card-text"><b>Ramo de atuação: </b>Campo 1</p>
-                            <p class="card-text"><b>Segmento de mercado: </b>Campo 2</p>
-                            <p class="card-text"><b>Objetivo: </b>Campo 3</p>
-                            <p class="card-text"><b>Área solução buscada: </b>Campo 4</p>
-                            <p class="card-text ">
-                                <b>Status: </b>
-                                @if (Model.DemandaAberta)
-                                {
-                                    <span class="badge bg-success text-white">ABERTA</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-danger text-white">FECHADA</span>
-                                }
-                            </p>
-
-                            <p class="card-text">
-
-                                <b>Solucionadores</b>
-                                <hr />
-                                <div class="row">
-                                    @foreach (var solucionador in Model.DemandaSolucionador)
+    <div class="col-md-8 offset-2">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.NomeEmpresa
+                                @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                     {
-                                        <div class="card-columns text-center">
-                                            <img class="border-info rounded-circle" src="@solucionador.Solucionador.ImagemURL" style="max-width: 150px" />
-                                            <br />
-                                            <a asp-controller="Solucionador" asp-action="Detalhes" asp-route-id="@solucionador.Solucionador.Id">@solucionador.Solucionador.Nome</a>
-                                        </div>
-                                    }
-                                </div>
-                            </p>
-
-                        </div>
+                                        <a class="text-white float-right" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil-square"></i></a>
+                                    }*@
+                            </h5>
+                        </p>
                     </div>
-                    <div class="col-md-12">
-                        <div class="card-footer ">
-                            <p class="card-text">
-                                <a class="btn btn-outline-primary float-right" asp-action="Index" >
-                                    Voltar a lista
-                                </a>
-                                @*<a class="btn btn-success text-white @((DateTime.Now > Model.EndDate) ? "disabled" : "")"
-                                       asp-controller="Orders"
-                                       asp-action="AddModelToShoppingCart"
-                                       asp-route-id="@Model.Id">
-                                        <i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))
-                                    </a>*@
-                            </p>
-                        </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="@Model.ImagemURL" width="100%" alt="@Model.NomeEmpresa">
+                </div>
+                <div class="col-md-8 offset-2">
+                    <div class="card-body">
+                        <p class="card-text">@Model.Descricao</p>
+                        <p class="card-text"><b>Ramo de atuação: </b>@Extensions.GetEnumDisplayName((EnumRamoDeAtuacao)Model.RamoDeAtuacao)</p>
+                        <p class="card-text"><b>Segmento de mercado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)Model.SegmentoDeMercado)</p>
+                        <p class="card-text"><b>Objetivo: </b>@Extensions.GetEnumDisplayName((EnumObjetivoParceria)Model.ObjetivoParceria)</p>
+                        <p class="card-text"><b>Área solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)Model.AreaSolucaoBuscada)</p>
+                        <p class="card-text ">
+                            <b>Status: </b>
+                            @if (Model.DemandaAberta)
+                            {
+                                <span class="badge bg-success text-white">ABERTA</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger text-white">FECHADA</span>
+                            }
+                        </p>
+
+                        <p class="card-text">
+
+                            <b>Solucionadores</b>
+                            <hr />
+                            <div class="row">
+                                @foreach (var solucionador in Model.DemandaSolucionador)
+                                {
+                                    <div class="card-columns text-center">
+                                        <img class="border-info rounded-circle" src="@solucionador.Solucionador.ImagemURL" style="max-width: 150px" />
+                                        <br />
+                                        <a asp-controller="Solucionador" asp-action="Detalhes" asp-route-id="@solucionador.Solucionador.Id">@solucionador.Solucionador.Nome</a>
+                                    </div>
+                                }
+                            </div>
+                        </p>
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-footer ">
+                        <p class="card-text">
+                            <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                Voltar a lista
+                            </a>
+                            @*<a class="btn btn-success text-white @((DateTime.Now > Model.EndDate) ? "disabled" : "")"
+                                   asp-controller="Orders"
+                                   asp-action="AddModelToShoppingCart"
+                                   asp-route-id="@Model.Id">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))
+                                </a>*@
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
 
 
