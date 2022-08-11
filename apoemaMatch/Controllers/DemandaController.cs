@@ -25,6 +25,20 @@ namespace apoemaMatch.Controllers
             return View(todasDemandas);
         }
 
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var todasDemandas = await _service.GetAllAsync();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var resultadoFiltro = todasDemandas.Where(n => n.NomeEmpresa.Contains(searchString) || n.Descricao.Contains(searchString))
+                    .ToList();
+                return View("Index", resultadoFiltro);
+            }
+
+            return View("Index", todasDemandas);
+        }
+
         //GET: Demanda/Detalhes/1
 
         public async Task<IActionResult> Detalhes(int Id)
