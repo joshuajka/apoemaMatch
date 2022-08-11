@@ -15,7 +15,7 @@ namespace apoemaMatch.Models
 
         public bool DemandaAberta { get; set; }
 
-        [Display(Name = "Foto")]
+        [Display(Name = "URL Foto")]
         public string ImagemURL { get; set; }
 
         public string Email { get; set; }

@@ -1,5 +1,6 @@
 ﻿using apoemaMatch.Data;
 using apoemaMatch.Data.Services;
+using apoemaMatch.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -33,12 +34,25 @@ namespace apoemaMatch.Controllers
         }
 
         //GET: Demanda/Cadastrar
-        public IActionResult Cadastrar()
+        public async Task<IActionResult> Cadastrar()
         {
             //var demandaDropDown = await _service.GetSolucionadoresDropDown();
             // ViewBag.SolucionadorId = new SelectList(demandaDropDown.Solucionadores, "Id", "Nome");
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Cadastrar(DemandaViewModel novaDemanda)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(novaDemanda);
+            }
+            await _service.AdicionarDemandaAsync(novaDemanda);
+
+
+            return RedirectToAction(nameof(Index));
         }
 
     }
