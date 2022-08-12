@@ -167,10 +167,29 @@ namespace apoemaMatch.Controllers
                 return View("NotFound");
             }
 
-            if (!ModelState.IsValid)
-            {
-                return View(novaDemanda);
-            }
+            var demanda = await _service.GetDemandaByIdAsync(id);
+            novaDemanda.DemandaAberta = false;
+            novaDemanda.ImagemURL = demanda.ImagemURL;
+            novaDemanda.Email = demanda.Email;
+            novaDemanda.NomeDemandante = demanda.NomeDemandante;
+            novaDemanda.Telefone = demanda.Telefone;
+            novaDemanda.NomeEmpresa = demanda.NomeEmpresa;
+            novaDemanda.CargoDemandante = demanda.CargoDemandante;
+            novaDemanda.TempoDeMercado = demanda.TempoDeMercado;
+            novaDemanda.PorteDaEmpresa = demanda.PorteDaEmpresa;
+            novaDemanda.RamoDeAtuacao = demanda.RamoDeAtuacao;
+            novaDemanda.SegmentoDeMercado = demanda.SegmentoDeMercado;
+            novaDemanda.LinhaDeAtuacaoTI = demanda.LinhaDeAtuacaoTI;
+            novaDemanda.RegimeDeTributacao = demanda.RegimeDeTributacao;
+            novaDemanda.LeiDeInformatica = demanda.LeiDeInformatica;
+            novaDemanda.ObjetivoParceria = demanda.ObjetivoParceria;
+            novaDemanda.AreaSolucaoBuscada = demanda.AreaSolucaoBuscada;
+            novaDemanda.Descricao = demanda.Descricao;
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(novaDemanda);
+            //}
 
             await _service.VincularDemandaAsync(novaDemanda);
 

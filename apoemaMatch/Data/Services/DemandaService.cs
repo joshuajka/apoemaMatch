@@ -110,7 +110,7 @@ namespace apoemaMatch.Data.Services
 
             if (dbDemanda != null)
             {
-                dbDemanda.DemandaAberta = true;
+                dbDemanda.DemandaAberta = false;
                 dbDemanda.ImagemURL = demanda.ImagemURL;
                 dbDemanda.Email = demanda.Email;
                 dbDemanda.NomeDemandante = demanda.NomeDemandante;
