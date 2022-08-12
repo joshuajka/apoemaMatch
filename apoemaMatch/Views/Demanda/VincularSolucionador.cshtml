@@ -1,0 +1,51 @@
+﻿@using apoemaMatch.Data.Enums
+@model DemandaViewModel
+
+@{
+    ViewData["Title"] = "Vincular solucionador";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Editar demanda</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <form asp-action="VincularSolucionador">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <div class="form-group">
+                                <label asp-for="DemandaSolucionadorIds" class="control-label"></label>
+                                <select asp-for="DemandaSolucionadorIds" class="form-control" asp-items="ViewBag.Solucinadores"></select>
+                                <span asp-validation-for="DemandaSolucionadorIds" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Vincular" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todas</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                var output = document.getElementById('ImagemURLPreview');
+                output.src = $('#ImagemURL').val();
+            })
+            $('#ImagemURL').on("change", function () {
+                var output = document.getElementById('ImagemURLPreview');
+                output.src = $(this).val();
+            })
+        </script>
+    }

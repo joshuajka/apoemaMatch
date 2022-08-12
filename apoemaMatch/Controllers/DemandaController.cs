@@ -2,6 +2,7 @@
 using apoemaMatch.Data.Services;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -87,7 +88,7 @@ namespace apoemaMatch.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //GET: Demanda/Editar
+        //GET: Demanda/Editar/2
         public async Task<IActionResult> Editar(int id)
         {
             //var demandaDropDown = await _service.GetSolucionadoresDropDown();
@@ -141,6 +142,42 @@ namespace apoemaMatch.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        //GET: Demanda/VincularSolucionador/3
+        public async Task<IActionResult> VincularSolucionador(int id)
+        {
+            var demanda = await _service.GetDemandaByIdAsync(id);
+            if (demanda == null)
+            {
+                return View("NotFound");
+            }
+
+            var demandaDropDown = await _service.GetSolucionadoresDropDown();
+            ViewBag.Solucinadores = new SelectList(demandaDropDown.Solucionadores, "Id", "Nome");
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> VincularSolucionador(int id, DemandaViewModel novaDemanda)
+        {
+            if (id != novaDemanda.Id)
+            {
+                return View("NotFound");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(novaDemanda);
+            }
+
+            await _service.UpdateDemandaAsync(novaDemanda);
+
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }

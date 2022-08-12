@@ -30,7 +30,7 @@ namespace apoemaMatch.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Cadastrar([Bind("ImagemURL,Email,Nome,Telefone,Formacao,AreaDePesquisa,CurriculoLattes,MiniBio")]Solucionador solucionador)
+        public async Task<IActionResult> Cadastrar(Solucionador solucionador)
         {
             if (!ModelState.IsValid)
             {
