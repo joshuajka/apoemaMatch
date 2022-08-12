@@ -101,7 +101,45 @@ namespace apoemaMatch.Data.Services
                 await _context.SaveChangesAsync();
             }
 
-            
+
+            }
+
+        public async Task VincularDemandaAsync(DemandaViewModel demanda)
+        {
+            var dbDemanda = await _context.Demandas.FirstOrDefaultAsync(n => n.Id == demanda.Id);
+
+            if (dbDemanda != null)
+            {
+                dbDemanda.DemandaAberta = true;
+                dbDemanda.ImagemURL = demanda.ImagemURL;
+                dbDemanda.Email = demanda.Email;
+                dbDemanda.NomeDemandante = demanda.NomeDemandante;
+                dbDemanda.Telefone = demanda.Telefone;
+                dbDemanda.NomeEmpresa = demanda.NomeEmpresa;
+                dbDemanda.CargoDemandante = demanda.CargoDemandante;
+                dbDemanda.TempoDeMercado = demanda.TempoDeMercado;
+                dbDemanda.PorteDaEmpresa = demanda.PorteDaEmpresa;
+                dbDemanda.RamoDeAtuacao = demanda.RamoDeAtuacao;
+                dbDemanda.SegmentoDeMercado = demanda.SegmentoDeMercado;
+                dbDemanda.LinhaDeAtuacaoTI = demanda.LinhaDeAtuacaoTI;
+                dbDemanda.RegimeDeTributacao = demanda.RegimeDeTributacao;
+                dbDemanda.LeiDeInformatica = demanda.LeiDeInformatica;
+                dbDemanda.ObjetivoParceria = demanda.ObjetivoParceria;
+                dbDemanda.AreaSolucaoBuscada = demanda.AreaSolucaoBuscada;
+                dbDemanda.Descricao = demanda.Descricao;
+                await _context.SaveChangesAsync();
+
+                foreach (var solucionadorId in demanda.DemandaSolucionadorIds)
+                {
+                    var novaDemandaSolucionador = new DemandaSolucionador()
+                    {
+                        DemandaId = dbDemanda.Id,
+                        SolucionadorId = solucionadorId
+                    };
+                    await _context.DemandasSolucionadores.AddAsync(novaDemandaSolucionador);
+                }
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

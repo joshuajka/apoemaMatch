@@ -17,6 +17,8 @@ namespace apoemaMatch.Data.Services
 
         Task UpdateDemandaAsync(DemandaViewModel demanda);
 
-        
+        Task VincularDemandaAsync(DemandaViewModel demanda);
+
+
     }
 }

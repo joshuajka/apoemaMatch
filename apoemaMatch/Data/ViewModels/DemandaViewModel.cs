@@ -102,6 +102,7 @@ namespace apoemaMatch.Models
         [Display(Name = "Regime de tributação")]
         public EnumTributacao EnumTributacao { get; set; }
         //Relationships
+        [Display(Name = "Solucionadores")]
         public List<int> DemandaSolucionadorIds { get; set; }
 
     }

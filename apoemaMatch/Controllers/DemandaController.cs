@@ -172,7 +172,7 @@ namespace apoemaMatch.Controllers
                 return View(novaDemanda);
             }
 
-            await _service.UpdateDemandaAsync(novaDemanda);
+            await _service.VincularDemandaAsync(novaDemanda);
 
 
             return RedirectToAction(nameof(Index));
