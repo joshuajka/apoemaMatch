@@ -152,7 +152,8 @@ namespace apoemaMatch.Controllers
                 return View("NotFound");
             }
 
-            var demandaDropDown = await _service.GetSolucionadoresDropDown();
+            var demandaDropDown = await _service.GetSolucionadoresDropDown(demanda);
+            
             ViewBag.Solucinadores = new SelectList(demandaDropDown.Solucionadores, "Id", "Nome");
 
             return View();
@@ -190,6 +191,7 @@ namespace apoemaMatch.Controllers
             //{
             //    return View(novaDemanda);
             //}
+
 
             await _service.VincularDemandaAsync(novaDemanda);
 

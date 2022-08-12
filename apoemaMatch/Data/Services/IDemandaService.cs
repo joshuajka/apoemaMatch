@@ -11,7 +11,7 @@ namespace apoemaMatch.Data.Services
     public interface IDemandaService:IEntityBaseRepository<Demanda>
     {
         Task<Demanda> GetDemandaByIdAsync(int Id);
-        Task<DemandaDropDownViewModel> GetSolucionadoresDropDown();
+        Task<DemandaDropDownViewModel> GetSolucionadoresDropDown(Demanda demanda);
 
         Task AdicionarDemandaAsync(DemandaViewModel demanda);
 

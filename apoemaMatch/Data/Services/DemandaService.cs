@@ -66,11 +66,13 @@ namespace apoemaMatch.Data.Services
 
         }
 
-        public async Task<DemandaDropDownViewModel> GetSolucionadoresDropDown()
+        public async Task<DemandaDropDownViewModel> GetSolucionadoresDropDown(Demanda demanda)
         {
             var response = new DemandaDropDownViewModel()
             {
                 Solucionadores = await _context.Solucionadores.OrderBy(n => n.Nome).ToListAsync()
+
+                //Solucionadores = await _context.Solucionadores.Where(n => n.AreaDePesquisa.Equals(demanda.AreaSolucaoBuscada)).OrderBy(n => n.Nome).ToListAsync()
             };
             return response;
         }
@@ -129,13 +131,20 @@ namespace apoemaMatch.Data.Services
                 dbDemanda.Descricao = demanda.Descricao;
                 await _context.SaveChangesAsync();
 
-                foreach (var solucionadorId in demanda.DemandaSolucionadorIds)
+                var SolucionadoresVinculados = await _context.DemandasSolucionadores.Where(n => n.DemandaId == dbDemanda.Id).ToListAsync();
+                //var lista = SolucionadoresVinculados.Select(n=>n.SolucionadorId).ToList();
+                var excecao = demanda.DemandaSolucionadorIds.Where(p => SolucionadoresVinculados.All(p2 => p2.SolucionadorId != p)).ToList();
+
+
+                foreach (var solucionadorId in excecao)
                 {
+
                     var novaDemandaSolucionador = new DemandaSolucionador()
                     {
                         DemandaId = dbDemanda.Id,
                         SolucionadorId = solucionadorId
                     };
+
                     await _context.DemandasSolucionadores.AddAsync(novaDemandaSolucionador);
                 }
                 await _context.SaveChangesAsync();
