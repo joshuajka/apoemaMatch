@@ -7,13 +7,13 @@ namespace apoemaMatch.Data.Enums
 {
     public enum EnumPorteDaEmpresa
     {
-        MEI = 1, //Microempreendedor Individual (MEI)
-        EIRELI = 2, //Empresa Individual de Responsabilidade Limitada (EIRELI)
-        SS = 3,  //Sociedade Simples (SS)
-        LTDA = 4,  //Sociedade Limitada (LTDA)
-        EI = 5, //Empresário Individual (EI)
-        SLU = 6, //Sociedade Limitada Unipessoal (SLU)
-        SA = 7, //Sociedade Anônima (SA)
-        OUTRO = 8
+        MEI, //Microempreendedor Individual (MEI)
+        EIRELI, //Empresa Individual de Responsabilidade Limitada (EIRELI)
+        SS,  //Sociedade Simples (SS)
+        LTDA,  //Sociedade Limitada (LTDA)
+        EI, //Empresário Individual (EI)
+        SLU, //Sociedade Limitada Unipessoal (SLU)
+        SA, //Sociedade Anônima (SA)
+        OUTRO
     }
 }

@@ -9,7 +9,7 @@ namespace apoemaMatch.Data.Enums
     public enum EnumLinhaDeAtuacaoTI
     {
         [Display(Name = "Desenvolvimento ERP/SIG/BPM")]
-        Desenvolvimento_ERP_SIG_BPM = 1,
+        Desenvolvimento_ERP_SIG_BPM,
         [Display(Name = "Suporte técnico/Infraestrutura TI")]
         Suporte_Tecnico_Infra_TI,
         [Display(Name = "Assessoria/Consultoria TI")]

@@ -9,7 +9,7 @@ namespace apoemaMatch.Data.Enums
     public enum EnumObjetivoParceria
     {
         [Display(Name = "Pesquisa/Desenvolvimento/Inovação")]
-        Pesquisa_Desenvolvimento_Inovacao = 1 ,
+        Pesquisa_Desenvolvimento_Inovacao,
         [Display(Name = "Disponibilização Transferência Tech")]
         Disponibilizacao_Transferencia_Tech,
         [Display(Name = "Capacitação técnica áreas especializadas")]

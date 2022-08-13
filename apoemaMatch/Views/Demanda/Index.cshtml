@@ -51,6 +51,9 @@
                     <div class="col-md-12">
                         <div class="card-footer ">
                             <p class="card-text">
+                                <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
+                                <i class="bi bi-trash"></i>Excluir
+                                </a>
                                 <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
                                     <i class="bi bi-eye-fill"></i> Detalhes
                                 </a>

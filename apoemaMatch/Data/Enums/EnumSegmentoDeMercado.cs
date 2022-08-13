@@ -9,26 +9,26 @@ namespace apoemaMatch.Data.Enums
     public enum EnumSegmentoDeMercado
     {
         [Display(Name = "Alimentos e bebidas")]
-        AlimentosEBebidas = 1,
+        AlimentosEBebidas,
         [Display(Name = "Vestuário e calçados")]
-        VestuarioECalcados = 2,
+        VestuarioECalcados,
         [Display(Name = "Construção")]
-        Construcao = 3,
+        Construcao,
         [Display(Name = "Saúde")]
-        Saude = 4,
+        Saude,
         [Display(Name = "Educação")]
-        Educacao = 5,
+        Educacao,
         [Display(Name = "Serviços Pessoais")]
-        ServicosPessoais = 6,
+        ServicosPessoais,
         [Display(Name = "Serviços Especializados")]
-        ServicosEspecializados = 7,
+        ServicosEspecializados,
         [Display(Name = "Informática TI")]
-        InformaticaTI = 8,
+        InformaticaTI,
         [Display(Name = "Entretenimento")]
-        Entretenimento = 9,
+        Entretenimento,
         [Display(Name = "Financeiro")]
-        Financeiro = 10,
+        Financeiro,
         [Display(Name = "Outros")]
-        Outros = 11
+        Outros
     }
 }

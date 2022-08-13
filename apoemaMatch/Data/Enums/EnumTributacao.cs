@@ -9,10 +9,10 @@ namespace apoemaMatch.Data.Enums
     public enum EnumTributacao
     {
         [Display(Name = "Lucro Real")]
-        LucroReal = 1,
+        LucroReal,
         [Display(Name = "Lucro Presumido")]
-        LucroPresumido = 2,
+        LucroPresumido,
         [Display(Name = "Simples Nacional")]
-        SimplesNacional = 3
+        SimplesNacional
     }
 }

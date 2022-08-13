@@ -9,7 +9,7 @@ namespace apoemaMatch.Data.Enums
     public enum EnumLeiDeInformatica
     {
         [Display(Name = "Já usou")]
-        Ja_Usou = 1,
+        Ja_Usou,
         [Display(Name = "Usa")]
         Usa,
         [Display(Name = "Não usa")]

@@ -9,7 +9,7 @@ namespace apoemaMatch.Data.Enums
     public enum EnumAreaSolucaoBuscada
     {
         [Display(Name = "Qualidade de Software")]
-        Qualidade_de_Software = 1,
+        Qualidade_de_Software,
         [Display(Name = "Recuperação de Informações")]
         Recuperacao_de_Informacoes,
         [Display(Name = "Redes")]

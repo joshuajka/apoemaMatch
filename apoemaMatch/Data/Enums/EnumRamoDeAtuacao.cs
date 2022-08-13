@@ -7,8 +7,8 @@ namespace apoemaMatch.Data.Enums
 {
     public enum EnumRamoDeAtuacao
     {
-        Industria = 1, 
-        Comercio = 2,
-        Servico = 3
+        Industria, 
+        Comercio,
+        Servico
     }
 }
