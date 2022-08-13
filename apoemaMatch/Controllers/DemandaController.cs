@@ -199,6 +199,30 @@ namespace apoemaMatch.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Excluir(int id)
+        {
+            var demandaDetalhes = await _service.GetDemandaByIdAsync(id);
+
+            if (demandaDetalhes == null)
+            {
+                return View("NotFound");
+            }
+
+            return View(demandaDetalhes);
+        }
+
+        [HttpPost, ActionName("Excluir")]
+        public async Task<IActionResult> ExcluirConfirmed(int id)
+        {
+            var demandaDetalhes = await _service.GetDemandaByIdAsync(id);
+            if (!ModelState.IsValid)
+            {
+                return View("NotFound");
+            }
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }
