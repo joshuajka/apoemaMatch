@@ -69,3 +69,41 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+nav {
+    background-color: #FCA000 !important;
+}
+
+a.nav-link {
+    color: #FFFFFF !important;
+}
+
+.btn-demandante {
+    width: 180px;
+    height: 80px;
+    border-radius: 30px;
+    background-color: #FCA000;
+    border-color: #FCA000;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.btn-solucionador {
+    width: 180px;
+    height: 80px;
+    border-radius: 30px;
+    background-color: #E3651C;
+    border-color: #E3651C;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+#logo {
+    height: 4.5vh;
+}
+
+footer {
+    background-color: #FFF7EC;
+}
+
+#Logo_Footer {
+    height: 15vh;
+}

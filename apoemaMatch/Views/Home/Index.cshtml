@@ -1,21 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="row">
-    <div class="col-4">
-        <h1>
-            Seja desafiado ou desafie-nos a encontrar a sua solução
-        </h1>
-        <p>
-            Uma plataforma de inovação aberta que conecta agentes demandantes a solucionadores da academia
-        </p>
-        <div class="row">
-            <button>Botao 1</button>
-            <button>Botao 2</button>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-4 text-center my-5">
+            <div class="row">
+                <h1>Seja desafiado ou desafie-nos a encontrar a sua solução</h1>
+            </div>
+            <div class="row my-5">
+                <h5>
+                    Uma plataforma de inovação aberta que conecta agentes demandantes a solucionadores da academia
+                </h5>
+            </div>
+            <div class="row my-5">
+                <button type="button" class="btn btn-primary btn-lg btn-demandante mr-3">
+                    Junte-se como
+                    Demandante
+                </button>
+                <button type="button" class="btn btn-secondary btn-lg btn-solucionador">
+                    Junte-se como
+                    Solucionador
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="col-8">
-        <img src="@Url.Content("~/img/home.png")"/>
+        <div class="col-lg-8">
+            <img id="imagem_cerebro" src="@Url.Content("~/img/central_laranja.png")" alt="Imagem da direita">
+        </div>
     </div>
 </div>
 
