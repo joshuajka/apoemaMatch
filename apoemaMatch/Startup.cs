@@ -26,12 +26,12 @@ namespace apoemaMatch
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //DbContext configuratios
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString
-                ("DefaultConnectionString")));
+            //DbContext configurations
+            services.AddDbContext<AppDbContext>(options =>
+                        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnectionString")));
 
             //Services configuration
-            services.AddScoped<ISolucionadorService,SolucionadorService>();
+            services.AddScoped<ISolucionadorService, SolucionadorService>();
             services.AddScoped<IDemandaService, DemandaService>();
 
             services.AddControllersWithViews();
