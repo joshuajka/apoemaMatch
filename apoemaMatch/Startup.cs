@@ -66,6 +66,7 @@ namespace apoemaMatch
 
             //Seed database 
             AppDbInitializer.Seed(app);
+            //AppDbInitializer.SeedUsuariosEPapeisAsync(app).Wait();
         }
     }
 }

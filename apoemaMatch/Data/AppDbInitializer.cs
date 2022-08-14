@@ -1,6 +1,8 @@
 ﻿using apoemaMatch.Data.Enums;
+using apoemaMatch.Data.Static;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -86,5 +88,58 @@ namespace apoemaMatch.Data
 
             }
         }
+
+        public static async Task SeedUsuariosEPapeisAsync(IApplicationBuilder applicationBuilder) 
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                //Papeis
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                if(!await roleManager.RoleExistsAsync(PapeisUsuarios.Admin))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(PapeisUsuarios.Admin));
+                }
+
+                if (!await roleManager.RoleExistsAsync(PapeisUsuarios.User))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(PapeisUsuarios.User));
+                }
+
+                //Usuarios
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                string adminUserEmail = "admin@apoema.com";
+                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                if(adminUser == null)
+                {
+                    var novoUsuarioAdmin = new ApplicationUser()
+                    {
+                        Nome = "Usuario Admin",
+                        UserName = "admin",
+                        Email = adminUserEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(novoUsuarioAdmin, "admin1234");
+                    await userManager.AddToRoleAsync(novoUsuarioAdmin, PapeisUsuarios.Admin);
+                }
+
+                string appUserEmail = "user@apoema.com";
+                var appUser = await userManager.FindByEmailAsync(appUserEmail);
+                if (appUser == null)
+                {
+                    var novoAppUser = new ApplicationUser()
+                    {
+                        Nome = "Usuario",
+                        UserName = "user",
+                        Email = appUserEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(novoAppUser, "admin1234");
+                    await userManager.AddToRoleAsync(novoAppUser, PapeisUsuarios.Admin);
+                }
+
+            }
+        }
+
     }
 }
