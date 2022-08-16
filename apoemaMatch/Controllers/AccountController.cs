@@ -28,5 +28,36 @@ namespace apoemaMatch.Controllers
             var response = new LoginViewModel();
             return View(response);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Login (LoginViewModel loginViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(loginViewModel);
+            }
+
+            var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
+            if (user != null)
+            {
+                var passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
+                
+                if (passwordCheck)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Demanda");
+                    }
+                }
+                TempData["Error"] = "Credenciais incorretas, tente novamente";
+                return View(loginViewModel);
+            }
+
+            TempData["Error"] = "Credenciais incorretas, tente novamente";
+            return View(loginViewModel);
+
+        }
+
     }
 }
