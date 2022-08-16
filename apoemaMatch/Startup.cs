@@ -1,8 +1,11 @@
 using apoemaMatch.Data;
 using apoemaMatch.Data.Services;
+using apoemaMatch.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +37,15 @@ namespace apoemaMatch
             services.AddScoped<ISolucionadorService, SolucionadorService>();
             services.AddScoped<IDemandaService, DemandaService>();
 
+            //Autenticacao e autorizacao 
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -57,6 +69,10 @@ namespace apoemaMatch
 
             app.UseAuthorization();
 
+            //Autenticacao e Autorizacao 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -66,7 +82,7 @@ namespace apoemaMatch
 
             //Seed database 
             AppDbInitializer.Seed(app);
-            //AppDbInitializer.SeedUsuariosEPapeisAsync(app).Wait();
+            AppDbInitializer.SeedUsuariosEPapeisAsync(app).Wait();
         }
     }
 }

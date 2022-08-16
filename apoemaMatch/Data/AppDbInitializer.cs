@@ -115,11 +115,11 @@ namespace apoemaMatch.Data
                     var novoUsuarioAdmin = new ApplicationUser()
                     {
                         Nome = "Usuario Admin",
-                        UserName = "admin",
+                        UserName = "admin-user",
                         Email = adminUserEmail,
                         EmailConfirmed = true
                     };
-                    await userManager.CreateAsync(novoUsuarioAdmin, "admin1234");
+                    await userManager.CreateAsync(novoUsuarioAdmin, "Coding@1234?");
                     await userManager.AddToRoleAsync(novoUsuarioAdmin, PapeisUsuarios.Admin);
                 }
 
@@ -134,8 +134,8 @@ namespace apoemaMatch.Data
                         Email = appUserEmail,
                         EmailConfirmed = true
                     };
-                    await userManager.CreateAsync(novoAppUser, "admin1234");
-                    await userManager.AddToRoleAsync(novoAppUser, PapeisUsuarios.Admin);
+                    await userManager.CreateAsync(novoAppUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(novoAppUser, PapeisUsuarios.User);
                 }
 
             }
