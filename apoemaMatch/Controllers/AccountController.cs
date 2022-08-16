@@ -1,4 +1,5 @@
 ﻿using apoemaMatch.Data;
+using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,10 @@ namespace apoemaMatch.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Login()
         {
-            return View();
+            var response = new LoginViewModel();
+            return View(response);
         }
     }
 }
