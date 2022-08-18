@@ -59,5 +59,11 @@ namespace apoemaMatch.Controllers
 
         }
 
+        public IActionResult Register()
+        {
+            var response = new RegisterViewModel();
+            return View(response);
+        }
+
     }
 }
