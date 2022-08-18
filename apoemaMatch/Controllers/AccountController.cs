@@ -1,4 +1,5 @@
 ﻿using apoemaMatch.Data;
+using apoemaMatch.Data.Static;
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Identity;
@@ -63,6 +64,38 @@ namespace apoemaMatch.Controllers
         {
             var response = new RegisterViewModel();
             return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Cadastrar(RegisterViewModel registerViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(registerViewModel);
+            }
+
+            var user = await _userManager.FindByEmailAsync(registerViewModel.Email);
+            if(user != null)
+            {
+                TempData["Error"] = "Esse email já está sendo usado";
+                return View(registerViewModel);
+            }
+
+            var novoUsuario = new ApplicationUser()
+            {
+                Nome = registerViewModel.Nome,
+                Email = registerViewModel.Email,
+                UserName = registerViewModel.Email
+            };
+            var novoUsuarioResponse = await _userManager.CreateAsync(novoUsuario, registerViewModel.Password);
+
+            if (novoUsuarioResponse.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(novoUsuario, PapeisUsuarios.User);
+            }
+
+            return View("RegisterCompleted");
+
         }
 
     }
