@@ -16,5 +16,10 @@ namespace apoemaMatch.Controllers
         {
             return View();
         }
+        
+        public IActionResult FormularioAvaliacao()
+        {
+            return View();
+        }
     }
 }
