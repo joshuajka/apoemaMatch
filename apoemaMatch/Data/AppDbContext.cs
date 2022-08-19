@@ -34,6 +34,7 @@ namespace apoemaMatch.Data
         public DbSet<Solucionador> Solucionadores { get; set; }
         public DbSet<DemandaSolucionador> DemandasSolucionadores { get; set; }
 
+        public DbSet<Encomenda> Encomendas { get; set; }
 
     }
 }
