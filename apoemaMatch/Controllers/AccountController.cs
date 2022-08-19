@@ -112,5 +112,10 @@ namespace apoemaMatch.Controllers
             return View(users);
         }
 
+        public IActionResult AccessDenied(string ReturnUrl)
+        {
+            return View();
+        }
+
     }
 }

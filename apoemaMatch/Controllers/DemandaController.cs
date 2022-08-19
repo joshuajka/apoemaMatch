@@ -1,6 +1,8 @@
 ﻿using apoemaMatch.Data;
 using apoemaMatch.Data.Services;
+using apoemaMatch.Data.Static;
 using apoemaMatch.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace apoemaMatch.Controllers
 {
+    [Authorize(Roles = PapeisUsuarios.Admin)]
     public class DemandaController : Controller
     {
         private readonly IDemandaService _service;
@@ -20,12 +23,14 @@ namespace apoemaMatch.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var todasDemandas = await _service.GetAllAsync();
             return View(todasDemandas);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Filter(string searchString)
         {
             var todasDemandas = await _service.GetAllAsync();
@@ -41,7 +46,7 @@ namespace apoemaMatch.Controllers
         }
 
         //GET: Demanda/Detalhes/1
-
+        [AllowAnonymous]
         public async Task<IActionResult> Detalhes(int Id)
         {
             var demandaDetalhes = await _service.GetDemandaByIdAsync(Id);

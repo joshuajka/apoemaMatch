@@ -1,6 +1,8 @@
 ﻿using apoemaMatch.Data;
 using apoemaMatch.Data.Services;
+using apoemaMatch.Data.Static;
 using apoemaMatch.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace apoemaMatch.Controllers
 {
+    [Authorize(Roles = PapeisUsuarios.Admin)]
     public class SolucionadorController : Controller
     {
         private readonly ISolucionadorService _service;
@@ -17,6 +20,8 @@ namespace apoemaMatch.Controllers
         {
             _service = service;
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var data = await _service.GetAllAsync();
@@ -42,6 +47,7 @@ namespace apoemaMatch.Controllers
         }
 
         //Get: Solucionador/Detalhes/1
+        [AllowAnonymous]
         public async Task<IActionResult> Detalhes(int id)
         {
             var solucionadorDetalhes = await _service.GetByIdAsync(id);
