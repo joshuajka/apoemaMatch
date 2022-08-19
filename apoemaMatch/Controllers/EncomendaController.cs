@@ -28,5 +28,10 @@ namespace apoemaMatch.Controllers
             _service.AddAsync(encomenda);
             return RedirectToAction(nameof(Index));
         }
+        
+        public IActionResult FormularioAvaliacao()
+        {
+            return View();
+        }
     }
 }
