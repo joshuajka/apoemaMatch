@@ -4,6 +4,7 @@ using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,7 @@ namespace apoemaMatch.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Cadastrar(RegisterViewModel registerViewModel)
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -105,6 +106,11 @@ namespace apoemaMatch.Controllers
             return RedirectToAction("Index", "Demanda");
         }
 
+        public async Task<IActionResult> Users()
+        {
+            var users = await _context.Users.ToListAsync();
+            return View(users);
+        }
 
     }
 }
