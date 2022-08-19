@@ -1,8 +1,74 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using apoemaMatch.Data.Enums
+@model EncomendaViewModel
 @{
-    ViewData["Title"] = "Criar nova encomenda";
+    ViewData["Title"] = "Criar Nova Encomenda";
 }
 
-<h2>teste</h2>
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Criar Nova Encomenda</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <form asp-action="Cadastrar">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label asp-for="TituloRequisicao" class="control-label"></label>
+                            <input asp-for="TituloRequisicao" class="form-control" />
+                            <span asp-validation-for="TituloRequisicao" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="EnumSegmentoDeMercado" class="control-label"></label>
+                                <select asp-for="EnumSegmentoDeMercado" class="form-control" asp-items="Html.GetEnumSelectList<EnumSegmentoDeMercado>()"></select>
+                                <span asp-validation-for="EnumSegmentoDeMercado" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EnumLinhaDeAtuacaoTI" class="control-label"></label>
+                                <select asp-for="EnumLinhaDeAtuacaoTI" class="form-control" asp-items="Html.GetEnumSelectList<EnumLinhaDeAtuacaoTI>()"></select>
+                                <span asp-validation-for="EnumLinhaDeAtuacaoTI" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Descricao" class="control-label"></label>
+                                <textarea asp-for="Descricao" class="form-control"></textarea>
+                                <span asp-validation-for="Descricao" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="text-center">
+                            <h6>Como você deseja encontrar um solucionador?</h6>
+                        </div>
+
+                        @*<input type="submit" value="Cadastrar" class="btn btn-outline-success float-right" />*@
+                        <div class="float-left">
+                            <a class="btn btn-outline-secondary" asp-action="Index">Ser agenciado pelo APEOMA</a>
+                        </div>
+                        <div class="float-right">
+                            <a class="btn btn-outline-secondary" asp-action="Index">Iniciar um processo de seleção</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ImagemURLPreview');
+            output.src = $('#ImagemURL').val();
+        })
+        $('#ImagemURL').on("change", function () {
+            var output = document.getElementById('ImagemURLPreview');
+            output.src = $(this).val();
+        })
+    </script>
+}
