@@ -25,6 +25,6 @@ namespace apoemaMatch.Data.ViewModels
         
         [Required(ErrorMessage = "É necessário informar se realiza processo seletivo")]
         public bool RealizaProcessoSeletivo { get; set; }
-        
+
     }
 }

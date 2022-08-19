@@ -1,5 +1,5 @@
 ﻿@using apoemaMatch.Data.Enums
-@model EncomendaViewModel
+@model apoemaMatch.Data.ViewModels.EncomendaViewModel
 @{
     ViewData["Title"] = "Criar Nova Encomenda";
 }
@@ -16,20 +16,20 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row">
                         <div class="col-md-12">
-                            <label asp-for="TituloRequisicao" class="control-label"></label>
-                            <input asp-for="TituloRequisicao" class="form-control" />
-                            <span asp-validation-for="TituloRequisicao" class="text-danger"></span>
+                            <label asp-for="Titulo" class="control-label"></label>
+                            <input asp-for="Titulo" class="form-control" />
+                            <span asp-validation-for="Titulo" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label asp-for="EnumSegmentoDeMercado" class="control-label"></label>
-                                <select asp-for="EnumSegmentoDeMercado" class="form-control" asp-items="Html.GetEnumSelectList<EnumSegmentoDeMercado>()"></select>
-                                <span asp-validation-for="EnumSegmentoDeMercado" class="text-danger"></span>
+                                <label asp-for="SegmentoDeMercado" class="control-label"></label>
+                                <select asp-for="SegmentoDeMercado" class="form-control" asp-items="Html.GetEnumSelectList<EnumSegmentoDeMercado>()"></select>
+                                <span asp-validation-for="SegmentoDeMercado" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="EnumLinhaDeAtuacaoTI" class="control-label"></label>
-                                <select asp-for="EnumLinhaDeAtuacaoTI" class="form-control" asp-items="Html.GetEnumSelectList<EnumLinhaDeAtuacaoTI>()"></select>
-                                <span asp-validation-for="EnumLinhaDeAtuacaoTI" class="text-danger"></span>
+                                <label asp-for="AreaSolucaoBuscada" class="control-label"></label>
+                                <select asp-for="AreaSolucaoBuscada" class="form-control" asp-items="Html.GetEnumSelectList<EnumLinhaDeAtuacaoTI>()"></select>
+                                <span asp-validation-for="AreaSolucaoBuscada" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-12">
