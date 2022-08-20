@@ -1,7 +1,6 @@
-﻿using apoemaMatch.Data.Enums;
-using apoemaMatch.Data.Base;
+﻿using apoemaMatch.Data.Base;
+using apoemaMatch.Data.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace apoemaMatch.Models
 {
@@ -12,7 +11,6 @@ namespace apoemaMatch.Models
         
         public string Pergunta { get; set; }
         
-        public EnumTipoResposta tipoResposta { get; set; }
-        
+        public EnumTipoResposta TipoResposta { get; set; }
     }
 }
