@@ -22,7 +22,6 @@ namespace apoemaMatch.Data.Services
         {
             var novaDemanda = new Demanda()
             {
-                DemandaAberta = true,
                 ImagemURL = demanda.ImagemURL,
                 Email = demanda.Email,
                 NomeDemandante = demanda.NomeDemandante,
@@ -83,7 +82,6 @@ namespace apoemaMatch.Data.Services
 
             if(dbDemanda != null)
             {
-                dbDemanda.DemandaAberta = true;
                 dbDemanda.ImagemURL = demanda.ImagemURL;
                 dbDemanda.Email = demanda.Email;
                 dbDemanda.NomeDemandante = demanda.NomeDemandante;
@@ -112,7 +110,6 @@ namespace apoemaMatch.Data.Services
 
             if (dbDemanda != null)
             {
-                dbDemanda.DemandaAberta = false;
                 dbDemanda.ImagemURL = demanda.ImagemURL;
                 dbDemanda.Email = demanda.Email;
                 dbDemanda.NomeDemandante = demanda.NomeDemandante;

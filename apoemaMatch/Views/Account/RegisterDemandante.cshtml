@@ -1,5 +1,6 @@
-﻿@using apoemaMatch.Data.ViewModels
-@model RegisterViewModel;
+﻿@using apoemaMatch.Data.Enums
+@using apoemaMatch.Data.ViewModels
+@model RegisterDemandanteViewModel;
 
 @{
     ViewData["Title"] = "Junte-se como Demandante";
@@ -8,7 +9,7 @@
 <div class="row">
     <div class="col-md-6 offset-3">
         <p>
-            <h4>Cadastre uma nova conta</h4>
+            <h4>Junte-se como Demandante</h4>
         </p>
 
         @if (TempData["Error"] != null)
@@ -19,35 +20,112 @@
         }
 
         <div class="row">
-            <div class="col-md-8 offset-2">
-                <form asp-action="Register">
+            <div class="col-md-10 offset-1">
+                <form asp-action="RegisterDemandante">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="CargoDemandante" class="control-label"></label>
+                                <input asp-for="CargoDemandante" class="form-control" />
+                                <span asp-validation-for="CargoDemandante" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="NomeEmpresa" class="control-label"></label>
+                                <input asp-for="NomeEmpresa" class="form-control" />
+                                <span asp-validation-for="NomeEmpresa" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Telefone" class="control-label"></label>
+                                <input asp-for="Telefone" class="form-control" />
+                                <span asp-validation-for="Telefone" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TempoDeMercado" class="control-label"></label>
+                                <input asp-for="TempoDeMercado" class="form-control" />
+                                <span asp-validation-for="TempoDeMercado" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ImagemURL" class="control-label"></label>
+                                <input asp-for="ImagemURL" class="form-control" />
+                                <span asp-validation-for="ImagemURL" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AreaSolucaoBuscada" class="control-label"></label>
+                                <select asp-for="AreaSolucaoBuscada" class="form-control" asp-items="Html.GetEnumSelectList<EnumAreaSolucaoBuscada>()"></select>
+                                <span asp-validation-for="AreaSolucaoBuscada" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LeiDeInformatica" class="control-label"></label>
+                                <select asp-for="LeiDeInformatica" class="form-control" asp-items="Html.GetEnumSelectList<EnumLeiDeInformatica>()"></select>
+                                <span asp-validation-for="LeiDeInformatica" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
 
-                    <div class="form-group">
-                        <label asp-for="Nome" class="control-label"></label>
-                        <input asp-for="Nome" class="form-control" />
-                        <span asp-validation-for="Nome" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ConfirmPassword" class="control-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    </div>
+                            <div class="form-group">
+                                <label asp-for="LinhaDeAtuacaoTI" class="control-label"></label>
+                                <select asp-for="LinhaDeAtuacaoTI" class="form-control" asp-items="Html.GetEnumSelectList<EnumLinhaDeAtuacaoTI>()"></select>
+                                <span asp-validation-for="LinhaDeAtuacaoTI" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ObjetivoParceria" class="control-label"></label>
+                                <select asp-for="ObjetivoParceria" class="form-control" asp-items="Html.GetEnumSelectList<EnumObjetivoParceria>()"></select>
+                                <span asp-validation-for="ObjetivoParceria" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="RamoDeAtuacao" class="control-label"></label>
+                                <select asp-for="RamoDeAtuacao" class="form-control" asp-items="Html.GetEnumSelectList<EnumRamoDeAtuacao>()"></select>
+                                <span asp-validation-for="RamoDeAtuacao" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SegmentoDeMercado" class="control-label"></label>
+                                <select asp-for="SegmentoDeMercado" class="form-control" asp-items="Html.GetEnumSelectList<EnumSegmentoDeMercado>()"></select>
+                                <span asp-validation-for="SegmentoDeMercado" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="RegimeDeTributacao" class="control-label"></label>
+                                <select asp-for="RegimeDeTributacao" class="form-control" asp-items="Html.GetEnumSelectList<EnumTributacao>()"></select>
+                                <span asp-validation-for="RegimeDeTributacao" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PorteDaEmpresa" class="control-label"></label>
+                                <select asp-for="PorteDaEmpresa" class="form-control" asp-items="Html.GetEnumSelectList<EnumPorteDaEmpresa>()"></select>
+                                <span asp-validation-for="PorteDaEmpresa" class="text-danger"></span>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Descricao" class="control-label"></label>
+                            <textarea asp-for="Descricao" class="form-control"></textarea>
+                            <span asp-validation-for="Descricao" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Sign up" />
-                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
-                    </div>
+                        <div class="form-group">
+                            <label asp-for="Nome" class="control-label"></label>
+                            <input asp-for="Nome" class="form-control" />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword" class="control-label"></label>
+                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input class="btn btn-outline-success float-right" type="submit" value="Sign up" />
+                            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
+                        </div>
                 </form>
             </div>
         </div>

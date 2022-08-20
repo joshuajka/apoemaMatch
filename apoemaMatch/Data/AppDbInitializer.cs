@@ -26,7 +26,6 @@ namespace apoemaMatch.Data
                     {
                         new Demanda()
                         {
-                            DemandaAberta = true,
                             ImagemURL = "",
                             Email = "",
                             NomeDemandante = "",
@@ -104,6 +103,16 @@ namespace apoemaMatch.Data
                 if (!await roleManager.RoleExistsAsync(PapeisUsuarios.User))
                 {
                     await roleManager.CreateAsync(new IdentityRole(PapeisUsuarios.User));
+                }
+
+                if (!await roleManager.RoleExistsAsync(PapeisUsuarios.Solucionador))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(PapeisUsuarios.Solucionador));
+                }
+
+                if (!await roleManager.RoleExistsAsync(PapeisUsuarios.Demandante))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(PapeisUsuarios.Demandante));
                 }
 
                 //Usuarios

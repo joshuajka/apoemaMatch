@@ -13,7 +13,7 @@ namespace apoemaMatch.Models
         [Key]
         public int Id { get; set; }
 
-        public bool DemandaAberta { get; set; }
+        public string IdUsuario { get; set; }
 
         [Display(Name = "URL Foto")]
         public string ImagemURL { get; set; }
