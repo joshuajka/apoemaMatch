@@ -107,6 +107,7 @@ namespace apoemaMatch.Data
                 }
 
                 //Usuarios
+                //Admin
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 string adminUserEmail = "admin@apoema.com";
                 var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
@@ -123,6 +124,7 @@ namespace apoemaMatch.Data
                     await userManager.AddToRoleAsync(novoUsuarioAdmin, PapeisUsuarios.Admin);
                 }
 
+                //Usuario genérico
                 string appUserEmail = "user@apoema.com";
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
                 if (appUser == null)
@@ -138,6 +140,36 @@ namespace apoemaMatch.Data
                     await userManager.AddToRoleAsync(novoAppUser, PapeisUsuarios.User);
                 }
 
+                //Solucionador 
+                string appSolucionadorEmail = "solucionador@apoema.com";
+                var solucionadorUser = await userManager.FindByEmailAsync(appSolucionadorEmail);
+                if (solucionadorUser == null)
+                {
+                    var novoSolucionadorUser = new ApplicationUser()
+                    {
+                        Nome = "Solucionador",
+                        UserName = "SolucionadorUser",
+                        Email = appSolucionadorEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(novoSolucionadorUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(novoSolucionadorUser, PapeisUsuarios.Solucionador);
+                }
+                //Demandante
+                string appDemandanteEmail = "demandante@apoema.com";
+                var demandanteUser = await userManager.FindByEmailAsync(appDemandanteEmail);
+                if (demandanteUser == null)
+                {
+                    var novoDemandanteUser = new ApplicationUser()
+                    {
+                        Nome = "Demandante",
+                        UserName = "DemandanteUser",
+                        Email = appDemandanteEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(novoDemandanteUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(novoDemandanteUser, PapeisUsuarios.Demandante);
+                }
             }
         }
 
