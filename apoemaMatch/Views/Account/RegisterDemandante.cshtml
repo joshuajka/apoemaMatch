@@ -55,11 +55,6 @@
                                 <select asp-for="AreaSolucaoBuscada" class="form-control" asp-items="Html.GetEnumSelectList<EnumAreaSolucaoBuscada>()"></select>
                                 <span asp-validation-for="AreaSolucaoBuscada" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="LeiDeInformatica" class="control-label"></label>
-                                <select asp-for="LeiDeInformatica" class="form-control" asp-items="Html.GetEnumSelectList<EnumLeiDeInformatica>()"></select>
-                                <span asp-validation-for="LeiDeInformatica" class="text-danger"></span>
-                            </div>
                         </div>
                         <div class="col-md-6">
 
@@ -92,6 +87,11 @@
                                 <label asp-for="PorteDaEmpresa" class="control-label"></label>
                                 <select asp-for="PorteDaEmpresa" class="form-control" asp-items="Html.GetEnumSelectList<EnumPorteDaEmpresa>()"></select>
                                 <span asp-validation-for="PorteDaEmpresa" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LeiDeInformatica" class="control-label"></label>
+                                <select asp-for="LeiDeInformatica" class="form-control" asp-items="Html.GetEnumSelectList<EnumLeiDeInformatica>()"></select>
+                                <span asp-validation-for="LeiDeInformatica" class="text-danger"></span>
                             </div>
                         </div>
                         </div>
