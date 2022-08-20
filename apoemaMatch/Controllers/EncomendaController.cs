@@ -1,4 +1,5 @@
 ﻿using apoemaMatch.Data.Services;
+using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +19,29 @@ namespace apoemaMatch.Controllers
             return View();
         }
 
-        public IActionResult Cadastrar(Encomenda encomenda)
+        [HttpPost]
+        public IActionResult Cadastrar(EncomendaViewModel encomendaViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(encomenda);
+                return View(encomendaViewModel);
             }
+
+            Encomenda encomenda = new()
+            {
+                Id = encomendaViewModel.Id,
+                Titulo = encomendaViewModel.Titulo,
+                SegmentoDeMercado = encomendaViewModel.SegmentoDeMercado,
+                AreaSolucaoBuscada = encomendaViewModel.AreaSolucaoBuscada,
+                Descricao = encomendaViewModel.Descricao,
+                RealizaProcessoSeletivo = encomendaViewModel.RealizaProcessoSeletivo,
+                Questoes = encomendaViewModel.Questoes?.ConvertAll(q => new Questao()
+                {
+                    Id = q.Id,
+                    Pergunta = q.Pergunta,
+                    TipoResposta = q.TipoResposta
+                })
+            };
 
             _service.AddAsync(encomenda);
             return RedirectToAction(nameof(Index));
