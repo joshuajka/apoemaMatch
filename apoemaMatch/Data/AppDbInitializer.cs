@@ -156,8 +156,8 @@ namespace apoemaMatch.Data
                 {
                     var novoSolucionadorUser = new ApplicationUser()
                     {
-                        Nome = "Solucionador",
-                        UserName = "SolucionadorUser",
+                        Nome = "solucionador",
+                        UserName = "solucionadorUser",
                         Email = appSolucionadorEmail,
                         EmailConfirmed = true
                     };
@@ -171,8 +171,8 @@ namespace apoemaMatch.Data
                 {
                     var novoDemandanteUser = new ApplicationUser()
                     {
-                        Nome = "Demandante",
-                        UserName = "DemandanteUser",
+                        Nome = "demandante",
+                        UserName = "demandanteUser",
                         Email = appDemandanteEmail,
                         EmailConfirmed = true
                     };
