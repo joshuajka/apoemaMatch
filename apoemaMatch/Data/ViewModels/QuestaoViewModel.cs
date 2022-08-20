@@ -8,6 +8,6 @@ namespace apoemaMatch.Data.ViewModels
         
         public string Pergunta { get; set; }
         
-        public EnumTipoResposta tipoResposta { get; set; }
+        public EnumTipoResposta TipoResposta { get; set; }
     }
 }
