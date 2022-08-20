@@ -36,6 +36,7 @@ namespace apoemaMatch
             //Services configuration
             services.AddScoped<ISolucionadorService, SolucionadorService>();
             services.AddScoped<IDemandaService, DemandaService>();
+            services.AddScoped<IEncomendaService, EncomendaService>();
 
             //Autenticacao e autorizacao 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
