@@ -9,5 +9,6 @@ namespace apoemaMatch.Data.Services
 {
     public interface ISolucionadorService:IEntityBaseRepository<Solucionador>
     {
+        Task<Solucionador> GetSolucionadorByIdUser(string IdUser);
     }
 }

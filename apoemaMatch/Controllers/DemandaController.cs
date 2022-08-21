@@ -54,6 +54,7 @@ namespace apoemaMatch.Controllers
         }
 
         //GET: Demanda/Cadastrar
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         public async Task<IActionResult> Cadastrar()
         {
             //var demandaDropDown = await _service.GetSolucionadoresDropDown();
@@ -62,6 +63,7 @@ namespace apoemaMatch.Controllers
             return View();
         }
 
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         [HttpPost]
         public async Task<IActionResult> Cadastrar(DemandaViewModel novaDemanda)
         {
@@ -94,6 +96,7 @@ namespace apoemaMatch.Controllers
         }
 
         //GET: Demanda/Editar/2
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         public async Task<IActionResult> Editar(int id)
         {
             //var demandaDropDown = await _service.GetSolucionadoresDropDown();
@@ -129,6 +132,7 @@ namespace apoemaMatch.Controllers
             return View(response);
         }
 
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         [HttpPost]
         public async Task<IActionResult> Editar(int id,DemandaViewModel novaDemanda)
         {

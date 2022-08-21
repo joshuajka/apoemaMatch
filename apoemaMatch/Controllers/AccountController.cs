@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace apoemaMatch.Controllers
@@ -193,7 +194,7 @@ namespace apoemaMatch.Controllers
 
             if (novoUsuarioResponse.Succeeded)
             {
-                await _userManager.AddToRoleAsync(novoUsuario, PapeisUsuarios.Solucionador);
+                await _userManager.AddToRoleAsync(novoUsuario, PapeisUsuarios.Demandante);
 
                 var usuarioDemandante = await _userManager.FindByEmailAsync(registerViewModel.Email);
 
@@ -237,6 +238,26 @@ namespace apoemaMatch.Controllers
         {
             var users = await _context.Users.ToListAsync();
             return View(users);
+        }
+
+        public async Task<IActionResult> MeuPerfilSolucionador()
+        {
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            var userSolucionador = await _userManager.FindByEmailAsync(userEmail);
+            var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(userSolucionador.Id);
+
+            return View(solucionador);
+        }
+
+        public async Task<IActionResult> MeuPerfilDemandante()
+        {
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            var userDemandante = await _userManager.FindByEmailAsync(userEmail);
+            var demandante = await _serviceDemandante.GetDemandaByIdUser(userDemandante.Id);
+
+            return View(demandante);
         }
 
         public IActionResult AccessDenied(string ReturnUrl)

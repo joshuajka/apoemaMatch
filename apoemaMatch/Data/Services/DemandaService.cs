@@ -65,6 +65,14 @@ namespace apoemaMatch.Data.Services
 
         }
 
+        public async Task<Demanda> GetDemandaByIdUser(string IdUser)
+        {
+            var demandaDetalhes = await _context.Demandas.Include(dm => dm.DemandaSolucionador).ThenInclude(s => s.Solucionador)
+                .FirstOrDefaultAsync(n => n.IdUsuario == IdUser);
+
+            return demandaDetalhes;
+        }
+
         public async Task<DemandaDropDownViewModel> GetSolucionadoresDropDown(Demanda demanda)
         {
             var response = new DemandaDropDownViewModel()

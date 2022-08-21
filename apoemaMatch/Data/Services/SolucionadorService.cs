@@ -14,5 +14,12 @@ namespace apoemaMatch.Data.Services
 
         public SolucionadorService(AppDbContext context) : base(context) { }
 
+        public async Task<Solucionador> GetSolucionadorByIdUser(string IdUser)
+        {
+            var solucionadorDetalhes = await _context.Solucionadores.Include(dm => dm.DemandaSolucionador).ThenInclude(s => s.Solucionador)
+                .FirstOrDefaultAsync(n => n.IdUsuario == IdUser);
+
+            return solucionadorDetalhes;
+        }
     }
 }

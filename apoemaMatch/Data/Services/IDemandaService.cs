@@ -19,6 +19,7 @@ namespace apoemaMatch.Data.Services
 
         Task VincularDemandaAsync(DemandaViewModel demanda);
 
+        Task<Demanda> GetDemandaByIdUser(string IdUser);
 
     }
 }

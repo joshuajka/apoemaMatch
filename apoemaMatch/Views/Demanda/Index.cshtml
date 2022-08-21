@@ -16,7 +16,7 @@
                             <p class="card-text">
                                 <h5 class="card-title">
                                     @item.NomeEmpresa
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Demandante")) //Colocar validação se a demanda é dele
                                         {
                                             <a class="text-white float-right" asp-action="Editar" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
                                         }
@@ -67,13 +67,6 @@
                                         <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
                                     </a>
                                 }
-
-                                @*<a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
-           asp-controller="Orders"
-           asp-action="AddItemToShoppingCart"
-           asp-route-id="@item.Id">
-            <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
-        </a>*@
                             </p>
                         </div>
                     </div>
