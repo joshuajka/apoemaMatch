@@ -1,1 +1,90 @@
-<h2>Formulario de avaliação</h2>
+@model apoemaMatch.Data.ViewModels.EncomendaViewModel
+@{
+    ViewData["Title"] = "Criar Questionário de Avaliação";
+}
+
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Faça aqui um questionário para o processo de avaliação</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="FormularioAvaliacao">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="inputList">
+                                
+                                <div class="col text-center">
+                                    <a class="btn btn-primary" onclick="AddInput()"><i class="bi bi-plus text-white"></i></a>
+                                    <br/><br/>
+                                </div>
+
+                                <div class="input-group">
+                                    <input asp-for="Titulo" class="form-control"/>
+                                    <a class="btn btn-danger text-white rmv_btn" onclick="RemoveInput()"><i class="bi bi-trash"></i>Delete</a>
+                                    <a class="btn btn-success text-white fix_btn" onclick="FixInput()"><i class="bi bi-check"></i></a>
+                                </div>
+                            </div>
+                            <br/><br/>
+                            
+                            <div id="fixedQuestions">
+                                Questoes Prontas
+                                <br/>
+                                <label class="control-label">Texto Pronto</label>
+                            </div>
+                            
+                            
+                            <div class="col text-center">
+                               <a class="btn btn-outline-warning">Publicar demanda</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    function AddInput() {
+        var inputList = document.getElementById("inputList");
+        var inputCount = inputList.getElementsByTagName('input').length;
+        var newInput = `<input asp-for="Titulo" class="form-control" id="EventMembers_${inputCount}" name="EventMembers[${inputCount}]"/>
+                        <a class="btn btn-danger text-white rmv_btn" onclick="RemoveInput()"><i class="bi bi-trash"></i>Delete</a>
+                        <a class="btn btn-success text-white fix_btn" onclick="FixInput()"><i class="bi bi-check"></i></a>`;
+        var element = document.createElement("div");
+        element.classList.add('input-group');
+        element.innerHTML = newInput ;
+        
+        //var break_element = document.createElement("br");
+
+        inputList.appendChild(element);
+        //inputList.appendChild(break_element);
+    }  
+        
+    function RemoveInput() {
+        $(document).on('click', '.rmv_btn', function(){
+                     // "this" is current button event occurs on
+                     $(this).closest('.input-group').remove()
+                  })  
+    }
+    
+    function FixInput() {
+        var inputList = document.getElementById("fixedQuestions");
+        //var inputCount = inputList.getElementsByTagName('input').length;
+        var newInput = `<label class="control-label">Texto Pronto</label>`;
+        var element = document.createElement("div");
+        element.classList.add('input-group');
+        element.innerHTML = newInput ;
+        
+        //var break_element = document.createElement("br");
+
+        inputList.appendChild(element);
+    }
+</script>
