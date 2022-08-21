@@ -66,8 +66,8 @@ namespace apoemaMatch
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
-            app.UseAuthorization();
 
             //Autenticacao e Autorizacao 
             app.UseAuthentication();
