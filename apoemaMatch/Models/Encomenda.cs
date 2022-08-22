@@ -1,5 +1,6 @@
 ﻿using apoemaMatch.Data.Base;
 using apoemaMatch.Data.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace apoemaMatch.Models
@@ -16,5 +17,8 @@ namespace apoemaMatch.Models
         public EnumAreaSolucaoBuscada ServicoBuscado { get; set; }
 
         public string Descricao { get; set; }
+
+        //Relationships
+        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
     }
 }

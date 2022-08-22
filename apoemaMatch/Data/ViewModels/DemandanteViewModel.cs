@@ -1,18 +1,13 @@
 ﻿using apoemaMatch.Data.Enums;
-using apoemaMatch.Data.Base;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace apoemaMatch.Models
 {
-    public class DemandaViewModel
+    public class DemandanteViewModel
     {
 
         public int Id { get; set; }
-        public bool DemandaAberta { get; set; }
 
         [Display(Name = "Foto")]
         [Required(ErrorMessage = "ImagemURL é obrigatória")]
@@ -79,7 +74,7 @@ namespace apoemaMatch.Models
         public string Descricao { get; set; }
 
         [Display(Name = "Área de solução buscada")]
-        public EnumAreaSolucaoBuscada EnumAreaSolucaoBuscada { get; set;}
+        public EnumAreaSolucaoBuscada EnumAreaSolucaoBuscada { get; set; }
 
         [Display(Name = "Lei de informática")]
         public EnumLeiDeInformatica EnumLeiDeInformatica { get; set; }
@@ -103,7 +98,7 @@ namespace apoemaMatch.Models
         public EnumTributacao EnumTributacao { get; set; }
         //Relationships
         [Display(Name = "Solucionadores")]
-        public List<int> DemandaSolucionadorIds { get; set; }
+        public List<int> EncomendaSolucionadorIds { get; set; }
 
     }
 }

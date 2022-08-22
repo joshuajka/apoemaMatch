@@ -19,12 +19,12 @@ namespace apoemaMatch.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
                 context.Database.EnsureCreated();
-                //Demanda
-                if (!context.Demandas.Any())
+                //Demandante
+                if (!context.Demandantes.Any())
                 {
-                    context.Demandas.AddRange(new List<Demanda>()
+                    context.Demandantes.AddRange(new List<Demandante>()
                     {
-                        new Demanda()
+                        new Demandante()
                         {
                             ImagemURL = "",
                             Email = "",
@@ -41,7 +41,7 @@ namespace apoemaMatch.Data
                             LeiDeInformatica = EnumLeiDeInformatica.Nao_Usa,
                             ObjetivoParceria = EnumObjetivoParceria.Pesquisa_Desenvolvimento_Inovacao,
                             AreaSolucaoBuscada = EnumAreaSolucaoBuscada.Inteligencia_Artificial_Aplicada,
-                            Descricao = "Demanda teste"
+                            Descricao = "Demandante teste"
                         }
 
                     });
@@ -69,15 +69,33 @@ namespace apoemaMatch.Data
                     context.SaveChanges();
 
                 }
-                //DemandaSolucionador
-                if (!context.DemandasSolucionadores.Any())
+
+                //Encomenda
+                if (!context.Encomendas.Any())
                 {
-                    context.DemandasSolucionadores.AddRange(new List<DemandaSolucionador>()
+                    context.Encomendas.AddRange(new List<Encomenda>()
+                    {
+                        new Encomenda()
+                        {
+                            Titulo = "",
+                            AreaServico = EnumSegmentoDeMercado.Educacao,
+                            ServicoBuscado = EnumAreaSolucaoBuscada.Bioinformatica,
+                            Descricao = ""
+                        }
+                    });
+
+                    context.SaveChanges();
+                }
+
+                //EncomendaSolucionador
+                if (!context.EncomendasSolucionadores.Any())
+                {
+                    context.EncomendasSolucionadores.AddRange(new List<EncomendaSolucionador>()
                     {
 
-                        new DemandaSolucionador()
+                        new EncomendaSolucionador()
                         {
-                            DemandaId = 1,
+                            EncomendaId = 1,
                             SolucionadorId =1
                         }
 
@@ -88,14 +106,14 @@ namespace apoemaMatch.Data
             }
         }
 
-        public static async Task SeedUsuariosEPapeisAsync(IApplicationBuilder applicationBuilder) 
+        public static async Task SeedUsuariosEPapeisAsync(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 //Papeis
                 var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                if(!await roleManager.RoleExistsAsync(PapeisUsuarios.Admin))
+                if (!await roleManager.RoleExistsAsync(PapeisUsuarios.Admin))
                 {
                     await roleManager.CreateAsync(new IdentityRole(PapeisUsuarios.Admin));
                 }
@@ -120,7 +138,7 @@ namespace apoemaMatch.Data
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 string adminUserEmail = "admin@apoema.com";
                 var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
-                if(adminUser == null)
+                if (adminUser == null)
                 {
                     var novoUsuarioAdmin = new ApplicationUser()
                     {

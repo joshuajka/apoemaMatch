@@ -1,14 +1,11 @@
 ﻿using apoemaMatch.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace apoemaMatch.Data.ViewModels
 {
-    public class DemandaDropDownViewModel
+    public class EncomendaDropDownViewModel
     {
-        public DemandaDropDownViewModel()
+        public EncomendaDropDownViewModel()
         {
             Solucionadores = new List<Solucionador>();
         }

@@ -16,7 +16,7 @@ namespace apoemaMatch.Data.Services
 
         public async Task<Solucionador> GetSolucionadorByIdUser(string IdUser)
         {
-            var solucionadorDetalhes = await _context.Solucionadores.Include(dm => dm.DemandaSolucionador).ThenInclude(s => s.Solucionador)
+            var solucionadorDetalhes = await _context.Solucionadores.Include(dm => dm.EncomendaSolucionador).ThenInclude(s => s.Solucionador)
                 .FirstOrDefaultAsync(n => n.IdUsuario == IdUser);
 
             return solucionadorDetalhes;

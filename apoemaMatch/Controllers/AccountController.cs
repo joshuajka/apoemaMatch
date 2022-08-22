@@ -6,9 +6,6 @@ using apoemaMatch.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -16,14 +13,14 @@ namespace apoemaMatch.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager; 
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly AppDbContext _context;
         private readonly ISolucionadorService _serviceSolucionador;
-        private readonly IDemandaService _serviceDemandante;
+        private readonly IDemandanteService _serviceDemandante;
 
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context, ISolucionadorService serviceSolucionador,
-            IDemandaService serviceDemandante)
+            IDemandanteService serviceDemandante)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,7 +36,7 @@ namespace apoemaMatch.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login (LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -50,13 +47,13 @@ namespace apoemaMatch.Controllers
             if (user != null)
             {
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
-                
+
                 if (passwordCheck)
                 {
                     var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Demanda");
+                        return RedirectToAction("Index", "Demandante");
                     }
                 }
                 TempData["Error"] = "Credenciais incorretas, tente novamente";
@@ -95,7 +92,7 @@ namespace apoemaMatch.Controllers
             }
 
             var user = await _userManager.FindByEmailAsync(registerViewModel.Email);
-            if(user != null)
+            if (user != null)
             {
                 TempData["Error"] = "Esse email já está sendo usado";
                 return View(registerViewModel);
@@ -144,7 +141,7 @@ namespace apoemaMatch.Controllers
             if (novoUsuarioResponse.Succeeded)
             {
                 await _userManager.AddToRoleAsync(novoUsuario, PapeisUsuarios.Solucionador);
-                
+
                 var usuarioSolucionador = await _userManager.FindByEmailAsync(registerViewModel.Email);
 
                 var novoSolucionador = new Solucionador()
@@ -198,7 +195,7 @@ namespace apoemaMatch.Controllers
 
                 var usuarioDemandante = await _userManager.FindByEmailAsync(registerViewModel.Email);
 
-                var novoDemandante = new Demanda()
+                var novoDemandante = new Demandante()
                 {
                     IdUsuario = usuarioDemandante.Id,
                     ImagemURL = registerViewModel.ImagemURL,
@@ -255,7 +252,7 @@ namespace apoemaMatch.Controllers
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
 
             var userDemandante = await _userManager.FindByEmailAsync(userEmail);
-            var demandante = await _serviceDemandante.GetDemandaByIdUser(userDemandante.Id);
+            var demandante = await _serviceDemandante.GetDemandanteByIdUser(userDemandante.Id);
 
             return View(demandante);
         }
