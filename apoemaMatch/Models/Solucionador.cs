@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace apoemaMatch.Models
 {
-    public class Solucionador:IEntityBase
+    public class Solucionador : IEntityBase
     {
         [Key]
-        public int Id { get; set; } 
+        public int Id { get; set; }
 
         public string IdUsuario { get; set; }
 
         public bool Disponivel { get; set; }
 
         [Display(Name = "Foto")]
-        [Required (ErrorMessage ="Imagem é obrigatória")]
-        [StringLength(50,MinimumLength = 3, ErrorMessage = "Nome completo deve conter entre 3 a 50 caracteres")]
+        [Required(ErrorMessage = "Imagem é obrigatória")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome completo deve conter entre 3 a 50 caracteres")]
         public string ImagemURL { get; set; }
 
         [Required(ErrorMessage = "Email é obrigatório")]
@@ -49,7 +49,7 @@ namespace apoemaMatch.Models
         public string MiniBio { get; set; }
 
         //Relationships
-        public List<DemandaSolucionador> DemandaSolucionador { get; set; }
+        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
 
 
     }
