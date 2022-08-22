@@ -12,13 +12,18 @@ namespace apoemaMatch.Models
 
         public string Titulo { get; set; }
 
-        public EnumSegmentoDeMercado AreaServico { get; set; }
+        public EnumSegmentoDeMercado SegmentoDeMercado { get; set; }
 
-        public EnumAreaSolucaoBuscada ServicoBuscado { get; set; }
+        public EnumAreaSolucaoBuscada AreaSolucaoBuscada { get; set; }
 
         public string Descricao { get; set; }
+        
+       public EnumStatusEncomenda StatusEncomenda { get; set; }
+       
+       //TODO(Inserir um campo para o agenciador justificar a recusa)
 
-        //Relationships
-        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
+       public bool RealizaProcessoSeletivo { get; set; }
+
+        public List<Questao> Questoes { get; set; }
     }
 }

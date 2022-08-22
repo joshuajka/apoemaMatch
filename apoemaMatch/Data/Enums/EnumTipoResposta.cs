@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace apoemaMatch.Data.Enums
 {
-    public enum EnumTipoRespostaQuestionario
+    public enum EnumTipoResposta
     {
         [Display(Name = "Resposta Curta")]
         RespostaCurta,

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using apoemaMatch.Data.Enums;
 
 namespace apoemaMatch.Data.ViewModels
@@ -25,6 +26,10 @@ namespace apoemaMatch.Data.ViewModels
 
         [Required(ErrorMessage = "É necessário informar se realiza processo seletivo")]
         public bool RealizaProcessoSeletivo { get; set; }
+
+        public EnumTipoResposta TipoResposta { get; set; }
+
+        public List<QuestaoViewModel> Questoes { get; set; }
 
     }
 }
