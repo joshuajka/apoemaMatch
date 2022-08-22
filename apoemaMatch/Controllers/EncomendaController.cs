@@ -2,6 +2,7 @@
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace apoemaMatch.Controllers
 {
@@ -20,11 +21,11 @@ namespace apoemaMatch.Controllers
         }
 
         [HttpPost]
-        public IActionResult Cadastrar(EncomendaViewModel encomendaViewModel)
+        public async Task<IActionResult> Cadastrar(EncomendaViewModel encomendaViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(encomendaViewModel);
+                return View(nameof(Index), encomendaViewModel);
             }
 
             Encomenda encomenda = new()
@@ -43,10 +44,10 @@ namespace apoemaMatch.Controllers
                 })
             };
 
-            _service.AddAsync(encomenda);
+            await _service.AddAsync(encomenda);
             return RedirectToAction(nameof(Index));
-        }
-        
+        }        
+
         public IActionResult FormularioAvaliacao()
         {
             return View();
