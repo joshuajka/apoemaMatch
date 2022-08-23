@@ -1,0 +1,74 @@
+﻿@using apoemaMatch.Data.Enums
+@model apoemaMatch.Data.ViewModels.EncomendaViewModel
+@{
+    ViewData["Title"] = "Criar Nova Encomenda";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Criar Nova Encomenda</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <form asp-action="Cadastrar">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label asp-for="Titulo" class="control-label"></label>
+                            <input asp-for="Titulo" class="form-control" />
+                            <span asp-validation-for="Titulo" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="SegmentoDeMercado" class="control-label"></label>
+                                <select asp-for="SegmentoDeMercado" class="form-control" asp-items="Html.GetEnumSelectList<EnumSegmentoDeMercado>()"></select>
+                                <span asp-validation-for="SegmentoDeMercado" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AreaSolucaoBuscada" class="control-label"></label>
+                                <select asp-for="AreaSolucaoBuscada" class="form-control" asp-items="Html.GetEnumSelectList<EnumAreaSolucaoBuscada>()"></select>
+                                <span asp-validation-for="AreaSolucaoBuscada" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Descricao" class="control-label"></label>
+                                <textarea asp-for="Descricao" class="form-control"></textarea>
+                                <span asp-validation-for="Descricao" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="text-center">
+                            <h6>Como você deseja encontrar um solucionador?</h6>
+                        </div>
+
+                        @*<input type="submit" value="Cadastrar" class="btn btn-outline-success float-right" />*@
+                        <div class="float-left">
+                            <input type="submit" class="btn btn-outline-secondary" value="Ser agenciado pelo APEOMA" />
+                        </div>
+                        <div class="float-right">
+                            <a class="btn btn-outline-secondary" asp-action="FormularioAvaliacao">Iniciar um processo de seleção</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ImagemURLPreview');
+            output.src = $('#ImagemURL').val();
+        })
+        $('#ImagemURL').on("change", function () {
+            var output = document.getElementById('ImagemURLPreview');
+            output.src = $(this).val();
+        })
+    </script>
+}
