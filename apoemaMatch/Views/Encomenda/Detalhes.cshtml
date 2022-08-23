@@ -1,0 +1,41 @@
+﻿@using apoemaMatch.Data.Enums
+@using apoemaMatch.Data.ViewModels
+@model EncomendaViewModel
+
+@{
+    ViewData["Title"] = "Detalhes Encomenda";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.Titulo
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-12 offset-2">
+                    <div class="card-body">
+                        <p class="card-text">@Model.Descricao</p>
+                        <p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)Model.SegmentoDeMercado)</p>
+                        <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)Model.AreaSolucaoBuscada)</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-footer ">
+                        <p class="card-text">
+                            <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                Voltar a lista
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
