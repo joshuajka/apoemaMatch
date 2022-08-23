@@ -3,6 +3,7 @@ using apoemaMatch.Data.Services;
 using apoemaMatch.Data.Static;
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -237,6 +238,7 @@ namespace apoemaMatch.Controllers
             return View(users);
         }
 
+        [Authorize(Roles = PapeisUsuarios.Solucionador)]
         public async Task<IActionResult> MeuPerfilSolucionador()
         {
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -260,6 +262,7 @@ namespace apoemaMatch.Controllers
             return View(solucionadorView);
         }
 
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         public async Task<IActionResult> MeuPerfilDemandante()
         {
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
