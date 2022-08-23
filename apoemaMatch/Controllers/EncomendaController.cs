@@ -36,5 +36,11 @@ namespace apoemaMatch.Controllers
         {
             return View();
         }
+        
+        [HttpGet]
+        public IActionResult Listar()
+        {
+            return View();
+        }
     }
 }
