@@ -20,9 +20,9 @@
                                     <a class="btn btn-primary" onclick="AddInput()"><i class="bi bi-plus text-white"></i></a>
                                     <br/><br/>
                                 </div>
-                                
-                                <div class="input-group">
-                                    <input asp-for="Titulo" class="form-control" placeholder="Insira a questão"/>
+                                <div class="input-group  teste-class">
+                                    <div class="input-group">
+                                        <input asp-for="Titulo" class="form-control" placeholder="Insira a questão"/>
                                         <div class="dropdown demolist">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="AddElement()">
                                             </button>
@@ -32,9 +32,11 @@
                                                 <a class="dropdown-item" href="#">Seleção única</a>
                                             </div>
                                         </div>
-                                    <a class="btn btn-danger text-white rmv_btn" onclick="RemoveInput()"><i class="bi bi-trash"></i></a>
+                                        <a class="btn btn-danger text-white rmv_btn" onclick="RemoveInput()"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                    <div class="input-element"></div>
                                 </div>
-                                <div class="input-element"></div>
+                                
                             </div>
                             <br/><br/>
                             <div class="col text-center">
@@ -47,6 +49,9 @@
         </div>
     </div>
 </div>
+
+
+
 @section Scripts{
     <script>
     function AddInput() {
@@ -68,6 +73,7 @@
                         <div class="input-element"></div>`;
         var element = document.createElement("div");
         element.classList.add('input-group');
+        element.classList.add('teste-class');
         element.innerHTML = newInput ;
         inputList.appendChild(element);
     }  
@@ -75,7 +81,7 @@
     function RemoveInput() {
         $(document).on('click', '.rmv_btn', function(){
                      // "this" is current button event occurs on
-                     $(this).closest('.input-group').remove()
+                     $(this).closest('.teste-class').remove()
                   })  
     }
     
@@ -84,29 +90,34 @@
           $('.demolist a').one('click', function () {
             var txt= ($(this).text());
             if (txt == "Textual"){
-                console.log(txt);
-                //$(this).closest('.input-element').remove()
-                //$(this).closest('.inputList').find('.none').replaceWith('<div class="input-element">Opções</div>');
-                console.log($(this).closest('#inputList').find('.none').get());
-                $(this).closest('#inputList').find('.input-element').replaceWith("<div class='input-element'>Textual</div>");
-                //$(this).closest('.inputList').find('.input-element').replaceWith("<div class='input-element'>Opções</div>")
-                //$(this).closest('.input-element').replaceWith("<div class='input-element'>Opções</div>")
-                //console.log($(this).closest("#inputList").find('.none'));
-                //$(this).parent().parent().parent().after("<div class='input-element'>Textual</div>");
+                $(this).closest('.teste-class').find('.input-element').replaceWith("<div class='input-element  mx-auto'><input type='text' class='form-control' id='lname' name='lname' placeholder='Entrada de Texto'></div>");
             }else if (txt == "Opções"){
-                console.log(txt);
-                console.log($(this).closest('#inputList').find('.none').get());
-                $(this).closest('#inputList').find('.input-element').replaceWith("<div class='input-element'>Opções</div>");
-                //$(this).parent().parent().parent().after("<div class='input-element'>Opções</div>");
+                $(this).closest('.teste-class').find('.input-element').replaceWith("<div class='input-element mx-auto'> \
+                                                                                       <div class='form-check'> \
+                                                                                           <input class='form-check-input' type='checkbox' value='' name='flexCheckDefault' id='flexCheckDefault1'> \
+                                                                                           <input type='' class='form-control form-control-sm' value=''> \
+                                                                                       </div> \
+                                                                                       <div class='form-check'> \
+                                                                                          <input class='form-check-input' type='checkbox' value='' name='flexCheckDefault' id='flexCheckDefault2' checked> \
+                                                                                          <input type='' class='form-control form-control-sm' value=''> \
+                                                                                       </div> \
+                                                                                       <a class='btn'  onclick=''><i class='bi bi-plus' style='font-size: 2rem; color: #0099ff;'></i></a> \
+                                                                                    </div>");
             }else if (txt == "Seleção única"){
-                console.log(txt);
-                console.log($(this).closest('#inputList').find('.none').get());
-                $(this).closest('#inputList').find('.input-element').replaceWith("<div class='input-element'>Seleção unica</div>");
-                         }
+                $(this).closest('.teste-class').find('.input-element').replaceWith("<div class='input-element  mx-auto'> \
+                                                                                        <div class='form-check'> \
+                                                                                            <input class='form-check-input' type='radio' value='' name='flexRadioDefault' id='flexRadioDefault1'> \
+                                                                                            <input type='' class='form-control form-control-sm' value=''> \
+                                                                                        </div> \
+                                                                                        <div class='form-check'> \
+                                                                                            <input class='form-check-input' type='radio' value='' name='flexRadioDefault' id='flexRadioDefault1' checked> \
+                                                                                            <input type='' class='form-control form-control-sm' value=''> \
+                                                                                        </div> \
+                                                                                        <a class='btn'><i class='bi bi-plus' style='font-size: 2rem; color: #0099ff;'></i></a> \
+                                                                                   </div>");
+            }
           });
         });
     }
-    
-     
     </script>
 }
