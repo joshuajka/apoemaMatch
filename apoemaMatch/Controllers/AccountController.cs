@@ -134,7 +134,7 @@ namespace apoemaMatch.Controllers
             {
                 Nome = registerViewModel.Nome,
                 Email = registerViewModel.Email,
-                UserName = registerViewModel.Email
+                UserName = registerViewModel.Nome
             };
             var novoUsuarioResponse = await _userManager.CreateAsync(novoUsuario, registerViewModel.Password);
 
@@ -185,7 +185,7 @@ namespace apoemaMatch.Controllers
             {
                 Nome = registerViewModel.Nome,
                 Email = registerViewModel.Email,
-                UserName = registerViewModel.Email
+                UserName = registerViewModel.Nome
             };
             var novoUsuarioResponse = await _userManager.CreateAsync(novoUsuario, registerViewModel.Password);
 
@@ -244,7 +244,20 @@ namespace apoemaMatch.Controllers
             var userSolucionador = await _userManager.FindByEmailAsync(userEmail);
             var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(userSolucionador.Id);
 
-            return View(solucionador);
+            var solucionadorView = new RegisterSolucionadorViewModel()
+            {
+                Id = solucionador.Id,
+                ImagemURL = solucionador.ImagemURL,
+                Email = solucionador.Email,
+                Nome = solucionador.Nome,
+                Telefone = solucionador.Telefone,
+                Formacao = solucionador.Formacao,
+                AreaDePesquisa = solucionador.AreaDePesquisa,
+                CurriculoLattes = solucionador.CurriculoLattes,
+                MiniBio = solucionador.MiniBio
+            };
+
+            return View(solucionadorView);
         }
 
         public async Task<IActionResult> MeuPerfilDemandante()
@@ -254,7 +267,28 @@ namespace apoemaMatch.Controllers
             var userDemandante = await _userManager.FindByEmailAsync(userEmail);
             var demandante = await _serviceDemandante.GetDemandanteByIdUser(userDemandante.Id);
 
-            return View(demandante);
+            var demandanteView = new RegisterDemandanteViewModel()
+            {
+                Id = demandante.Id,
+                ImagemURL = demandante.ImagemURL,
+                Email = demandante.Email,
+                Nome = demandante.NomeDemandante,
+                Telefone = demandante.Telefone,
+                NomeEmpresa = demandante.NomeEmpresa,
+                CargoDemandante = demandante.CargoDemandante,
+                TempoDeMercado = demandante.TempoDeMercado,
+                PorteDaEmpresa = demandante.PorteDaEmpresa,
+                RamoDeAtuacao = demandante.RamoDeAtuacao,
+                SegmentoDeMercado = demandante.SegmentoDeMercado,
+                LinhaDeAtuacaoTI = demandante.LinhaDeAtuacaoTI,
+                RegimeDeTributacao = demandante.RegimeDeTributacao,
+                LeiDeInformatica = demandante.LeiDeInformatica,
+                ObjetivoParceria = demandante.ObjetivoParceria,
+                AreaSolucaoBuscada = demandante.AreaSolucaoBuscada,
+                Descricao = demandante.Descricao
+            };
+
+            return View(demandanteView);
         }
 
         public IActionResult AccessDenied(string ReturnUrl)

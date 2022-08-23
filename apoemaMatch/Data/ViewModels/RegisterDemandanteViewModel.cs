@@ -9,6 +9,8 @@ namespace apoemaMatch.Data.ViewModels
 {
     public class RegisterDemandanteViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "URL Foto")]
         [Required(ErrorMessage = "Este campo é obrigatório")]
         public string ImagemURL { get; set; }

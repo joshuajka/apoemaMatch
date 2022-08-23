@@ -9,6 +9,8 @@ namespace apoemaMatch.Data.ViewModels
 {
     public class RegisterSolucionadorViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Foto")]
         [Required(ErrorMessage = "Imagem é obrigatória")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome completo deve conter entre 3 a 50 caracteres")]
@@ -40,6 +42,7 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "Bio é obrigatória")]
         public string MiniBio { get; set; }
 
+        [Display(Name = "Senha")]
         [Required(ErrorMessage = "Senha é obrigatória")]
         [DataType(DataType.Password)]
         public string Password { get; set; }

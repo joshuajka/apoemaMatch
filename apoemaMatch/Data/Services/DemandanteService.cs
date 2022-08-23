@@ -93,7 +93,7 @@ namespace apoemaMatch.Data.Services
             return response;
         }*/
 
-        public Task UpdateAsync(int id, Demandante entity)
+        public async Task UpdateAsync(int id, Demandante entity)
         {
             throw new NotImplementedException();
         }
