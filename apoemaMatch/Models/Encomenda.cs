@@ -17,13 +17,15 @@ namespace apoemaMatch.Models
         public EnumAreaSolucaoBuscada AreaSolucaoBuscada { get; set; }
 
         public string Descricao { get; set; }
-        
-       public EnumStatusEncomenda StatusEncomenda { get; set; }
-       
-       //TODO(Inserir um campo para o agenciador justificar a recusa)
 
-       public bool RealizaProcessoSeletivo { get; set; }
+        public EnumStatusEncomenda StatusEncomenda { get; set; }
+
+        //TODO(Inserir um campo para o agenciador justificar a recusa)
+
+        public bool RealizaProcessoSeletivo { get; set; }
 
         public List<Questao> Questoes { get; set; }
+
+        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
     }
 }

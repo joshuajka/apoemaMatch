@@ -78,9 +78,10 @@ namespace apoemaMatch.Data
                         new Encomenda()
                         {
                             Titulo = "",
-                            AreaServico = EnumSegmentoDeMercado.Educacao,
-                            ServicoBuscado = EnumAreaSolucaoBuscada.Bioinformatica,
-                            Descricao = ""
+                            SegmentoDeMercado = EnumSegmentoDeMercado.Educacao,
+                            AreaSolucaoBuscada = EnumAreaSolucaoBuscada.Bioinformatica,
+                            Descricao = "",
+                            StatusEncomenda = EnumStatusEncomenda.Iniciado
                         }
                     });
 
