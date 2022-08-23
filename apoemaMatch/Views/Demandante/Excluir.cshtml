@@ -1,8 +1,8 @@
 ﻿@using apoemaMatch.Data.Enums
-@model Demanda
+@model Demandante
 
 @{
-    ViewData["Title"] = "Excluir Demanda";
+    ViewData["Title"] = "Excluir Demandante";
 }
 
 <div class="row">
@@ -32,24 +32,12 @@
                         <p class="card-text"><b>Segmento de mercado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)Model.SegmentoDeMercado)</p>
                         <p class="card-text"><b>Objetivo: </b>@Extensions.GetEnumDisplayName((EnumObjetivoParceria)Model.ObjetivoParceria)</p>
                         <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)Model.AreaSolucaoBuscada)</p>
-                        <p class="card-text ">
-                            <b>Status: </b>
-                            @if (Model.DemandaAberta)
-                            {
-                                <span class="badge bg-success text-white">ABERTA</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-danger text-white">FECHADA</span>
-                            }
-                        </p>
-
                         <p class="card-text">
 
                             <b>Solucionadores</b>
                             <hr />
                             <div class="row">
-                                @foreach (var solucionador in Model.DemandaSolucionador)
+                                @foreach (var solucionador in Model.EncomendaSolucionador)
                                 {
                                     <div class="card-columns text-center">
                                         <img class="border-info rounded-circle" src="@solucionador.Solucionador.ImagemURL" style="max-width: 150px" />

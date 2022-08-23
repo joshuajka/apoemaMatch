@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using apoemaMatch.Data;
@@ -9,9 +10,10 @@ using apoemaMatch.Data;
 namespace apoemaMatch.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220822230947_Demandante")]
+    partial class Demandante
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -286,7 +288,7 @@ namespace apoemaMatch.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AreaSolucaoBuscada")
+                    b.Property<int>("AreaServico")
                         .HasColumnType("integer");
 
                     b.Property<int?>("DemandanteId")
@@ -295,13 +297,7 @@ namespace apoemaMatch.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("text");
 
-                    b.Property<bool>("RealizaProcessoSeletivo")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("SegmentoDeMercado")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StatusEncomenda")
+                    b.Property<int>("ServicoBuscado")
                         .HasColumnType("integer");
 
                     b.Property<string>("Titulo")
@@ -311,7 +307,7 @@ namespace apoemaMatch.Migrations
 
                     b.HasIndex("DemandanteId");
 
-                    b.ToTable("Encomendas");
+                    b.ToTable("Encomenda");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.EncomendaSolucionador", b =>
@@ -332,29 +328,6 @@ namespace apoemaMatch.Migrations
                     b.HasIndex("SolucionadorId");
 
                     b.ToTable("EncomendasSolucionadores");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.Questao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int?>("EncomendaId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Pergunta")
-                        .HasColumnType("text");
-
-                    b.Property<int>("TipoResposta")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EncomendaId");
-
-                    b.ToTable("Questao");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.Solucionador", b =>
@@ -488,13 +461,6 @@ namespace apoemaMatch.Migrations
                     b.Navigation("Solucionador");
                 });
 
-            modelBuilder.Entity("apoemaMatch.Models.Questao", b =>
-                {
-                    b.HasOne("apoemaMatch.Models.Encomenda", null)
-                        .WithMany("Questoes")
-                        .HasForeignKey("EncomendaId");
-                });
-
             modelBuilder.Entity("apoemaMatch.Models.Demandante", b =>
                 {
                     b.Navigation("Encomendas");
@@ -505,8 +471,6 @@ namespace apoemaMatch.Migrations
             modelBuilder.Entity("apoemaMatch.Models.Encomenda", b =>
                 {
                     b.Navigation("EncomendaSolucionador");
-
-                    b.Navigation("Questoes");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.Solucionador", b =>

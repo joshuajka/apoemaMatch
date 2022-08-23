@@ -11,6 +11,7 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage ="Email é obrigatório")]
         public string Email { get; set; }
 
+        [Display(Name = "Senha")]
         [Required(ErrorMessage = "Senha é obrigatória")]
         [DataType(DataType.Password)]
         public string Password { get; set; }

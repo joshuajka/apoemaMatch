@@ -1,5 +1,5 @@
 ﻿using apoemaMatch.Data.Enums;
-using apoemaMatch.Data.Base;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,17 +8,10 @@ using System.Threading.Tasks;
 
 namespace apoemaMatch.Models
 {
-    public class Demanda:IEntityBase
+    public class DemandanteUser : IdentityUser
     {
-        [Key]
-        public int Id { get; set; }
-
-        public bool DemandaAberta { get; set; }
-
         [Display(Name = "URL Foto")]
         public string ImagemURL { get; set; }
-
-        public string Email { get; set; }
 
         public string NomeDemandante { get; set; }
 
@@ -30,26 +23,22 @@ namespace apoemaMatch.Models
 
         public int TempoDeMercado { get; set; }
 
-        public EnumPorteDaEmpresa PorteDaEmpresa { get; set; } 
+        public EnumPorteDaEmpresa PorteDaEmpresa { get; set; }
 
-        public EnumRamoDeAtuacao RamoDeAtuacao { get; set; } 
+        public EnumRamoDeAtuacao RamoDeAtuacao { get; set; }
 
-        public EnumSegmentoDeMercado SegmentoDeMercado { get; set; } 
+        public EnumSegmentoDeMercado SegmentoDeMercado { get; set; }
 
-        public EnumLinhaDeAtuacaoTI LinhaDeAtuacaoTI { get; set; } 
+        public EnumLinhaDeAtuacaoTI LinhaDeAtuacaoTI { get; set; }
 
         public EnumTributacao RegimeDeTributacao { get; set; }
 
-        public EnumLeiDeInformatica LeiDeInformatica { get; set; }  
+        public EnumLeiDeInformatica LeiDeInformatica { get; set; }
 
-        public EnumObjetivoParceria ObjetivoParceria { get; set; } 
+        public EnumObjetivoParceria ObjetivoParceria { get; set; }
 
         public EnumAreaSolucaoBuscada AreaSolucaoBuscada { get; set; }
 
         public string Descricao { get; set; }
-
-        //Relationships
-        public List<DemandaSolucionador> DemandaSolucionador { get; set; }
-
     }
 }

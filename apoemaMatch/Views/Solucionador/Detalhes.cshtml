@@ -2,7 +2,7 @@
 @model Solucionador
 
 @{
-    ViewData["Title"] = "Cadastro Solucionador";
+    ViewData["Title"] = "Detalhes Solucionador";
 }
 
 <div class="row text">
@@ -56,7 +56,10 @@
                     <span asp-validation-for="MiniBio" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <a class="btn btn-outline-success float-right" asp-action="Editar" asp-route-id="@Model.Id"> Editar</a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-outline-success float-right" asp-action="Editar" asp-route-id="@Model.Id"> Editar</a>
+                    }
                     <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todos</a>
                 </div>
             </div>

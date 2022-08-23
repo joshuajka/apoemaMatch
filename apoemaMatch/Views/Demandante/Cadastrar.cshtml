@@ -1,19 +1,19 @@
 ﻿@using apoemaMatch.Data.Enums
-@model DemandaViewModel
+@model DemandanteViewModel
 
 @{
-    ViewData["Title"] = "Editar demanda";
+    ViewData["Title"] = "Cadastrar demandante";
 }
 
 <div class="row">
     <div class="col-md-8 offset-2">
         <p>
-            <h4>Editar demanda</h4>
+            <h4>Cadastrar demandante</h4>
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
 
-                <form asp-action="Editar">
+                <form asp-action="Cadastrar">
 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row">
@@ -111,7 +111,7 @@
                         <img width="100%" id="ImagemURLPreview" />
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Atualizar" class="btn btn-outline-success float-right" />
+                        <input type="submit" value="Cadastrar" class="btn btn-outline-success float-right" />
                         <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todas</a>
                     </div>
                 </form>

@@ -35,7 +35,7 @@ namespace apoemaMatch
 
             //Services configuration
             services.AddScoped<ISolucionadorService, SolucionadorService>();
-            services.AddScoped<IDemandaService, DemandaService>();
+            services.AddScoped<IDemandanteService, DemandanteService>();
             services.AddScoped<IEncomendaService, EncomendaService>();
 
             //Autenticacao e autorizacao 
@@ -67,8 +67,8 @@ namespace apoemaMatch
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
-            app.UseAuthorization();
 
             //Autenticacao e Autorizacao 
             app.UseAuthentication();

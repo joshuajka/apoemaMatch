@@ -1,5 +1,6 @@
 ﻿@using apoemaMatch.Data.Enums
-@model DemandaViewModel
+
+@model DemandanteViewModel
 
 @{
     ViewData["Title"] = "Vincular solucionador";
@@ -20,9 +21,9 @@
                         <div class="col-md-12">
                             
                             <div class="form-group">
-                                <label asp-for="DemandaSolucionadorIds" class="control-label"></label>
-                                <select asp-for="DemandaSolucionadorIds" class="form-control" asp-items="ViewBag.Solucinadores"></select>
-                                <span asp-validation-for="DemandaSolucionadorIds" class="text-danger"></span>
+                                <label asp-for="EncomendaSolucionadorIds" class="control-label"></label>
+                                <select asp-for="EncomendaSolucionadorIds" class="form-control" asp-items="ViewBag.Solucinadores"></select>
+                                <span asp-validation-for="EncomendaSolucionadorIds" class="text-danger"></span>
                             </div>
                         </div>
 

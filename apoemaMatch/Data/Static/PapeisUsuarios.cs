@@ -9,6 +9,8 @@ namespace apoemaMatch.Data.Static
     {
         public const string Admin = "Admin";
         public const string User = "User";
+        public const string Solucionador = "Solucionador";
+        public const string Demandante = "Demandante";
 
     }
 }

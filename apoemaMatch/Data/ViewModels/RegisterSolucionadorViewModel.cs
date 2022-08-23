@@ -1,22 +1,14 @@
 ﻿using apoemaMatch.Data.Enums;
-using apoemaMatch.Data.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace apoemaMatch.Models
+namespace apoemaMatch.Data.ViewModels
 {
-    public class Solucionador : IEntityBase
+    public class RegisterSolucionadorViewModel
     {
-        [Key]
-        public int Id { get; set; }
-
-        public string IdUsuario { get; set; }
-
-        public bool Disponivel { get; set; }
-
         [Display(Name = "Foto")]
         [Required(ErrorMessage = "Imagem é obrigatória")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome completo deve conter entre 3 a 50 caracteres")]
@@ -48,9 +40,15 @@ namespace apoemaMatch.Models
         [Required(ErrorMessage = "Bio é obrigatória")]
         public string MiniBio { get; set; }
 
-        //Relationships
-        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
+        [Required(ErrorMessage = "Senha é obrigatória")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
 
+        [Display(Name = "Senha de confirmação")]
+        [Required(ErrorMessage = "Senha de confirmação é obrigatória")]
+        [DataType(DataType.Password)]
+        [Compare("Password",ErrorMessage = "Senhas não coincidem")]
+        public string ConfirmPassword { get; set; } 
 
     }
 }

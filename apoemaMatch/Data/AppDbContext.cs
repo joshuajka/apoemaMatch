@@ -1,14 +1,10 @@
 ﻿using apoemaMatch.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace apoemaMatch.Data
 {
-    public class AppDbContext:IdentityDbContext<ApplicationUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -16,23 +12,23 @@ namespace apoemaMatch.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DemandaSolucionador>().HasKey(am => new
+            modelBuilder.Entity<EncomendaSolucionador>().HasKey(es => new
             {
-                am.DemandaId,
-                am.SolucionadorId
+                es.EncomendaId,
+                es.SolucionadorId
             });
 
-            modelBuilder.Entity<DemandaSolucionador>().HasOne(m => m.Demanda).WithMany(am => am.DemandaSolucionador)
-                .HasForeignKey(m => m.DemandaId);
-            modelBuilder.Entity<DemandaSolucionador>().HasOne(m => m.Solucionador).WithMany(am => am.DemandaSolucionador)
-                .HasForeignKey(m => m.SolucionadorId);
+            modelBuilder.Entity<EncomendaSolucionador>().HasOne(e => e.Encomenda).WithMany(es => es.EncomendaSolucionador)
+                .HasForeignKey(e => e.EncomendaId);
+            modelBuilder.Entity<EncomendaSolucionador>().HasOne(s => s.Solucionador).WithMany(es => es.EncomendaSolucionador)
+                .HasForeignKey(s => s.SolucionadorId);
 
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Demanda> Demandas { get; set; }
+        public DbSet<Demandante> Demandantes { get; set; }
         public DbSet<Solucionador> Solucionadores { get; set; }
-        public DbSet<DemandaSolucionador> DemandasSolucionadores { get; set; }
+        public DbSet<EncomendaSolucionador> EncomendasSolucionadores { get; set; }
 
         public DbSet<Encomenda> Encomendas { get; set; }
 

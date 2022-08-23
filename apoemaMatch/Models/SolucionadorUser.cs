@@ -1,5 +1,5 @@
 ﻿using apoemaMatch.Data.Enums;
-using apoemaMatch.Data.Base;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,22 +8,14 @@ using System.Threading.Tasks;
 
 namespace apoemaMatch.Models
 {
-    public class Solucionador : IEntityBase
+    public class SolucionadorUser : IdentityUser
     {
-        [Key]
-        public int Id { get; set; }
-
-        public string IdUsuario { get; set; }
-
         public bool Disponivel { get; set; }
 
-        [Display(Name = "Foto")]
+        [Display(Name = "URL da Foto")]
         [Required(ErrorMessage = "Imagem é obrigatória")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome completo deve conter entre 3 a 50 caracteres")]
         public string ImagemURL { get; set; }
-
-        [Required(ErrorMessage = "Email é obrigatório")]
-        public string Email { get; set; }
 
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "Nome é obrigatório")]
@@ -32,7 +24,7 @@ namespace apoemaMatch.Models
         [Required(ErrorMessage = "Telefone é obrigatório")]
         public string Telefone { get; set; }
 
-        [Required(ErrorMessage = "Formação é obrigatório")]
+        [Required(ErrorMessage = "Formação é obrigatória")]
         [Display(Name = "Formação")]
         public string Formacao { get; set; }
 
@@ -40,17 +32,12 @@ namespace apoemaMatch.Models
         [Display(Name = "Área de Pesquisa")]
         public EnumAreaSolucaoBuscada AreaDePesquisa { get; set; }
 
-        [Required(ErrorMessage = "Currículo Lattes é obrigatório")]
+        [Required(ErrorMessage = "Link do Currículo Lattes é obrigatório")]
         [Display(Name = "Currículo Lattes")]
         public string CurriculoLattes { get; set; }
 
         [Display(Name = "Bio")]
         [Required(ErrorMessage = "Bio é obrigatória")]
         public string MiniBio { get; set; }
-
-        //Relationships
-        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
-
-
     }
 }

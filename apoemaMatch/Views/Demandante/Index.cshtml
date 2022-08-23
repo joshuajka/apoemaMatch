@@ -1,8 +1,8 @@
 ﻿@using apoemaMatch.Data.Enums
-@model IEnumerable<Demanda>
+@model IEnumerable<Demandante>
 
 @{
-    ViewData["Title"] = "Lista de Demandas";
+    ViewData["Title"] = "Lista de Demandantes";
 }
 
 <div class="row">
@@ -16,10 +16,10 @@
                             <p class="card-text">
                                 <h5 class="card-title">
                                     @item.NomeEmpresa
-                                    @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                         {
                                             <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
-                                        }*@
+                                        }
                                 </h5>
                             </p>
                         </div>
@@ -34,17 +34,6 @@
                             <p class="card-text"><b>Segmento de mercado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
                             <p class="card-text"><b>Objetivo: </b>@Extensions.GetEnumDisplayName((EnumObjetivoParceria)item.ObjetivoParceria)</p>
                             <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>
-                            <p class="card-text ">
-                                <b>Status: </b>
-                                @if (item.DemandaAberta)
-                                {
-                                    <span class="badge bg-success text-white">ABERTA</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-danger text-white">FECHADA</span>
-                                }
-                            </p>
 
                         </div>
                     </div>
@@ -74,5 +63,5 @@
         </div>
     }
 </div>
-@await Html.PartialAsync("_CadastrarItem", "Demanda")
+@await Html.PartialAsync("_CadastrarItem", "Demandante")
 

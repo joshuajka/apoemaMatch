@@ -1,0 +1,85 @@
+﻿@using apoemaMatch.Data.Enums
+@using apoemaMatch.Data.ViewModels
+@model RegisterSolucionadorViewModel;
+
+@{
+    ViewData["Title"] = "Junte-se como Solucionador";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <p>
+            <h4>Junte-se como Solucionador</h4>
+        </p>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="col-md-12 alert alert-danger">
+                <span><b>Sorry!</b> - @TempData["Error"] </span>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="RegisterSolucionador">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="ImagemURL" class="control-label"></label>
+                        <input asp-for="ImagemURL" class="form-control" />
+                        <span asp-validation-for="ImagemURL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Telefone" class="control-label"></label>
+                        <input asp-for="Telefone" type="number" class="form-control" />
+                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Formacao" class="control-label"></label>
+                        <input asp-for="Formacao" class="form-control" />
+                        <span asp-validation-for="Formacao" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AreaDePesquisa" class="control-label"></label>
+                        <select asp-for="AreaDePesquisa" class="form-control" asp-items="Html.GetEnumSelectList<EnumAreaSolucaoBuscada>()"></select>
+                        <span asp-validation-for="AreaDePesquisa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CurriculoLattes" class="control-label"></label>
+                        <input asp-for="CurriculoLattes" class="form-control" />
+                        <span asp-validation-for="CurriculoLattes" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MiniBio" class="control-label"></label>
+                        <textarea asp-for="MiniBio" class="form-control"></textarea>
+                        <span asp-validation-for="MiniBio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Nome" class="control-label"></label>
+                        <input asp-for="Nome" class="form-control" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-outline-success float-right" type="submit" value="Entrar" />
+                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
