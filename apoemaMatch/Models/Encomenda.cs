@@ -18,13 +18,11 @@ namespace apoemaMatch.Models
 
         public string Descricao { get; set; }
         
-       //TODO(Fazer os enuns de status)
-        //Iniciado -> Demandante criou a encomenda,
-       //Recusado -> Agenciador recusou a encomenda,
-       //Publico -> Encomenda disponível para os solucionaores,
-       //Finalizado -> encomenda deixou de ser disponível
+       public EnumStatusEncomenda StatusEncomenda { get; set; }
+       
+       //TODO(Inserir um campo para o agenciador justificar a recusa)
 
-        public bool RealizaProcessoSeletivo { get; set; }
+       public bool RealizaProcessoSeletivo { get; set; }
 
         public List<Questao> Questoes { get; set; }
     }
