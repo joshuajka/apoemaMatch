@@ -12,6 +12,8 @@ namespace apoemaMatch.Models
 
         public string Titulo { get; set; }
 
+        public bool EncomendaAberta { get; set; }
+
         public EnumSegmentoDeMercado SegmentoDeMercado { get; set; }
 
         public EnumAreaSolucaoBuscada AreaSolucaoBuscada { get; set; }

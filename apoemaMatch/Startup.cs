@@ -1,6 +1,7 @@
 using apoemaMatch.Data;
 using apoemaMatch.Data.Services;
 using apoemaMatch.Models;
+using apoemaMatch.Data.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

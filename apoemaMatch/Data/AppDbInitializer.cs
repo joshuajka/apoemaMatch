@@ -77,6 +77,7 @@ namespace apoemaMatch.Data
                     {
                         new Encomenda()
                         {
+                            EncomendaAberta = true,
                             Titulo = "",
                             SegmentoDeMercado = EnumSegmentoDeMercado.Educacao,
                             AreaSolucaoBuscada = EnumAreaSolucaoBuscada.Bioinformatica,

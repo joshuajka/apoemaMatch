@@ -1,4 +1,5 @@
 ﻿using apoemaMatch.Data.Base;
+using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.EntityFrameworkCore;
 using System;

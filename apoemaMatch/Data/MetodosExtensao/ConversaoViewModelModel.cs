@@ -17,7 +17,7 @@ namespace apoemaMatch.Data.MetodosExtensao
                 Descricao = encomendaViewModel.Descricao,
                 StatusEncomenda = statusEncomenda,
                 RealizaProcessoSeletivo = encomendaViewModel.RealizaProcessoSeletivo,
-                Questoes = encomendaViewModel.Questoes?.ConvertAll(q => q.Converta())
+                Questoes = encomendaViewModel.Questoes
             };
         }
 

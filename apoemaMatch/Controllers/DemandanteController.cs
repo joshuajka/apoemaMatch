@@ -1,5 +1,6 @@
 ﻿using apoemaMatch.Data.Services;
 using apoemaMatch.Data.Static;
+using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

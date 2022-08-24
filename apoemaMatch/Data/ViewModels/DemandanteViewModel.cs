@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace apoemaMatch.Models
+namespace apoemaMatch.Data.ViewModels
 {
     public class DemandanteViewModel
     {
@@ -97,8 +97,8 @@ namespace apoemaMatch.Models
         [Display(Name = "Regime de tributação")]
         public EnumTributacao EnumTributacao { get; set; }
         //Relationships
-        [Display(Name = "Solucionadores")]
-        public List<int> EncomendaSolucionadorIds { get; set; }
+        [Display(Name = "Solucionador")]
+        public int SolucionadorId { get; set; }
 
     }
 }

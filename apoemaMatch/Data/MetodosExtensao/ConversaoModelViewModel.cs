@@ -17,7 +17,7 @@ namespace apoemaMatch.Data.MetodosExtensao
                 Descricao = encomenda.Descricao,
                 RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo,
                 TipoResposta = EnumTipoResposta.RespostaCurta,
-                Questoes = encomenda.Questoes?.ConvertAll(q => q.Converta())
+                Questoes = encomenda.Questoes
             };
         }
 

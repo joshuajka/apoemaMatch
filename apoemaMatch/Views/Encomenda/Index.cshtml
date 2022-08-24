@@ -33,6 +33,17 @@
                                 <p class="card-text">@item.Descricao</p>
                                 <p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
                                 <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>
+                                <p class="card-text ">
+                                    <b>Status: </b>
+                                    @if (item.EncomendaAberta)
+                                    {
+                                        <span class="badge bg-success text-white">ABERTA</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger text-white">FECHADA</span>
+                                    }
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -41,6 +52,12 @@
                                     <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
                                         <i class="bi bi-trash"></i>Excluir
                                     </a>
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
+                                            <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
+                                        </a>
+                                    }
                                     <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
                                         <i class="bi bi-eye-fill"></i> Detalhes
                                     </a>
