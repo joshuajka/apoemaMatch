@@ -102,6 +102,9 @@ a.nav-link {
 
 footer {
     background-color: #FFF7EC;
+    width: 100%;
+    position: absolute;
+    margin-bottom: 0px;
 }
 
 #Logo_Footer {
