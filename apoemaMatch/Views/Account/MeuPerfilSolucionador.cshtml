@@ -1,25 +1,26 @@
 ﻿@using apoemaMatch.Data.Enums
-@model Solucionador
+@using apoemaMatch.Data.ViewModels
+@model RegisterSolucionadorViewModel
 
 @{
-    ViewData["Title"] = "Detalhes Solucionador";
+    ViewData["Title"] = "Meu Perfil";
 }
 
 <div class="row text">
     <div class="col-md-8 offset-2">
         <p>
-            <h1>Detalhes @Model.Nome</h1>
+            <h1>Perfil @Model.Nome</h1>
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
                 <div class="form-group text-center">
-                    <img src="@Model.ImagemURL" class="border-info rounded-circle" style="max-width: 150px"/>
+                    <img class="border-info rounded-circle" style="max-width: 150px" id="ImagemURLPreview" />
                 </div>
-                @*<div class="form-group">
+                <div class="form-group">
                     <label asp-for="ImagemURL" class="control-label"></label>
                     <input asp-for="ImagemURL" class="form-control" readonly />
                     <span asp-validation-for="ImagemURL" class="text-danger"></span>
-                </div>*@
+                </div>
                 <div class="form-group">
                     <label asp-for="Nome" class="control-label"></label>
                     <input asp-for="Nome" class="form-control" readonly />
@@ -56,21 +57,18 @@
                     <span asp-validation-for="MiniBio" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                    {
                         <a class="btn btn-outline-success float-right" asp-action="Editar" asp-route-id="@Model.Id"> Editar</a>
-                    }
-                    <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todos</a>
+                    <a class="btn btn-outline-secondary" asp-action="Index">Voltar</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@*@section Scripts{
+@section Scripts{
     <script>
         $(document).ready(function () {
             var output = document.getElementById('ImagemURLPreview');
             output.src = $('#ImagemURL').val();
         })
     </script>
-}*@
+}

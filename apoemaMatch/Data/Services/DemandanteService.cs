@@ -1,4 +1,5 @@
 ﻿using apoemaMatch.Data.Base;
+using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -41,9 +42,12 @@ namespace apoemaMatch.Data.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task<Demandante> GetDemandanteByIdAsync(int Id)
+        public async Task<Demandante> GetDemandanteByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var demandanteDetalhes = await _context.Demandantes.Include(dm => dm.EncomendaSolucionador).ThenInclude(s => s.Solucionador)
+                .FirstOrDefaultAsync(n => n.Id == Id);
+
+            return demandanteDetalhes;
         }
 
         public async Task<Demandante> GetDemandanteByIdUser(string IdUser)
@@ -93,7 +97,7 @@ namespace apoemaMatch.Data.Services
             return response;
         }*/
 
-        public Task UpdateAsync(int id, Demandante entity)
+        public async Task UpdateAsync(int id, Demandante entity)
         {
             throw new NotImplementedException();
         }

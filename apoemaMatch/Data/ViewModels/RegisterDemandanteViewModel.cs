@@ -9,6 +9,8 @@ namespace apoemaMatch.Data.ViewModels
 {
     public class RegisterDemandanteViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "URL Foto")]
         [Required(ErrorMessage = "Este campo é obrigatório")]
         public string ImagemURL { get; set; }
@@ -68,11 +70,13 @@ namespace apoemaMatch.Data.ViewModels
         public string Nome { get; set; }
 
         [Required(ErrorMessage ="Email é obrigatório")]
+        [RegularExpression("^[A-Za-z0-9._%+-]*@[A-Za-z0-9.-]*\\.[A-Za-z0-9-]{2,}$", ErrorMessage = "Escreva um email válido")]
         public string Email { get; set; }
 
         [Display(Name = "Senha")]
         [Required(ErrorMessage = "Senha é obrigatória")]
         [DataType(DataType.Password)]
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "A senha deve conter no mínimo 6 dígitos, com 1 caractere especial, 1 numérico, 1 letra maiúscula e 1 letra miníscula")]
         public string Password { get; set; }
 
         [Display(Name = "Senha de confirmação")]

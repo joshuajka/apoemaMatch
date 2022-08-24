@@ -1,8 +1,9 @@
 ﻿@using apoemaMatch.Data.Enums
-@model Demandante
+@using apoemaMatch.Data.ViewModels
+@model RegisterDemandanteViewModel
 
 @{
-    ViewData["Title"] = "Excluir Demandante";
+    ViewData["Title"] = "Meu Perfil";
 }
 
 <div class="row">
@@ -14,10 +15,10 @@
                         <p class="card-text">
                             <h5 class="card-title">
                                 @Model.NomeEmpresa
-                                @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                        {
-                            <a class="text-white float-right" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil-square"></i></a>
-                        }*@
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <a class="text-white float-right" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil-square"></i></a>
+                                }
                             </h5>
                         </p>
                     </div>
@@ -34,29 +35,21 @@
                         <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)Model.AreaSolucaoBuscada)</p>
                         <p class="card-text">
 
-                            <b>Solucionadores</b>
-                            <hr />
-                            <div class="row">
-                                @foreach (var solucionador in Model.EncomendaSolucionador)
-                                {
-                                    <div class="card-columns text-center">
-                                        <img class="border-info rounded-circle" src="@solucionador.Solucionador.ImagemURL" style="max-width: 150px" />
-                                        <br />
-                                        <a asp-controller="Solucionador" asp-action="Detalhes" asp-route-id="@solucionador.Solucionador.Id">@solucionador.Solucionador.Nome</a>
-                                    </div>
-                                }
-                            </div>
+                            @*<b>Solucionadores</b>
+                                <hr />
+                                <div class="row">
+                                    @foreach (var solucionador in Model.EncomendaSolucionador)
+                                    {
+                                        <div class="card-columns text-center">
+                                            <img class="border-info rounded-circle" src="@solucionador.Solucionador.ImagemURL" style="max-width: 150px" />
+                                            <br />
+                                            <a asp-controller="Solucionador" asp-action="Detalhes" asp-route-id="@solucionador.Solucionador.Id">@solucionador.Solucionador.Nome</a>
+                                        </div>
+                                    }
+                                </div>*@
                         </p>
 
                     </div>
-
-                </div>
-                <div class="form-group">
-                    <form asp-action="Excluir">
-                        <input type="hidden" asp-for="Id" />
-                        <input type="submit" value="Confirmar" class="btn btn-danger float-right" />
-                    </form>
-                    <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todos</a>
                 </div>
                 <div class="col-md-12">
                     <div class="card-footer ">
@@ -65,11 +58,11 @@
                                 Voltar a lista
                             </a>
                             @*<a class="btn btn-success text-white @((DateTime.Now > Model.EndDate) ? "disabled" : "")"
-                       asp-controller="Orders"
-                       asp-action="AddModelToShoppingCart"
-                       asp-route-id="@Model.Id">
-                        <i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))
-                    </a>*@
+                                   asp-controller="Orders"
+                                   asp-action="AddModelToShoppingCart"
+                                   asp-route-id="@Model.Id">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))
+                                </a>*@
                         </p>
                     </div>
                 </div>
@@ -77,5 +70,3 @@
         </div>
     </div>
 </div>
-
-

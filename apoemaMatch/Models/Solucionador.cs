@@ -19,7 +19,6 @@ namespace apoemaMatch.Models
 
         [Display(Name = "Foto")]
         [Required(ErrorMessage = "Imagem é obrigatória")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome completo deve conter entre 3 a 50 caracteres")]
         public string ImagemURL { get; set; }
 
         [Required(ErrorMessage = "Email é obrigatório")]

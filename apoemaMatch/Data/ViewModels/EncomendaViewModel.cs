@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using apoemaMatch.Data.Enums;
+using apoemaMatch.Models;
 
 namespace apoemaMatch.Data.ViewModels
 {
     public class EncomendaViewModel
     {
         public int Id { get; set; }
+
+        public bool EncomendaAberta { get; set; }
 
         [Display(Name = "Título da requisição")]
         [Required(ErrorMessage = "O Título da requisição é obrigatório")]
@@ -27,9 +30,14 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "É necessário informar se realiza processo seletivo")]
         public bool RealizaProcessoSeletivo { get; set; }
 
+        public EnumStatusEncomenda StatusEncomenda { get; set; }
+
         public EnumTipoResposta TipoResposta { get; set; }
 
-        public List<QuestaoViewModel> Questoes { get; set; }
+        public List<Questao> Questoes { get; set; }
+
+        [Display(Name = "Solucionador")]
+        public int SolucionadorId { get; set; }
 
     }
 }
