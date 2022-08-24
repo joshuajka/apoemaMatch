@@ -26,12 +26,12 @@ namespace apoemaMatch.Data
                     {
                         new Demandante()
                         {
-                            ImagemURL = "",
-                            Email = "",
-                            NomeDemandante = "",
-                            Telefone = "",
-                            NomeEmpresa = "",
-                            CargoDemandante = "",
+                            ImagemURL = "https://choppbrahmaexpress.vtexassets.com/arquivos/ids/155714/pepsi_normal.png?v=637353454715870000",
+                            Email = "pepsi@mail.com",
+                            NomeDemandante = "Richard Grant",
+                            Telefone = "+5591988657532",
+                            NomeEmpresa = "Pepsi",
+                            CargoDemandante = "Presidente",
                             TempoDeMercado = 3,
                             PorteDaEmpresa = EnumPorteDaEmpresa.MEI,
                             RamoDeAtuacao = EnumRamoDeAtuacao.Industria,
@@ -55,11 +55,11 @@ namespace apoemaMatch.Data
                         new Solucionador()
                         {
                             Disponivel = true,
-                            ImagemURL = "http://dotnethow.net/images/cinemas/cinema-1.jpeg",
-                            Email = "",
-                            Nome = "",
-                            Telefone = "",
-                            Formacao = "",
+                            ImagemURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Marie_Curie_c1920.jpg/200px-Marie_Curie_c1920.jpg",
+                            Email = "marie@mail.com",
+                            Nome = "Marie Curie",
+                            Telefone = "+68925647897",
+                            Formacao = "Química",
                             AreaDePesquisa = EnumAreaSolucaoBuscada.Inteligencia_Artificial_Aplicada,
                             CurriculoLattes = "Lattes",
                             MiniBio = "Solucionador teste"
@@ -78,10 +78,10 @@ namespace apoemaMatch.Data
                         new Encomenda()
                         {
                             EncomendaAberta = true,
-                            Titulo = "",
+                            Titulo = "Nova Encomenda",
                             SegmentoDeMercado = EnumSegmentoDeMercado.Educacao,
                             AreaSolucaoBuscada = EnumAreaSolucaoBuscada.Bioinformatica,
-                            Descricao = "",
+                            Descricao = "Essa é uma nova encomenda",
                             StatusEncomenda = EnumStatusEncomenda.Iniciado
                         }
                     });

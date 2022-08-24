@@ -92,7 +92,7 @@ namespace apoemaMatch.Controllers
         }
 
         //GET: Demandante/Editar/2
-        [Authorize(Roles = PapeisUsuarios.Demandante)]
+        [Authorize(Roles = PapeisUsuarios.Demandante + "," + PapeisUsuarios.Admin)]
         public async Task<IActionResult> Editar(int id)
         {
             //var demandanteDropDown = await _service.GetSolucionadoresDropDown();
@@ -127,7 +127,7 @@ namespace apoemaMatch.Controllers
             return View(response);
         }
 
-        [Authorize(Roles = PapeisUsuarios.Demandante)]
+        [Authorize(Roles = PapeisUsuarios.Demandante + "," + PapeisUsuarios.Admin)]
         [HttpPost]
         public async Task<IActionResult> Editar(int id, DemandanteViewModel novoDemandante)
         {

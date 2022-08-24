@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Lista de Demandantes";
 }
+<h2>Demandantes</h2>
 
 <div class="row">
     @foreach (var item in Model)
@@ -18,7 +19,7 @@
                                     @item.NomeEmpresa
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                         {
-                                            <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                            <a class="text-white float-right" asp-action="Editar" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
                                         }
                                 </h5>
                             </p>
