@@ -7,9 +7,6 @@
 }
 <h2>Lista de Encomendas</h2>
 
-<a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="Cadastrar">
-    Criar nova encomenda
-</a>
 
 <div class="row">
     @if(Model is not null)
@@ -31,6 +28,7 @@
                         <div class="col-md-12">
                             <div class="card-body">
                                 <p class="card-text">@item.Descricao</p>
+                                <p class="card-text">@item.Titulo</p>
                                 <p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
                                 <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>
                                 <p class="card-text ">
@@ -70,3 +68,7 @@
         }
     }
 </div>
+
+<a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="Cadastrar">
+    Criar nova encomenda
+</a>
