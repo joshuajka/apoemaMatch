@@ -40,7 +40,8 @@ namespace apoemaMatch.Controllers
             }
 
             await _service.AddAsync(encomendaViewModel.Converta());
-            return RedirectToAction(nameof(Index));
+            TempData["Sucesso"] = true;
+            return View();
         }
 
         public IActionResult FormularioAvaliacao()

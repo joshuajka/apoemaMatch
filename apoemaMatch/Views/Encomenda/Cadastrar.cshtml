@@ -9,6 +9,15 @@
         <p>
             <h4>Criar Nova Encomenda</h4>
         </p>
+
+        @if ((bool?)TempData["Sucesso"] == true)
+        {
+            <div class="d-flex alert alert-success justify-content-between">
+                <span class="align-self-center"><b>Cadastro realizado com sucesso!</b></span>
+                <a class="btn btn-outline-secondary" asp-controller="Encomenda" asp-action="Index">Voltar à lista</a>
+            </div>
+        }
+
         <div class="row">
             <div class="col-md-8 offset-2">
 
