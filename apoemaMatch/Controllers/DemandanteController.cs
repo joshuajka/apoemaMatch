@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace apoemaMatch.Controllers
 {
-    [Authorize(Roles = PapeisUsuarios.Admin)]
     public class DemandanteController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -149,7 +148,28 @@ namespace apoemaMatch.Controllers
                 return View(novoDemandante);
             }
 
-            await _service.UpdateDemandanteAsync(novoDemandante);
+            var demandanteAlterado = new DemandanteViewModel()
+            {
+                Id = novoDemandante.Id,
+                ImagemURL = novoDemandante.ImagemURL,
+                Email = novoDemandante.Email,
+                NomeDemandante = novoDemandante.NomeDemandante,
+                Telefone = novoDemandante.Telefone,
+                NomeEmpresa = novoDemandante.NomeEmpresa,
+                CargoDemandante = novoDemandante.CargoDemandante,
+                TempoDeMercado = novoDemandante.TempoDeMercado,
+                PorteDaEmpresa = novoDemandante.EnumPorteDaEmpresa,
+                RamoDeAtuacao = novoDemandante.EnumRamoDeAtuacao,
+                SegmentoDeMercado = novoDemandante.EnumSegmentoDeMercado,
+                LinhaDeAtuacaoTI = novoDemandante.EnumLinhaDeAtuacaoTI,
+                RegimeDeTributacao = novoDemandante.EnumTributacao,
+                LeiDeInformatica = novoDemandante.EnumLeiDeInformatica,
+                ObjetivoParceria = novoDemandante.EnumObjetivoParceria,
+                AreaSolucaoBuscada = novoDemandante.EnumAreaSolucaoBuscada,
+                Descricao = novoDemandante.Descricao
+            };
+
+            await _service.UpdateDemandanteAsync(demandanteAlterado);
 
 
             return RedirectToAction(nameof(Index));

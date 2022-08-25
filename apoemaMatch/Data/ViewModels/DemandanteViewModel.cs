@@ -95,6 +95,7 @@ namespace apoemaMatch.Data.ViewModels
         public EnumSegmentoDeMercado EnumSegmentoDeMercado { get; set; }
 
         [Display(Name = "Regime de tributação")]
+
         public EnumTributacao EnumTributacao { get; set; }
         //Relationships
         [Display(Name = "Solucionador")]

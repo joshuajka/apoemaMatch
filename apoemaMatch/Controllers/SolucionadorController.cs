@@ -1,6 +1,7 @@
 ﻿using apoemaMatch.Data;
 using apoemaMatch.Data.Services;
 using apoemaMatch.Data.Static;
+using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace apoemaMatch.Controllers
 {
-    [Authorize(Roles = PapeisUsuarios.Admin)]
+
     public class SolucionadorController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -65,26 +66,58 @@ namespace apoemaMatch.Controllers
         }
 
         //Get: Solucionador/Edit/1
+        [Authorize(Roles = PapeisUsuarios.Admin + "," + PapeisUsuarios.Solucionador)]
         public async Task<IActionResult> Editar(int id)
         {
-            var solucionadorDetalhes = await _service.GetByIdAsync(id);
+            var solucionador = await _service.GetByIdAsync(id);
 
-            if (solucionadorDetalhes == null)
+            if (solucionador == null)
             {
                 return View("NotFound");
             }
 
-            return View(solucionadorDetalhes);
+            var response = new SolucionadorViewModel()
+            {
+                ImagemURL = solucionador.ImagemURL,
+                Nome = solucionador.Nome,
+                Email = solucionador.Email,
+                Telefone = solucionador.Telefone,
+                MiniBio = solucionador.MiniBio,
+                Formacao = solucionador.Formacao,
+                AreaDePesquisa = solucionador.AreaDePesquisa,
+                CurriculoLattes = solucionador.CurriculoLattes,
+            };
+
+            return View(response);
         }
 
+        [Authorize(Roles = PapeisUsuarios.Admin + "," + PapeisUsuarios.Solucionador)]
         [HttpPost]
-        public async Task<IActionResult> Editar(int id, [Bind("Id,ImagemURL,Email,Nome,Telefone,Formacao,AreaDePesquisa,CurriculoLattes,MiniBio")] Solucionador solucionador)
+        public async Task<IActionResult> Editar(int id, SolucionadorViewModel solucionador)
         {
+            if (id != solucionador.Id)
+            {
+                return View("NotFound");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(solucionador);
             }
-            await _service.UpdateAsync(id, solucionador);
+
+            var solucionadorAlterado = new SolucionadorViewModel()
+            {
+                ImagemURL = solucionador.ImagemURL,
+                Nome = solucionador.Nome,
+                Email = solucionador.Email,
+                Telefone = solucionador.Telefone,
+                MiniBio = solucionador.MiniBio,
+                Formacao = solucionador.Formacao,
+                AreaDePesquisa = solucionador.AreaDePesquisa,
+                CurriculoLattes = solucionador.CurriculoLattes,
+        };
+
+            await _service.UpdateSolucionadorAsync(solucionadorAlterado);
             return RedirectToAction(nameof(Index));
         }
 
