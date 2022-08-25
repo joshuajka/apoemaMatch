@@ -15,12 +15,12 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "O Título da requisição é obrigatório")]
         public string Titulo { get; set; }
 
-        [Display(Name = "Qual serviço procura?")]
-        [Required(ErrorMessage = "O tipo de serviço procurado é obrigatorio")]
-        public EnumSegmentoDeMercado SegmentoDeMercado { get; set; }
-
         [Display(Name = "Área de solução buscada?")]
         [Required(ErrorMessage = "A área de solução buscada é obrigatorio")]
+        public EnumSegmentoDeMercado SegmentoDeMercado { get; set; }
+        
+        [Display(Name = "Qual serviço procura?")]
+        [Required(ErrorMessage = "O tipo de serviço procurado é obrigatorio")]
         public EnumAreaSolucaoBuscada AreaSolucaoBuscada { get; set; }
 
         [Display(Name = "Descreva sua encomenda")]
