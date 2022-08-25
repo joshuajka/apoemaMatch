@@ -1,8 +1,10 @@
-﻿using apoemaMatch.Data.Services;
+﻿using apoemaMatch.Data;
+using apoemaMatch.Data.Services;
 using apoemaMatch.Data.Static;
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,10 +14,16 @@ namespace apoemaMatch.Controllers
     [Authorize(Roles = PapeisUsuarios.Admin)]
     public class DemandanteController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly AppDbContext _context;
         private readonly IDemandanteService _service;
 
-        public DemandanteController(IDemandanteService service)
+        public DemandanteController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context, IDemandanteService service)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _context = context;
             _service = service;
         }
 
@@ -50,46 +58,46 @@ namespace apoemaMatch.Controllers
         }
 
         //GET: Demandante/Cadastrar
-        [Authorize(Roles = PapeisUsuarios.Demandante)]
-        public async Task<IActionResult> Cadastrar()
-        {
-            //var demandanteDropDown = await _service.GetSolucionadoresDropDown();
-            // ViewBag.SolucionadorId = new SelectList(demandanteDropDown.Solucionadores, "Id", "Nome");
+        //[Authorize(Roles = PapeisUsuarios.Demandante)]
+        //public async Task<IActionResult> Cadastrar()
+        //{
+        //    //var demandanteDropDown = await _service.GetSolucionadoresDropDown();
+        //    // ViewBag.SolucionadorId = new SelectList(demandanteDropDown.Solucionadores, "Id", "Nome");
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        [Authorize(Roles = PapeisUsuarios.Demandante)]
-        [HttpPost]
-        public async Task<IActionResult> Cadastrar(DemandanteViewModel novoDemandante)
-        {
-            if (!ModelState.IsValid)
-            {
-                novoDemandante.AreaSolucaoBuscada = novoDemandante.EnumAreaSolucaoBuscada;
-                novoDemandante.LeiDeInformatica = novoDemandante.EnumLeiDeInformatica;
-                novoDemandante.LinhaDeAtuacaoTI = novoDemandante.EnumLinhaDeAtuacaoTI;
-                novoDemandante.ObjetivoParceria = novoDemandante.EnumObjetivoParceria;
-                novoDemandante.PorteDaEmpresa = novoDemandante.EnumPorteDaEmpresa;
-                novoDemandante.RamoDeAtuacao = novoDemandante.EnumRamoDeAtuacao;
-                novoDemandante.SegmentoDeMercado = novoDemandante.EnumSegmentoDeMercado;
-                novoDemandante.RegimeDeTributacao = novoDemandante.EnumTributacao;
-                return View(novoDemandante);
-            }
+        //[Authorize(Roles = PapeisUsuarios.Demandante)]
+        //[HttpPost]
+        //public async Task<IActionResult> Cadastrar(DemandanteViewModel novoDemandante)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        novoDemandante.AreaSolucaoBuscada = novoDemandante.EnumAreaSolucaoBuscada;
+        //        novoDemandante.LeiDeInformatica = novoDemandante.EnumLeiDeInformatica;
+        //        novoDemandante.LinhaDeAtuacaoTI = novoDemandante.EnumLinhaDeAtuacaoTI;
+        //        novoDemandante.ObjetivoParceria = novoDemandante.EnumObjetivoParceria;
+        //        novoDemandante.PorteDaEmpresa = novoDemandante.EnumPorteDaEmpresa;
+        //        novoDemandante.RamoDeAtuacao = novoDemandante.EnumRamoDeAtuacao;
+        //        novoDemandante.SegmentoDeMercado = novoDemandante.EnumSegmentoDeMercado;
+        //        novoDemandante.RegimeDeTributacao = novoDemandante.EnumTributacao;
+        //        return View(novoDemandante);
+        //    }
 
-            novoDemandante.AreaSolucaoBuscada = novoDemandante.EnumAreaSolucaoBuscada;
-            novoDemandante.LeiDeInformatica = novoDemandante.EnumLeiDeInformatica;
-            novoDemandante.LinhaDeAtuacaoTI = novoDemandante.EnumLinhaDeAtuacaoTI;
-            novoDemandante.ObjetivoParceria = novoDemandante.EnumObjetivoParceria;
-            novoDemandante.PorteDaEmpresa = novoDemandante.EnumPorteDaEmpresa;
-            novoDemandante.RamoDeAtuacao = novoDemandante.EnumRamoDeAtuacao;
-            novoDemandante.SegmentoDeMercado = novoDemandante.EnumSegmentoDeMercado;
-            novoDemandante.RegimeDeTributacao = novoDemandante.EnumTributacao;
+        //    novoDemandante.AreaSolucaoBuscada = novoDemandante.EnumAreaSolucaoBuscada;
+        //    novoDemandante.LeiDeInformatica = novoDemandante.EnumLeiDeInformatica;
+        //    novoDemandante.LinhaDeAtuacaoTI = novoDemandante.EnumLinhaDeAtuacaoTI;
+        //    novoDemandante.ObjetivoParceria = novoDemandante.EnumObjetivoParceria;
+        //    novoDemandante.PorteDaEmpresa = novoDemandante.EnumPorteDaEmpresa;
+        //    novoDemandante.RamoDeAtuacao = novoDemandante.EnumRamoDeAtuacao;
+        //    novoDemandante.SegmentoDeMercado = novoDemandante.EnumSegmentoDeMercado;
+        //    novoDemandante.RegimeDeTributacao = novoDemandante.EnumTributacao;
 
-            await _service.AdicionarDemandanteAsync(novoDemandante);
+        //    await _service.AdicionarDemandanteAsync(novoDemandante);
 
 
-            return RedirectToAction(nameof(Index));
-        }
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         //GET: Demandante/Editar/2
         [Authorize(Roles = PapeisUsuarios.Demandante + "," + PapeisUsuarios.Admin)]
@@ -204,6 +212,7 @@ namespace apoemaMatch.Controllers
 
         public async Task<IActionResult> Excluir(int id)
         {
+
             var demandanteDetalhes = await _service.GetDemandanteByIdAsync(id);
 
             if (demandanteDetalhes == null)
@@ -218,11 +227,14 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> ExcluirConfirmed(int id)
         {
             var demandanteDetalhes = await _service.GetDemandanteByIdAsync(id);
+            var user = await _userManager.FindByEmailAsync(demandanteDetalhes.Email);
+
             if (!ModelState.IsValid)
             {
                 return View("NotFound");
             }
             await _service.DeleteAsync(id);
+            await _userManager.DeleteAsync(user);
             return RedirectToAction(nameof(Index));
         }
 

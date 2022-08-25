@@ -1,7 +1,9 @@
-﻿using apoemaMatch.Data.Services;
+﻿using apoemaMatch.Data;
+using apoemaMatch.Data.Services;
 using apoemaMatch.Data.Static;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,10 +12,16 @@ namespace apoemaMatch.Controllers
     [Authorize(Roles = PapeisUsuarios.Admin)]
     public class SolucionadorController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly AppDbContext _context;
         private readonly ISolucionadorService _service;
 
-        public SolucionadorController(ISolucionadorService service)
+        public SolucionadorController(ISolucionadorService service,UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _context = context;
             _service = service;
         }
 
@@ -25,22 +33,22 @@ namespace apoemaMatch.Controllers
         }
 
         //Get: Solucionador/Create
-        public IActionResult Cadastrar()
-        {
-            return View();
-        }
+        //public IActionResult Cadastrar()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Cadastrar(Solucionador solucionador)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(solucionador);
-            }
-            await _service.AddAsync(solucionador);
-            return RedirectToAction(nameof(Index));
+        //[HttpPost]
+        //public async Task<IActionResult> Cadastrar(Solucionador solucionador)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(solucionador);
+        //    }
+        //    await _service.AddAsync(solucionador);
+        //    return RedirectToAction(nameof(Index));
 
-        }
+        //}
 
         //Get: Solucionador/Detalhes/1
         [AllowAnonymous]
@@ -97,11 +105,15 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> ExcluirConfirmed(int id)
         {
             var solucionadorDetalhes = await _service.GetByIdAsync(id);
+            var user = await _userManager.FindByEmailAsync(solucionadorDetalhes.Email);
+
             if (!ModelState.IsValid)
             {
                 return View("NotFound");
             }
+
             await _service.DeleteAsync(id);
+            await _userManager.DeleteAsync(user);
             return RedirectToAction(nameof(Index));
         }
 

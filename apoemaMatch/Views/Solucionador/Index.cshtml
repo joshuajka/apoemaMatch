@@ -57,5 +57,12 @@
         </div>
     }
 </div>
-@await Html.PartialAsync("_CadastrarItem", "Solucionador")
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div class="text-white text-center">
+        <a asp-controller="Account" asp-action="RegisterSolucionador" class="btn btn-success">
+            <i class="bi bi-plus-circle">Adicionar</i>
+        </a>
+    </div>
+}
 
