@@ -21,9 +21,20 @@
                 </div>
                 <div class="col-md-12 offset-2">
                     <div class="card-body">
-                        <p class="card-text">@Model.Descricao</p>
-                        <p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)Model.SegmentoDeMercado)</p>
-                        <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)Model.AreaSolucaoBuscada)</p>
+                        <p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)Model.AreaSolucaoBuscada)</p>
+                        <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)Model.SegmentoDeMercado)</p>
+                        <p class="card-text"><b>Descrição: </b>@Model.Descricao</p>
+                        <p class="card-text ">
+                            <b>Status: </b>
+                            @if (Model.EncomendaAberta)
+                            {
+                                <span class="badge bg-success text-white">ABERTA</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger text-white">FECHADA</span>
+                            }
+                        </p>
                     </div>
                 </div>
                 <div class="col-md-12">
