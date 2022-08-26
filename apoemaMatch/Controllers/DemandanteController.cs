@@ -158,14 +158,14 @@ namespace apoemaMatch.Controllers
                 NomeEmpresa = novoDemandante.NomeEmpresa,
                 CargoDemandante = novoDemandante.CargoDemandante,
                 TempoDeMercado = novoDemandante.TempoDeMercado,
-                PorteDaEmpresa = novoDemandante.EnumPorteDaEmpresa,
-                RamoDeAtuacao = novoDemandante.EnumRamoDeAtuacao,
-                SegmentoDeMercado = novoDemandante.EnumSegmentoDeMercado,
-                LinhaDeAtuacaoTI = novoDemandante.EnumLinhaDeAtuacaoTI,
-                RegimeDeTributacao = novoDemandante.EnumTributacao,
-                LeiDeInformatica = novoDemandante.EnumLeiDeInformatica,
-                ObjetivoParceria = novoDemandante.EnumObjetivoParceria,
-                AreaSolucaoBuscada = novoDemandante.EnumAreaSolucaoBuscada,
+                PorteDaEmpresa = novoDemandante.PorteDaEmpresa,
+                RamoDeAtuacao = novoDemandante.RamoDeAtuacao,
+                SegmentoDeMercado = novoDemandante.SegmentoDeMercado,
+                LinhaDeAtuacaoTI = novoDemandante.LinhaDeAtuacaoTI,
+                RegimeDeTributacao = novoDemandante.RegimeDeTributacao,
+                LeiDeInformatica = novoDemandante.LeiDeInformatica,
+                ObjetivoParceria = novoDemandante.ObjetivoParceria,
+                AreaSolucaoBuscada = novoDemandante.AreaSolucaoBuscada,
                 Descricao = novoDemandante.Descricao
             };
 

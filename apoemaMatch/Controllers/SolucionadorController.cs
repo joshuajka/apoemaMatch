@@ -107,6 +107,7 @@ namespace apoemaMatch.Controllers
 
             var solucionadorAlterado = new SolucionadorViewModel()
             {
+                Id = solucionador.Id,
                 ImagemURL = solucionador.ImagemURL,
                 Nome = solucionador.Nome,
                 Email = solucionador.Email,
