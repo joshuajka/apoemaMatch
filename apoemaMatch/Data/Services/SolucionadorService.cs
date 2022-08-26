@@ -1,4 +1,5 @@
 ﻿using apoemaMatch.Data.Base;
+using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,6 +25,24 @@ namespace apoemaMatch.Data.Services
                 .FirstOrDefaultAsync(n => n.IdUsuario == IdUser);
 
             return solucionadorDetalhes;
+        }
+
+        public async Task UpdateSolucionadorAsync(SolucionadorViewModel solucionador)
+        {
+            var dbSolucionador = await _context.Solucionadores.FirstOrDefaultAsync(n => n.Id == solucionador.Id);
+
+            if (dbSolucionador != null)
+            {
+                dbSolucionador.ImagemURL = solucionador.ImagemURL;
+                dbSolucionador.Nome = solucionador.Nome;
+                dbSolucionador.Email = solucionador.Email;
+                dbSolucionador.Telefone = solucionador.Telefone;
+                dbSolucionador.MiniBio = solucionador.MiniBio;
+                dbSolucionador.Formacao = solucionador.Formacao;
+                dbSolucionador.AreaDePesquisa = solucionador.AreaDePesquisa;
+                dbSolucionador.CurriculoLattes = solucionador.CurriculoLattes;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

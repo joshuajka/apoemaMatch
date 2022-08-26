@@ -18,9 +18,9 @@
                                 <h5 class="card-title">
                                     @item.NomeEmpresa
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                        {
-                                            <a class="text-white float-right" asp-action="Editar" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
-                                        }
+                                    {
+                                        <a class="text-white float-right" asp-action="Editar" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                    }
                                 </h5>
                             </p>
                         </div>
@@ -47,18 +47,18 @@
                                         <i class="bi bi-trash"></i>Excluir
                                     </a>
                                     @*<a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
-                                        <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
-                                    </a>*@
+                                            <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
+                                        </a>*@
                                 }
                                 <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
                                     <i class="bi bi-eye-fill"></i> Detalhes
                                 </a>
                                 @*<a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
-           asp-controller="Orders"
-           asp-action="AddItemToShoppingCart"
-           asp-route-id="@item.Id">
-            <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
-        </a>*@
+                                       asp-controller="Orders"
+                                       asp-action="AddItemToShoppingCart"
+                                       asp-route-id="@item.Id">
+                                        <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
+                                    </a>*@
                             </p>
                         </div>
                     </div>
@@ -67,5 +67,13 @@
         </div>
     }
 </div>
-@await Html.PartialAsync("_CadastrarItem", "Demandante")
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div class="text-white text-center">
+        <a asp-controller="Account" asp-action="RegisterDemandante" class="btn btn-success">
+            <i class="bi bi-plus-circle">Adicionar</i>
+        </a>
+    </div>
+}
+
 
