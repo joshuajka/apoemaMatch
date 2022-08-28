@@ -4,76 +4,60 @@
 @{
     ViewData["Title"] = "Lista de Demandantes";
 }
-<h2>Demandantes</h2>
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-4 col-xs-6 border-primary mb-3">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-12">
-                        <div class="card-header text-white cor-apoema">
-                            <p class="card-text">
-                                <h5 class="card-title">
-                                    @item.NomeEmpresa
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                    {
-                                        <a class="text-white float-right" asp-action="Editar" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
-                                    }
-                                </h5>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <img src="@item.ImagemURL" style="height: 225px; width: 200px" alt="@item.NomeEmpresa">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <p class="card-text">@item.Descricao</p>
-                            <p class="card-text"><b>Ramo de atuação: </b>@Extensions.GetEnumDisplayName((EnumRamoDeAtuacao)item.RamoDeAtuacao)</p>
-                            <p class="card-text"><b>Segmento de mercado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
-                            <p class="card-text"><b>Objetivo: </b>@Extensions.GetEnumDisplayName((EnumObjetivoParceria)item.ObjetivoParceria)</p>
-                            <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>
+<div class="container">
+    <h2>Demandantes</h2>
 
-                        </div>
+    <div class="row">
+        <div class="card-deck">
+            @foreach (var item in Model)
+            {
+                <div class="card border-0">
+                    <img src="@item.ImagemURL" class="card-img-top img-fluid" alt="@item.NomeEmpresa">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">
+                            @item.NomeEmpresa
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a class="text-white float-right" asp-action="Editar" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                            }
+                        </h5>
+                        <p class="card-text">@item.Descricao</p>
+                        <p class="card-text"><b>Ramo de atuação: </b>@Extensions.GetEnumDisplayName((EnumRamoDeAtuacao)item.RamoDeAtuacao)</p>
+                        <p class="card-text"><b>Segmento de mercado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
+                        <p class="card-text"><b>Objetivo: </b>@Extensions.GetEnumDisplayName((EnumObjetivoParceria)item.ObjetivoParceria)</p>
+                        <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>
                     </div>
-                    <div class="col-md-12">
-                        <div class="card-footer ">
-                            <p class="card-text">
-                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                {
-                                    <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
-                                        <i class="bi bi-trash"></i>Excluir
-                                    </a>
-                                    @*<a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
-                                            <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
-                                        </a>*@
-                                }
-                                <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
-                                    <i class="bi bi-eye-fill"></i> Detalhes
-                                </a>
-                                @*<a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
-                                       asp-controller="Orders"
-                                       asp-action="AddItemToShoppingCart"
-                                       asp-route-id="@item.Id">
-                                        <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
-                                    </a>*@
-                            </p>
-                        </div>
+                    <div class="card-footer">
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
+                                <i class="bi bi-trash"></i>Excluir
+                            </a>
+                            @*<a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
+                                    <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
+                                </a>*@
+                        }
+                        <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
+                            <i class="bi bi-eye-fill"></i> Detalhes
+                        </a>
+                        @*<a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
+                                asp-controller="Orders"
+                                asp-action="AddItemToShoppingCart"
+                                asp-route-id="@item.Id">
+                                <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
+                            </a>*@
                     </div>
                 </div>
-            </div>
+            }
+        </div>
+    </div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div class="text-white text-center">
+            <a asp-controller="Account" asp-action="RegisterDemandante" class="btn btn-success">
+                <i class="bi bi-plus-circle">Adicionar</i>
+            </a>
         </div>
     }
 </div>
-@*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-{
-    <div class="text-white text-center">
-        <a asp-controller="Account" asp-action="RegisterDemandante" class="btn btn-success">
-            <i class="bi bi-plus-circle">Adicionar</i>
-        </a>
-    </div>
-}*@
-
-

@@ -29,7 +29,11 @@ namespace apoemaMatch.Data.ViewModels
         public string NomeCompleto { get; set; }
 
 
-        [Required(ErrorMessage = "Telefone é obrigatório")]
+        [Display(Name = "Telefone (Com DDD)")]
+        [MaxLength(11)]
+        [Required(ErrorMessage = "Este campo é obrigatório")]
+        [RegularExpression(@"^\(?([0-9]{2})\)?[-. ]?([0-9]{5})[-. ]?([0-9]{4})$",
+                   ErrorMessage = "O número de telefone inserido não é válido. Exemplo: (12) 9 1234-5678 (Insira somente números)")]
         public string Telefone { get; set; }
 
         [Required(ErrorMessage = "Formação é obrigatório")]
@@ -57,8 +61,8 @@ namespace apoemaMatch.Data.ViewModels
         [Display(Name = "Senha de confirmação")]
         [Required(ErrorMessage = "Senha de confirmação é obrigatória")]
         [DataType(DataType.Password)]
-        [Compare("Password",ErrorMessage = "Senhas não coincidem")]
-        public string ConfirmPassword { get; set; } 
+        [Compare("Password", ErrorMessage = "Senhas não coincidem")]
+        public string ConfirmPassword { get; set; }
 
     }
 }
