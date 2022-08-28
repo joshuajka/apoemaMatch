@@ -10,6 +10,10 @@ namespace apoemaMatch.Models
         [Key]
         public int Id { get; set; }
 
+        public int IdDemandante { get; set; }
+
+        public int IdSolucionador { get; set; }
+
         public string Titulo { get; set; }
 
         public bool EncomendaAberta { get; set; }
@@ -27,7 +31,5 @@ namespace apoemaMatch.Models
         public bool RealizaProcessoSeletivo { get; set; }
 
         public List<Questao> Questoes { get; set; }
-
-        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
     }
 }

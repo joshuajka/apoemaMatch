@@ -47,9 +47,5 @@ namespace apoemaMatch.Models
         [Required(ErrorMessage = "Bio é obrigatória")]
         public string MiniBio { get; set; }
 
-        //Relationships
-        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
-
-
     }
 }

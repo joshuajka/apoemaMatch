@@ -289,14 +289,17 @@ namespace apoemaMatch.Migrations
                     b.Property<int>("AreaSolucaoBuscada")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("DemandanteId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Descricao")
                         .HasColumnType("text");
 
                     b.Property<bool>("EncomendaAberta")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("IdDemandante")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdSolucionador")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("RealizaProcessoSeletivo")
                         .HasColumnType("boolean");
@@ -312,29 +315,7 @@ namespace apoemaMatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DemandanteId");
-
                     b.ToTable("Encomendas");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.EncomendaSolucionador", b =>
-                {
-                    b.Property<int>("EncomendaId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SolucionadorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("DemandanteId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("EncomendaId", "SolucionadorId");
-
-                    b.HasIndex("DemandanteId");
-
-                    b.HasIndex("SolucionadorId");
-
-                    b.ToTable("EncomendasSolucionadores");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.Questao", b =>
@@ -460,36 +441,6 @@ namespace apoemaMatch.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("apoemaMatch.Models.Encomenda", b =>
-                {
-                    b.HasOne("apoemaMatch.Models.Demandante", null)
-                        .WithMany("Encomendas")
-                        .HasForeignKey("DemandanteId");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.EncomendaSolucionador", b =>
-                {
-                    b.HasOne("apoemaMatch.Models.Demandante", null)
-                        .WithMany("EncomendaSolucionador")
-                        .HasForeignKey("DemandanteId");
-
-                    b.HasOne("apoemaMatch.Models.Encomenda", "Encomenda")
-                        .WithMany("EncomendaSolucionador")
-                        .HasForeignKey("EncomendaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("apoemaMatch.Models.Solucionador", "Solucionador")
-                        .WithMany("EncomendaSolucionador")
-                        .HasForeignKey("SolucionadorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Encomenda");
-
-                    b.Navigation("Solucionador");
-                });
-
             modelBuilder.Entity("apoemaMatch.Models.Questao", b =>
                 {
                     b.HasOne("apoemaMatch.Models.Encomenda", null)
@@ -497,23 +448,9 @@ namespace apoemaMatch.Migrations
                         .HasForeignKey("EncomendaId");
                 });
 
-            modelBuilder.Entity("apoemaMatch.Models.Demandante", b =>
-                {
-                    b.Navigation("Encomendas");
-
-                    b.Navigation("EncomendaSolucionador");
-                });
-
             modelBuilder.Entity("apoemaMatch.Models.Encomenda", b =>
                 {
-                    b.Navigation("EncomendaSolucionador");
-
                     b.Navigation("Questoes");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.Solucionador", b =>
-                {
-                    b.Navigation("EncomendaSolucionador");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,6 +9,10 @@ namespace apoemaMatch.Data.ViewModels
     {
         public int Id { get; set; }
 
+        public int IdSolucionador { get; set; }
+
+        public int IdDemandante { get; set; }
+
         public bool EncomendaAberta { get; set; }
 
         [Display(Name = "Título da requisição")]

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace apoemaMatch.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial28081456 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,13 +49,13 @@ namespace apoemaMatch.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Demandas",
+                name: "Demandantes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    DemandaAberta = table.Column<bool>(type: "boolean", nullable: false),
                     ImagemURL = table.Column<string>(type: "text", nullable: true),
+                    IdUsuario = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
                     NomeDemandante = table.Column<string>(type: "text", nullable: true),
                     Telefone = table.Column<string>(type: "text", nullable: true),
@@ -74,7 +74,28 @@ namespace apoemaMatch.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Demandas", x => x.Id);
+                    table.PrimaryKey("PK_Demandantes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Encomendas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdDemandante = table.Column<int>(type: "integer", nullable: false),
+                    IdSolucionador = table.Column<int>(type: "integer", nullable: false),
+                    Titulo = table.Column<string>(type: "text", nullable: true),
+                    EncomendaAberta = table.Column<bool>(type: "boolean", nullable: false),
+                    SegmentoDeMercado = table.Column<int>(type: "integer", nullable: false),
+                    AreaSolucaoBuscada = table.Column<int>(type: "integer", nullable: false),
+                    Descricao = table.Column<string>(type: "text", nullable: true),
+                    StatusEncomenda = table.Column<int>(type: "integer", nullable: false),
+                    RealizaProcessoSeletivo = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Encomendas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,8 +104,9 @@ namespace apoemaMatch.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdUsuario = table.Column<string>(type: "text", nullable: true),
                     Disponivel = table.Column<bool>(type: "boolean", nullable: false),
-                    ImagemURL = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    ImagemURL = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Nome = table.Column<string>(type: "text", nullable: false),
                     Telefone = table.Column<string>(type: "text", nullable: false),
@@ -205,27 +227,24 @@ namespace apoemaMatch.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DemandasSolucionadores",
+                name: "Questao",
                 columns: table => new
                 {
-                    DemandaId = table.Column<int>(type: "integer", nullable: false),
-                    SolucionadorId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Pergunta = table.Column<string>(type: "text", nullable: true),
+                    TipoResposta = table.Column<int>(type: "integer", nullable: false),
+                    EncomendaId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DemandasSolucionadores", x => new { x.DemandaId, x.SolucionadorId });
+                    table.PrimaryKey("PK_Questao", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DemandasSolucionadores_Demandas_DemandaId",
-                        column: x => x.DemandaId,
-                        principalTable: "Demandas",
+                        name: "FK_Questao_Encomendas_EncomendaId",
+                        column: x => x.EncomendaId,
+                        principalTable: "Encomendas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DemandasSolucionadores_Solucionadores_SolucionadorId",
-                        column: x => x.SolucionadorId,
-                        principalTable: "Solucionadores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -266,9 +285,9 @@ namespace apoemaMatch.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_DemandasSolucionadores_SolucionadorId",
-                table: "DemandasSolucionadores",
-                column: "SolucionadorId");
+                name: "IX_Questao_EncomendaId",
+                table: "Questao",
+                column: "EncomendaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -289,7 +308,13 @@ namespace apoemaMatch.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "DemandasSolucionadores");
+                name: "Demandantes");
+
+            migrationBuilder.DropTable(
+                name: "Questao");
+
+            migrationBuilder.DropTable(
+                name: "Solucionadores");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -298,10 +323,7 @@ namespace apoemaMatch.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Demandas");
-
-            migrationBuilder.DropTable(
-                name: "Solucionadores");
+                name: "Encomendas");
         }
     }
 }

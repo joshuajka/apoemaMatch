@@ -45,10 +45,5 @@ namespace apoemaMatch.Models
 
         public string Descricao { get; set; }
 
-        public List<Encomenda> Encomendas { get; set; }
-
-        //Relationships
-        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
-
     }
 }

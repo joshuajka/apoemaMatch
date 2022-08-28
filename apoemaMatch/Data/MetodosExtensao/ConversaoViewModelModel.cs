@@ -10,7 +10,8 @@ namespace apoemaMatch.Data.MetodosExtensao
         {
             return new()
             {
-                Id = encomendaViewModel.Id,
+                IdDemandante = encomendaViewModel.IdDemandante,
+                EncomendaAberta = encomendaViewModel.EncomendaAberta,
                 Titulo = encomendaViewModel.Titulo,
                 SegmentoDeMercado = encomendaViewModel.SegmentoDeMercado,
                 AreaSolucaoBuscada = encomendaViewModel.AreaSolucaoBuscada,

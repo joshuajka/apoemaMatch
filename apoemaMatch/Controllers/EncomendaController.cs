@@ -2,10 +2,12 @@
 using apoemaMatch.Data.Services;
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace apoemaMatch.Controllers
@@ -13,10 +15,17 @@ namespace apoemaMatch.Controllers
     public class EncomendaController : Controller
     {
         private readonly IEncomendaService _service;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ISolucionadorService _serviceSolucionador;
+        private readonly IDemandanteService _serviceDemandante;
 
-        public EncomendaController(IEncomendaService service)
+        public EncomendaController(IEncomendaService service, UserManager<ApplicationUser> userManager,ISolucionadorService serviceSolucionador,
+            IDemandanteService serviceDemandante)
         {
             _service = service;
+            _userManager = userManager;
+            _serviceSolucionador = serviceSolucionador;
+            _serviceDemandante = serviceDemandante;
         }
 
         public async Task<IActionResult> Index()
@@ -38,7 +47,20 @@ namespace apoemaMatch.Controllers
             {
                 return View(encomendaViewModel);
             }
+            
+            if (User.IsInRole("Admin"))
+            {
+                encomendaViewModel.IdDemandante = 0;
+            }
+            else
+            {
+                string userEmail = User.FindFirstValue(ClaimTypes.Email);
+                var userDemandante= await _userManager.FindByEmailAsync(userEmail);
+                var demandante = await _serviceSolucionador.GetSolucionadorByIdUser(userDemandante.Id);
+                encomendaViewModel.IdDemandante = demandante.Id;
+            }
 
+            encomendaViewModel.EncomendaAberta = true;
             await _service.AddAsync(encomendaViewModel.Converta());
             return RedirectToAction(nameof(Index));
         }
