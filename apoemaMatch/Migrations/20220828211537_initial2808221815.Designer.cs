@@ -10,8 +10,8 @@ using apoemaMatch.Data;
 namespace apoemaMatch.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220828175641_initial28081456")]
-    partial class initial28081456
+    [Migration("20220828211537_initial2808221815")]
+    partial class initial2808221815
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -300,7 +300,7 @@ namespace apoemaMatch.Migrations
                     b.Property<int>("IdDemandante")
                         .HasColumnType("integer");
 
-                    b.Property<int>("IdSolucionador")
+                    b.Property<int?>("IdSolucionador")
                         .HasColumnType("integer");
 
                     b.Property<bool>("RealizaProcessoSeletivo")

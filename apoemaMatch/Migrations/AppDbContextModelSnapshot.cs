@@ -298,7 +298,7 @@ namespace apoemaMatch.Migrations
                     b.Property<int>("IdDemandante")
                         .HasColumnType("integer");
 
-                    b.Property<int>("IdSolucionador")
+                    b.Property<int?>("IdSolucionador")
                         .HasColumnType("integer");
 
                     b.Property<bool>("RealizaProcessoSeletivo")

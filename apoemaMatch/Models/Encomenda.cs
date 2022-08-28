@@ -12,7 +12,7 @@ namespace apoemaMatch.Models
 
         public int IdDemandante { get; set; }
 
-        public int IdSolucionador { get; set; }
+        public int? IdSolucionador { get; set; }
 
         public string Titulo { get; set; }
 

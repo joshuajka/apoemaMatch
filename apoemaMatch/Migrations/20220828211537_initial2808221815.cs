@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace apoemaMatch.Migrations
 {
-    public partial class initial28081456 : Migration
+    public partial class initial2808221815 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -84,7 +84,7 @@ namespace apoemaMatch.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     IdDemandante = table.Column<int>(type: "integer", nullable: false),
-                    IdSolucionador = table.Column<int>(type: "integer", nullable: false),
+                    IdSolucionador = table.Column<int>(type: "integer", nullable: true),
                     Titulo = table.Column<string>(type: "text", nullable: true),
                     EncomendaAberta = table.Column<bool>(type: "boolean", nullable: false),
                     SegmentoDeMercado = table.Column<int>(type: "integer", nullable: false),
