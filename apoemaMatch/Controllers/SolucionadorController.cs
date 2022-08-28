@@ -95,6 +95,7 @@ namespace apoemaMatch.Controllers
         [HttpPost]
         public async Task<IActionResult> Editar(int id, SolucionadorViewModel solucionador)
         {
+
             if (id != solucionador.Id)
             {
                 return View("NotFound");

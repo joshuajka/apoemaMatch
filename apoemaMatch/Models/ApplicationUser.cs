@@ -9,7 +9,7 @@ namespace apoemaMatch.Models
 {
     public class ApplicationUser:IdentityUser
     {
-        [Display(Name="Nome")]
+        [Display(Name="Nome de usuario")]
         public string Nome { get; set; }
     }
 }

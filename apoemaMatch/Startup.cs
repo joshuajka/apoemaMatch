@@ -15,32 +15,63 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using apoemaMatch.Repository;
 
 namespace apoemaMatch
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             //DbContext configurations
             services.AddDbContext<AppDbContext>(options =>
-                        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnectionString")));
+                        options.UseNpgsql(_configuration.GetConnectionString("DefaultConnectionString")));
 
             //Services configuration
             services.AddScoped<ISolucionadorService, SolucionadorService>();
             services.AddScoped<IDemandanteService, DemandanteService>();
             services.AddScoped<IEncomendaService, EncomendaService>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmailService, EmailService>();
+
+            //Services Email
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+
+                options.SignIn.RequireConfirmedEmail = false;
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(20);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+            });
+
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromMinutes(5);
+            });
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = _configuration["Application:LoginPath"];
+            });
+
+            services.Configure<SMTPConfigModel>(_configuration.GetSection("SMTPConfig"));
 
             //Autenticacao e autorizacao 
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             services.AddMemoryCache();
             services.AddSession();
             services.AddAuthentication(options =>

@@ -9,7 +9,7 @@
 <div class="row text">
     <div class="col-md-8 offset-2">
         <p>
-            <h1>Perfil @Model.Nome</h1>
+            <h1>Perfil @Model.NomeCompleto</h1>
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
@@ -22,9 +22,14 @@
                     <span asp-validation-for="ImagemURL" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Nome" class="control-label"></label>
-                    <input asp-for="Nome" class="form-control" readonly />
-                    <span asp-validation-for="Nome" class="text-danger"></span>
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" readonly />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NomeCompleto" class="control-label"></label>
+                    <input asp-for="NomeCompleto" class="form-control" readonly />
+                    <span asp-validation-for="NomeCompleto" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Email" class="control-label"></label>
@@ -57,7 +62,7 @@
                     <span asp-validation-for="MiniBio" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                        <a class="btn btn-outline-success float-right" asp-controller="Solucionador" asp-action="Editar" asp-route-id="@Model.Id"> Editar</a>
+                    <a class="btn btn-outline-success float-right" asp-controller="Solucionador" asp-action="Editar" asp-route-id="@Model.Id"> Editar</a>
                     <a class="btn btn-outline-secondary" asp-controller="Solucionador" asp-action="Index">Voltar</a>
                 </div>
             </div>
