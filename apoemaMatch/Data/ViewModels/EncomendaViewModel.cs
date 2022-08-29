@@ -9,7 +9,8 @@ namespace apoemaMatch.Data.ViewModels
     {
         public int Id { get; set; }
 
-        public int IdSolucionador { get; set; }
+        [Display(Name ="Solucionador")]
+        public int? IdSolucionador { get; set; }
 
         public int IdDemandante { get; set; }
 
@@ -39,9 +40,6 @@ namespace apoemaMatch.Data.ViewModels
         public EnumTipoResposta TipoResposta { get; set; }
 
         public List<Questao> Questoes { get; set; }
-
-        [Display(Name = "Solucionador")]
-        public int SolucionadorId { get; set; }
 
     }
 }

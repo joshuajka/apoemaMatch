@@ -118,6 +118,7 @@ namespace apoemaMatch.Controllers
             novaEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
             novaEncomenda.Questoes = encomenda.Questoes;
             novaEncomenda.EncomendaAberta = false;
+            novaEncomenda.IdDemandante = encomenda.IdDemandante;
 
 
             //if (!ModelState.IsValid)

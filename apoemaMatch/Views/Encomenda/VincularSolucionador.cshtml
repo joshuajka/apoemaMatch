@@ -21,9 +21,9 @@
                         <div class="col-md-12">
                             
                             <div class="form-group">
-                                <label asp-for="SolucionadorId" class="control-label"></label>
-                                <select asp-for="SolucionadorId" class="form-control" asp-items="ViewBag.Solucinadores"></select>
-                                <span asp-validation-for="SolucionadorId" class="text-danger"></span>
+                                <label asp-for="IdSolucionador" class="control-label"></label>
+                                <select asp-for="IdSolucionador" class="form-control" asp-items="ViewBag.Solucinadores"></select>
+                                <span asp-validation-for="IdSolucionador" class="text-danger"></span>
                             </div>
                         </div>
 
@@ -38,15 +38,3 @@
             </div>
         </div>
     </div>
-    @section Scripts{
-        <script>
-            $(document).ready(function () {
-                var output = document.getElementById('ImagemURLPreview');
-                output.src = $('#ImagemURL').val();
-            })
-            $('#ImagemURL').on("change", function () {
-                var output = document.getElementById('ImagemURLPreview');
-                output.src = $(this).val();
-            })
-        </script>
-    }
