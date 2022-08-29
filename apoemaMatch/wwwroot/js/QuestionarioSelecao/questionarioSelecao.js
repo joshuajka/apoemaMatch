@@ -9,15 +9,15 @@ let inputOpcaoRespostaTexto2 = document.getElementById("QuestaoBase_OpcaoRespost
 let spanOpcaoResposta2 = document.getElementById("spanOpcaoResposta2");
 let questoesInput = document.getElementById("InputQuestoes");
 let divQuestoes = document.getElementById("div_Questoes");
-let questoesAdicionadas = [];
 
 window.addEventListener('load', () => {
+    monteCardsQuestoes();
 
     document.getElementById("botaoAdicionarQuestao").addEventListener('click', () => {
-        valideInput(perguntaEstaValida(), spanPergunta, "Pergunta é obrigatória");
+        valideInput(perguntaEstaValida(), spanPergunta, "Critério é obrigatório");
         if (ehTipoRespostaOpcao()) {
-            valideInput(opcaoRespostaEstaValida(), spanOpcaoResposta1, "Primeira opcão é obrigatória");
-            valideInput(opcaoRespostaEstaValida(), spanOpcaoResposta2, "Segunda opcão é obrigatória");
+            valideInput(opcaoRespostaEstaValida(), spanOpcaoResposta1, "Primeiro atributo é obrigatório");
+            valideInput(opcaoRespostaEstaValida(), spanOpcaoResposta2, "Segundo atributo é obrigatório");
         }
 
         if (questaoEstaValida())
@@ -29,8 +29,8 @@ window.addEventListener('load', () => {
             divOpcaoResposta.classList.remove("d-none");
         }
         else {
-            valideInput(true, spanOpcaoResposta1, "Primeira opcão é obrigatória");
-            valideInput(true, spanOpcaoResposta2, "Segunda opcão é obrigatória");
+            valideInput(true, spanOpcaoResposta1, "Primeiro atributo é obrigatório");
+            valideInput(true, spanOpcaoResposta2, "Segundo atributo é obrigatório");
             divOpcaoResposta.classList.add("d-none");
         }
     });
@@ -89,11 +89,13 @@ function adicioneQuestao() {
     let questaoNova = {
         Pergunta: inputPergunta.value,
         TipoResposta: questaoTipoResposta.value,
+        TextoTipoResposta: questaoTipoResposta.options[questaoTipoResposta.selectedIndex].text,
         OpcoesResposta: ehTipoRespostaOpcao() ?
             opcoes
             : null
     }
 
+    let questoesAdicionadas = JSON.parse(questoesInput.value || '[]');
     questoesAdicionadas.push(questaoNova);
     questoesInput.value = JSON.stringify(questoesAdicionadas);
     monteCardsQuestoes();
@@ -101,7 +103,7 @@ function adicioneQuestao() {
 
 function monteCardsQuestoes() {
     divQuestoes.innerHTML = "";
-    let questoesAtuais = JSON.parse(questoesInput.value);
+    let questoesAtuais = JSON.parse(questoesInput.value || '[]');
 
     if (questoesAtuais.length) divQuestoes.classList.remove("d-none");
     else {
@@ -114,15 +116,15 @@ function monteCardsQuestoes() {
         divCard.classList.add("col-md-4", "col-xs-6", "border-primary", "mb-3");
 
         divCard.innerHTML =
-              "<div class=\"card mb-3\">"
+            "<div class=\"card mb-3\">"
             + "<div class=\"row g-0\">"
             + "<div class=\"col-md-12\">"
             + "<div class=\"card-header cor-apoema\"></div>"
             + "</div>"
             + "<div class=\"col-md-12\">"
             + "<div class=\"card-body\">"
-            + `<p class=\"card-text\"><b>Pergunta: </b>${q.Pergunta}</p>`
-            + `<p class=\"card-text\"><b>Tipo Resposta: </b>${q.TipoResposta}</p>`
+            + `<p class=\"card-text\"><b>Critério: </b>${q.Pergunta}</p>`
+            + `<p class=\"card-text\"><b>Tipo de critério: </b>${q.TextoTipoResposta}</p>`
             + "</div>"
             + "</div>"
             + "</div>"
