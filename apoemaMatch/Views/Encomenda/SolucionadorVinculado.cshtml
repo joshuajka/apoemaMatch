@@ -1,0 +1,12 @@
+﻿<div class="row">
+    <div class="col-md-6 offset-3 alert alert-success text-center">
+        <h2>Essa encomenda já possui um solucionador vinculado</h2>
+        <p><b>@ViewData["NomeSolucionador"]</b> está com esta encomenda.</p>
+        <hr />
+        <div class="form-group">
+            <a class="btn btn-outline-secondary" asp-action="Index">Voltar as encomendas</a>
+            <a class="btn btn-outline-secondary" asp-action="AlterarSolucionador" asp-route-id="@ViewData["IdEncomenda"]">Alterar solucionador</a>
+        </div>
+    </div>
+    
+</div>

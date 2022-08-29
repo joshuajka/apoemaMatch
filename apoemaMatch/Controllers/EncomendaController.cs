@@ -93,6 +93,15 @@ namespace apoemaMatch.Controllers
                 return View("NotFound");
             }
 
+            if (encomenda.IdSolucionador != null)
+            {
+                var solucionador = await _serviceSolucionador.GetByIdAsync((int)encomenda.IdSolucionador);
+                ViewData["NomeSolucionador"] = solucionador.Nome;
+                ViewData["IdEncomenda"] = Id;
+
+                return View("SolucionadorVinculado");
+            }
+
             var encomendaDropDown = await _service.GetSolucionadoresDropDown(encomenda);
 
             ViewBag.Solucinadores = new SelectList(encomendaDropDown.Solucionadores, "Id", "Nome");
@@ -107,6 +116,57 @@ namespace apoemaMatch.Controllers
             {
                 return View("NotFound");
             }
+
+
+            var encomenda = await _service.GetByIdAsync(id);
+
+            novaEncomenda.RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo;
+            novaEncomenda.SegmentoDeMercado = encomenda.SegmentoDeMercado;
+            novaEncomenda.Titulo = encomenda.Titulo;
+            novaEncomenda.AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada;
+            novaEncomenda.Descricao = encomenda.Descricao;
+            novaEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
+            novaEncomenda.Questoes = encomenda.Questoes;
+            novaEncomenda.EncomendaAberta = false;
+            novaEncomenda.IdDemandante = encomenda.IdDemandante;
+
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return View();
+            //}
+
+
+            await _service.VincularEncomendaAsync(novaEncomenda);
+
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> AlterarSolucionador(int Id)
+        {
+            var encomenda = await _service.GetByIdAsync(Id);
+
+            if (encomenda == null)
+            {
+                return View("NotFound");
+            }
+
+            var encomendaDropDown = await _service.GetSolucionadoresDropDown(encomenda);
+
+            ViewBag.Solucinadores = new SelectList(encomendaDropDown.Solucionadores, "Id", "Nome");
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AlterarSolucionador(int id, EncomendaViewModel novaEncomenda)
+        {
+            if (id != novaEncomenda.Id)
+            {
+                return View("NotFound");
+            }
+
 
             var encomenda = await _service.GetByIdAsync(id);
 

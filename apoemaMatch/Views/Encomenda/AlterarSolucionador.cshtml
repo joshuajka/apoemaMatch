@@ -1,0 +1,40 @@
+﻿@using apoemaMatch.Data.Enums
+
+@model EncomendaViewModel
+
+@{
+    ViewData["Title"] = "Vincular solucionador";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Vincular Solucionador</h4>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <form asp-action="AlterarSolucionador">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <div class="form-group">
+                                <label asp-for="IdSolucionador" class="control-label"></label>
+                                <select asp-for="IdSolucionador" class="form-control" asp-items="ViewBag.Solucinadores"></select>
+                                <span asp-validation-for="IdSolucionador" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Vincular" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todas</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
