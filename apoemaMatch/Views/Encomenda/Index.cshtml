@@ -5,16 +5,24 @@
 @{
     ViewData["Title"] = "Lista de Encomendas";
 }
+
 <h2>Lista de Encomendas</h2>
 
+<div class="row justify-content-end">
+    <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
+        <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="Cadastrar">
+            Criar nova encomenda
+        </a>
+    </div>
+</div>
 
 <div class="row">
-    @if(Model is not null)
+    @if (Model is not null)
     {
         @foreach (var item in Model)
         {
             <div class="col-md-4 col-xs-6 border-primary mb-3">
-                <div class="card mb-3" style="max-width: 540px;">
+                <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-12">
                             <div class="card-header text-white cor-apoema">
@@ -67,7 +75,3 @@
         }
     }
 </div>
-
-<a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="Cadastrar">
-    Criar nova encomenda
-</a>
