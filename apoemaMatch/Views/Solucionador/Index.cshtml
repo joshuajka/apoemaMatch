@@ -8,10 +8,10 @@
     <h2>Solucionadores</h2>
 
     <div class="row">
-        <div class="card-deck">
-            @foreach (var item in Model)
-            {
-            <div class="card border-0">
+        @*<div class="card-deck">*@
+        @foreach (var item in Model)
+        {
+            <div class="card border-0 mb-3 mx-auto col-12 col-md-6 col-lg-3" style="min-width: 22rem">
                 <img src="@item.ImagemURL" class="card-img-top img-fluid" alt="@item.Nome">
                 <div class="card-body">
                     <h5 class="card-title text-center">
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-                <!--<div class="col-md-6 border-primary mb-3">
+            <!--<div class="col-md-6 border-primary mb-3">
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
                 <div class="col-md-12">
@@ -73,8 +73,8 @@
 
                 <div class="col-md-12">
                     <div class="card-footer ">-->
-                @*<p class="card-text">*@
-                <!--@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            @*<p class="card-text">*@
+            <!--@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
         {
             <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
                 <i class="bi bi-trash"></i>Excluir
@@ -83,15 +83,15 @@
         <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
             <i class="bi bi-eye-fill"></i> Detalhes
         </a>-->
-                @*</p>*@
-                <!--</div>
+            @*</p>*@
+            <!--</div>
                     </div>
                 </div>
             </div>
         </div>-->
-            }
-        </div>
-       </div>
+        }
+        @*</div>*@
+    </div>
         @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
         {
             <div class="text-white text-center">
