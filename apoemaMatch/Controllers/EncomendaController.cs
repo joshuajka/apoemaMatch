@@ -4,6 +4,7 @@ using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,6 +38,18 @@ namespace apoemaMatch.Controllers
             if (!ModelState.IsValid)
             {
                 return View(encomendaViewModel);
+            }
+
+            List<Questao> questoes = null;
+            if (encomendaViewModel.InputQuestoes is not null)
+            {
+                questoes = JsonConvert.DeserializeObject<List<Questao>>(encomendaViewModel.InputQuestoes);
+            }
+
+            if (questoes is not null && questoes.Any())
+            {
+                encomendaViewModel.Questoes = new();
+                encomendaViewModel.Questoes.AddRange(questoes);
             }
 
             await _service.AddAsync(encomendaViewModel.Converta());
