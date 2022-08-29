@@ -80,7 +80,7 @@ namespace apoemaMatch.Data
                     {
                         new Encomenda()
                         {
-                            IdDemandante = 0,
+                            IdDemandante = 1,
                             EncomendaAberta = true,
                             Titulo = "Nova Encomenda",
                             SegmentoDeMercado = EnumSegmentoDeMercado.Educacao,

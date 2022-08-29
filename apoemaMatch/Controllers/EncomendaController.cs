@@ -50,7 +50,7 @@ namespace apoemaMatch.Controllers
             
             if (User.IsInRole("Admin"))
             {
-                encomendaViewModel.IdDemandante = 0;
+                encomendaViewModel.IdDemandante = 1;
             }
             else
             {
@@ -81,6 +81,21 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> Detalhes(int Id)
         {
             Encomenda encomenda = await _service.GetByIdAsync(Id);
+
+            if(encomenda.IdSolucionador != null)
+            {
+                var solucionador = await _serviceSolucionador.GetByIdAsync((int)encomenda.IdSolucionador);
+                ViewData["NomeSolucionador"] = solucionador.Nome;
+            }
+            else
+            {
+                ViewData["NomeSolucionador"] = "Não possui";
+            }
+            var demandante = await _serviceDemandante.GetByIdAsync((int)encomenda.IdDemandante);
+            ViewData["EmpresaDemandante"] = demandante.NomeEmpresa;
+
+
+
             return View(encomenda.Converta());
         }
 

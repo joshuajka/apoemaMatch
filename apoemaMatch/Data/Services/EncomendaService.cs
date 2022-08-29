@@ -43,6 +43,7 @@ namespace apoemaMatch.Data.Services
                 dbEncomenda.Questoes = encomenda.Questoes;
                 dbEncomenda.IdDemandante = encomenda.IdDemandante;
                 dbEncomenda.IdSolucionador = encomenda.IdSolucionador;
+                dbEncomenda.EncomendaAberta = encomenda.EncomendaAberta;
 
                 await _context.SaveChangesAsync();
 

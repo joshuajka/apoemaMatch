@@ -24,6 +24,8 @@
                         <p class="card-text">@Model.Descricao</p>
                         <p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)Model.SegmentoDeMercado)</p>
                         <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)Model.AreaSolucaoBuscada)</p>
+                        <p class="card-text"><b>Solucionador: </b>@ViewData["NomeSolucionador"]</p>
+                        <p class="card-text"><b>Empresa Demandante: </b>@ViewData["EmpresaDemandante"]</p>
                     </div>
                 </div>
                 <div class="col-md-12">
