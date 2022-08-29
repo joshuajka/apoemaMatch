@@ -6,10 +6,10 @@ namespace apoemaMatch.Data.ViewModels
     {
         public int Id { get; set; }
 
-        [Display(Name = "Texto para primeira opção")]
+        [Display(Name = "Texto para primeiro atributo")]
         public string TextoPrimeiraOpcao { get; set; }
 
-        [Display(Name = "Texto para segunda opção")]
+        [Display(Name = "Texto para segundo atributo")]
         public string TextoSegundaOpcao { get; set; }
 
         public bool EhRespostaEsperada { get; set; }
