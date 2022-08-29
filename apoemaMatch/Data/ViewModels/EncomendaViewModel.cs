@@ -32,12 +32,13 @@ namespace apoemaMatch.Data.ViewModels
 
         public EnumStatusEncomenda StatusEncomenda { get; set; }
 
-        public EnumTipoResposta TipoResposta { get; set; }
+        public QuestaoViewModel QuestaoBase { get; set; }
+
+        public string InputQuestoes { get; set; }
 
         public List<Questao> Questoes { get; set; }
 
         [Display(Name = "Solucionador")]
         public int SolucionadorId { get; set; }
-
     }
 }
