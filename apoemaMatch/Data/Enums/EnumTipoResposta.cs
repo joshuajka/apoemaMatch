@@ -5,13 +5,10 @@ namespace apoemaMatch.Data.Enums
 {
     public enum EnumTipoResposta
     {
-        [Display(Name = "Resposta Curta")]
-        RespostaCurta,
-        [Display(Name = "Parágrafo")]
-        Paragrafo,
-        [Display(Name = "Sim ou Não")]
-        SimNao,
-        [Display(Name = "Caixas de seleção")]
-        CaixaSelecao,
+        Textual = 1,
+        [Display(Name = "Seleção única")]
+        SelecaoUnica,
+        [Display(Name = "Múltipla seleção")]
+        MultiplaSelecao,
     }
 }
