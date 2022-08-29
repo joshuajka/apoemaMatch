@@ -1,5 +1,4 @@
-﻿using apoemaMatch.Data.Enums;
-using apoemaMatch.Data.ViewModels;
+﻿using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 
 namespace apoemaMatch.Data.MetodosExtensao
@@ -16,7 +15,6 @@ namespace apoemaMatch.Data.MetodosExtensao
                 AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada,
                 Descricao = encomenda.Descricao,
                 RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo,
-                TipoResposta = EnumTipoResposta.RespostaCurta,
                 Questoes = encomenda.Questoes
             };
         }
