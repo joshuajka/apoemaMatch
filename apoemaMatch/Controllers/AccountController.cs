@@ -390,6 +390,14 @@ namespace apoemaMatch.Controllers
                     return View(model);
                 }
 
+                var userVerificador = await _userManager.FindByEmailAsync(model.NewEmail);
+
+                if (userVerificador != null)
+                {
+                    TempData["Error"] = "Esse email já está cadastrado";
+                    return View(model);
+                }
+
                 user.Email = model.NewEmail;
                 user.EmailConfirmed = true;
 
@@ -399,7 +407,8 @@ namespace apoemaMatch.Controllers
                 {
                     ViewBag.IsSuccess = true;
                     ModelState.Clear();
-                    return View();
+                    await _signInManager.SignOutAsync();
+                    return RedirectToAction("Index", "Home");
                 }
 
                 foreach (var error in result.Errors)
