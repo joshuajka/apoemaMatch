@@ -49,7 +49,7 @@ namespace apoemaMatch.Migrations
                         column: x => x.EncomendaId,
                         principalTable: "Encomendas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

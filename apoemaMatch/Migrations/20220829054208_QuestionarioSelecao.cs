@@ -25,7 +25,7 @@ namespace apoemaMatch.Migrations
                         column: x => x.QuestaoId,
                         principalTable: "Questao",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
