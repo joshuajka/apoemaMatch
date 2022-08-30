@@ -52,6 +52,8 @@
                             </div>
                         </div>
 
+                        <input type="hidden" asp-for="RealizaProcessoSeletivo" value="false" />
+
                         <div class="form-group">
                             <div class="text-center">
                                 <h6>Como você deseja encontrar um solucionador?</h6>
@@ -59,7 +61,7 @@
 
                             @*<input type="submit" value="Cadastrar" class="btn btn-outline-success float-right" />*@
                             <div class="float-left">
-                                <input type="submit" class="btn btn-outline-secondary" value="Ser agenciado pelo APEOMA" />
+                                <input type="submit" onclick="atribuiRealizaProcessoSeletivo(false)" class="btn btn-outline-secondary" value="Ser agenciado pelo APEOMA" />
                             </div>
                             <div class="float-right">
                                 <button onclick="mostreQuestionarioSelecao()" type="button" class="btn btn-outline-secondary"> Iniciar um processo de seleção </button>
@@ -77,12 +79,19 @@
 
 @section Scripts{
     <script>
+        let inputRealizaProcessoSeletivo = document.getElementById("RealizaProcessoSeletivo");
+
+        function atribuiRealizaProcessoSeletivo(realiza) {
+            inputRealizaProcessoSeletivo.value = realiza;
+        }
+
         function fecheAlertaSucesso() {
             const alert = new bootstrap.Alert(document.getElementById("alertSucesso"));
             alert.close();
         }
 
         function mostreQuestionarioSelecao() {
+            atribuiRealizaProcessoSeletivo(true);
             document.getElementById("cadastroBasicoEncomenda").classList.add("d-none");
             document.getElementById("questionarioSelecao").classList.remove("d-none");
         }

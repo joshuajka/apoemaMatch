@@ -17,7 +17,7 @@ namespace apoemaMatch.Data.MetodosExtensao
                 Descricao = encomendaViewModel.Descricao,
                 StatusEncomenda = statusEncomenda,
                 RealizaProcessoSeletivo = encomendaViewModel.RealizaProcessoSeletivo,
-                Questoes = encomendaViewModel.Questoes
+                Questoes = encomendaViewModel.RealizaProcessoSeletivo ? encomendaViewModel.Questoes : null
             };
         }
 

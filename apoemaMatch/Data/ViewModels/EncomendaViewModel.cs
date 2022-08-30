@@ -27,7 +27,6 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "A descrição da demanda é obrigatorio")]
         public string Descricao { get; set; }
 
-        [Required(ErrorMessage = "É necessário informar se realiza processo seletivo")]
         public bool RealizaProcessoSeletivo { get; set; }
 
         public EnumStatusEncomenda StatusEncomenda { get; set; }
