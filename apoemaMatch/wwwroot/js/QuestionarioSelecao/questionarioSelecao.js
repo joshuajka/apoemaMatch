@@ -76,9 +76,11 @@ function questaoEstaValida() {
 
 function adicioneQuestao() {
     let opcaoResposta1 = {
+        Ordem: 1,
         Texto: inputOpcaoRespostaTexto1.value
     }
     let opcaoResposta2 = {
+        Ordem: 2,
         Texto: inputOpcaoRespostaTexto2.value
     }
     let opcoes = [];
@@ -86,7 +88,9 @@ function adicioneQuestao() {
     opcoes.push(opcaoResposta1);
     opcoes.push(opcaoResposta2);
 
+    let questoesAdicionadas = JSON.parse(questoesInput.value || '[]');
     let questaoNova = {
+        Ordem: questoesAdicionadas.length + 1,
         Pergunta: inputPergunta.value,
         TipoResposta: questaoTipoResposta.value,
         TextoTipoResposta: questaoTipoResposta.options[questaoTipoResposta.selectedIndex].text,
@@ -95,9 +99,9 @@ function adicioneQuestao() {
             : null
     }
 
-    let questoesAdicionadas = JSON.parse(questoesInput.value || '[]');
     questoesAdicionadas.push(questaoNova);
     questoesInput.value = JSON.stringify(questoesAdicionadas);
+    limpeCamposInputQuestao();
     monteCardsQuestoes();
 }
 
@@ -119,7 +123,13 @@ function monteCardsQuestoes() {
             "<div class=\"card mb-3\">"
             + "<div class=\"row g-0\">"
             + "<div class=\"col-md-12\">"
-            + "<div class=\"card-header cor-apoema\"></div>"
+            + "<div class=\"card-header cor-apoema\" style=\"text-align: center;\">"
+            + "<p class=\"card-text\">"
+            + "<h5 class=\"card-title\">"
+            + `Critério ${q.Ordem}`
+            + "</h5>"
+            + "</p>"
+            + "</div>"
             + "</div>"
             + "<div class=\"col-md-12\">"
             + "<div class=\"card-body\">"
@@ -127,9 +137,52 @@ function monteCardsQuestoes() {
             + `<p class=\"card-text\"><b>Tipo de critério: </b>${q.TextoTipoResposta}</p>`
             + "</div>"
             + "</div>"
+            + "<div class=\"col-md-12\">"
+            + "<div class=\"card-footer\">"
+            + "<p class=\"card-text\">"
+            + `<button onclick=\"removaQuestao(${q.Ordem})\" type=\"button\" class=\"btn btn-danger text-white\">`
+            + "<i class=\"bi bi-trash\"></i>"
+            + "</button>"
+            + `<button onclick=\"visualizeQuestao(${q.Ordem})\" type=\"button\" class=\"btn btn-outline-primary float-right\">`
+            + "<i class=\"bi bi-eye-fill\"></i>"
+            + "</button>"
+            + "</p>"
             + "</div>"
-            + "</div >";
+            + "</div>"
+            + "</div>"
+            + "</div>";
 
         divQuestoes.appendChild(divCard);
     });
+}
+
+function removaQuestao(ordemQuestao) {
+    let questoesAdicionadas = JSON.parse(questoesInput.value || '[]');
+    questoesAdicionadas = questoesAdicionadas.filter(q => q.Ordem != ordemQuestao);
+
+    for (let i = 0; i < questoesAdicionadas.length; i++) {
+        let questao = questoesAdicionadas[i];
+        questao.Ordem = i + 1;
+    }
+
+    questoesInput.value = JSON.stringify(questoesAdicionadas);
+    monteCardsQuestoes();
+}
+
+function visualizeQuestao(ordemQuestao) {
+    let questoesAdicionadas = JSON.parse(questoesInput.value || '[]');
+    let questaoProcurada = questoesAdicionadas.find(q => q.Ordem == ordemQuestao);
+
+    inputPergunta.value = questaoProcurada.Pergunta;
+    questaoTipoResposta.value = questaoProcurada.TipoResposta;
+    inputOpcaoRespostaTexto1.value = questaoProcurada.OpcoesResposta?.find(op => op.Ordem == 1).Texto || '';
+    inputOpcaoRespostaTexto2.value = questaoProcurada.OpcoesResposta?.find(op => op.Ordem == 2).Texto || '';
+    questaoTipoResposta.dispatchEvent(new Event('change'));
+}
+
+function limpeCamposInputQuestao() {
+    inputPergunta.value = '';
+    questaoTipoResposta.value = 1;
+    inputOpcaoRespostaTexto1.value = '';
+    inputOpcaoRespostaTexto2.value = '';
 }

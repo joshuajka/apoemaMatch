@@ -4,8 +4,8 @@
     ViewData["Title"] = "Criar Questionário de Avaliação";
 }
 
-<div class="d-none" id="questionarioSelecao">
-    <div class="row">
+<div class="row d-none" id="questionarioSelecao">
+    <div class="col-md-8 offset-2">
         <div class="col-md-12 mb-3">
             <h2 style="text-align: center;">Quais critérios e atributos você gostaria de avaliar para sua encomenda?</h2>
         </div>
@@ -42,10 +42,10 @@
 
             @* TODO: Implementar add opcao *@
             @*<div class="col-md-12 mb-3 d-flex justify-content-center">
-                <button type="button" class="btn btn-primary" id="botaoAdicionarOpcaoResposta">
-                    <i class="bi bi-plus text-white"></i>
-                </button>
-            </div>*@
+                    <button type="button" class="btn btn-primary" id="botaoAdicionarOpcaoResposta">
+                        <i class="bi bi-plus text-white"></i>
+                    </button>
+                </div>*@
         </div>
 
         <div class="col-md-12 mb-3 d-flex justify-content-end">
@@ -54,7 +54,7 @@
 
         <input type="hidden" asp-for="InputQuestoes" />
 
-        <div class="col-md-12 mb-3 d-flex d-none" id="div_Questoes">
+        <div class="row mb-3 d-none" id="div_Questoes">
         </div>
 
         <div class="col text-center">
