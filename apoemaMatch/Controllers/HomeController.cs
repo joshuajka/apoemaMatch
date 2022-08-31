@@ -40,16 +40,12 @@ namespace apoemaMatch.Controllers
 
         public async Task<IActionResult> Privacy()
         {
-            //UserEmailOptions options = new UserEmailOptions
-            //{
-            //    ToEmails = new List<string>() { "joshuajka@gmail.com" },
-            //    PlaceHolders = new List<KeyValuePair<string, string>>()
-            //    {
-            //        new KeyValuePair<string, string>("{{UserName}}","Joshua")
-            //    }
-            //};
 
-            //await _emailService.SendTestEmail(options);
+            return View();
+        }
+
+        public async Task<IActionResult> Sobre()
+        {
 
             return View();
         }
