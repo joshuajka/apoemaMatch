@@ -24,6 +24,17 @@
                         <p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)Model.AreaSolucaoBuscada)</p>
                         <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)Model.SegmentoDeMercado)</p>
                         <p class="card-text"><b>Descrição: </b>@Model.Descricao</p>
+                        <p class="card-text">
+                            <b>Realiza processo seletivo: </b>
+                            @if (Model.RealizaProcessoSeletivo)
+                            {
+                                <span>Sim</span>
+                            }
+                            else
+                            {
+                                <span>Não</span>
+                            }
+                        </p>
                         <p class="card-text ">
                             <b>Status: </b>
                             @if (Model.EncomendaAberta)
