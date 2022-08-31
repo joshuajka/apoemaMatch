@@ -52,10 +52,13 @@ namespace apoemaMatch
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;
 
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
+
                 options.SignIn.RequireConfirmedEmail = false;
 
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(20);
                 options.Lockout.MaxFailedAccessAttempts = 3;
+
             });
 
             services.Configure<DataProtectionTokenProviderOptions>(options =>

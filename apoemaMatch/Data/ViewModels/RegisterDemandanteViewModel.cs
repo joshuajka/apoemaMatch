@@ -72,7 +72,7 @@ namespace apoemaMatch.Data.ViewModels
 
         [Display(Name = "Nome de usuário")]
         [Required(ErrorMessage = "Nome de usuário é obrigatório")]
-        [RegularExpression("[A-Za-z]*", ErrorMessage = "O nome só pode conter letras em uma única palavra, sugerimos seu primeiro nome")]
+        //[RegularExpression("[A-Za-z]*", ErrorMessage = "O nome só pode conter letras em uma única palavra, sugerimos seu primeiro nome")]
         public string UserName { get; set; }
 
         [Display(Name = "Nome Completo")]

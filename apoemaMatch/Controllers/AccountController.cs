@@ -104,7 +104,7 @@ namespace apoemaMatch.Controllers
 
             var novoUsuario = new ApplicationUser()
             {
-                Nome = registerViewModel.Nome,
+                Nome = textoSemAcentos(registerViewModel.Nome),
                 Email = registerViewModel.Email,
                 UserName = registerViewModel.Email
             };
@@ -136,7 +136,7 @@ namespace apoemaMatch.Controllers
 
             var novoUsuario = new ApplicationUser()
             {
-                Nome = registerViewModel.NomeCompleto,
+                Nome = textoSemAcentos(registerViewModel.NomeCompleto),
                 Email = registerViewModel.Email,
                 UserName = registerViewModel.UserName
             };
@@ -163,10 +163,11 @@ namespace apoemaMatch.Controllers
                 };
 
                 await _serviceSolucionador.AddAsync(novoSolucionador);
-
+                return View("RegisterCompleted");
             }
 
-            return View("RegisterCompleted");
+            TempData["Error"] = "Nome de usuário já sendo utilizado";
+            return View(registerViewModel);
 
         }
 
@@ -187,7 +188,7 @@ namespace apoemaMatch.Controllers
 
             var novoUsuario = new ApplicationUser()
             {
-                Nome = registerViewModel.NomeCompleto,
+                Nome = textoSemAcentos(registerViewModel.NomeCompleto),
                 Email = registerViewModel.Email,
                 UserName = registerViewModel.UserName
             };
@@ -221,11 +222,12 @@ namespace apoemaMatch.Controllers
                 };
 
                 await _serviceDemandante.AddAsync(novoDemandante);
-
+                return View("RegisterCompleted");
             }
 
-            return View("RegisterCompleted");
-
+            
+            TempData["Error"] = "Nome de usuário já sendo utilizado";
+            return View(registerViewModel);
         }
 
         [HttpPost]
@@ -370,7 +372,7 @@ namespace apoemaMatch.Controllers
             return View();
         }
 
-        
+
         public IActionResult ChangeEmail()
         {
             return View();
@@ -486,5 +488,21 @@ namespace apoemaMatch.Controllers
         }
 
 
+        public static string textoSemAcentos(string text)
+        {
+            string withDiacritics = "ÄÅÁÂÀÃäáâàãÉÊËÈéêëèÍÎÏÌíîïìÖÓÔÒÕöóôòõÜÚÛüúûùÇç";
+            string withoutDiacritics = "AAAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUuuuuCc";
+            for (int i = 0; i < withDiacritics.Length; i++)
+            {
+                text = text.Replace(withDiacritics[i].ToString(), withoutDiacritics[i].ToString());
+            }
+            return text;
+
+
+
+        }
+
+
     }
-}
+
+    }
