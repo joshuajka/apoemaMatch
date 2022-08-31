@@ -27,7 +27,8 @@ namespace apoemaMatch.Data.MetodosExtensao
             {
                 Id = questaoViewModel.Id,
                 Pergunta = questaoViewModel.Pergunta,
-                TipoResposta = questaoViewModel.TipoResposta
+                TipoResposta = questaoViewModel.TipoResposta,
+                Ordem = questaoViewModel.Ordem
             };
         }
     }
