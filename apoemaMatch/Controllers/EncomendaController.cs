@@ -34,6 +34,32 @@ namespace apoemaMatch.Controllers
             return View(encomendas.Select(e => e.Converta()));
         }
 
+        public async Task<IActionResult> MinhasEncomendasSolucionador()
+        {
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var userSolucionador = await _userManager.FindByEmailAsync(userEmail);
+            var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(userSolucionador.Id);
+
+            IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
+
+            var encomendasSolucionador = encomendas.Where(n => n.IdSolucionador == solucionador.Id);
+
+            return View(encomendasSolucionador.Select(e => e.Converta()));
+        }
+
+        public async Task<IActionResult> MinhasEncomendasDemandante()
+        {
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var userDemandante = await _userManager.FindByEmailAsync(userEmail);
+            var demamandante = await _serviceDemandante.GetDemandanteByIdUser(userDemandante.Id);
+
+            IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
+
+            var encomendasDemandante = encomendas.Where(n => n.IdDemandante == demamandante.Id);
+
+            return View(encomendas.Select(e => e.Converta()));
+        }
+
         [HttpGet]
         public IActionResult Cadastrar()
         {
