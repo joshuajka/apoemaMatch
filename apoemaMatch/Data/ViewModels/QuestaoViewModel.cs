@@ -14,5 +14,7 @@ namespace apoemaMatch.Data.ViewModels
         public EnumTipoResposta TipoResposta { get; set; }
 
         public OpcaoRespostaViewModel OpcaoRespostaBase { get; set; }
+
+        public int Ordem { get; set; }
     }
 }

@@ -15,5 +15,7 @@ namespace apoemaMatch.Models
         public EnumTipoResposta TipoResposta { get; set; }
 
         public List<OpcaoResposta> OpcoesResposta { get; set; }
+
+        public int Ordem { get; set; }
     }
 }
