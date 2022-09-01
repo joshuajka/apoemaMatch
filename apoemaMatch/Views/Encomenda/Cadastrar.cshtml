@@ -64,11 +64,11 @@
                                 <input type="submit" onclick="atribuiRealizaProcessoSeletivo(false)" class="btn btn-outline-secondary" value="Ser agenciado pelo APEOMA" />
                             </div>
                             <div class="float-right">
-                                <button onclick="mostreQuestionarioSelecao()" type="button" class="btn btn-outline-secondary"> Iniciar um processo de seleção </button>
+                                <button onclick="mostreDetalhesioSelecao()" type="button" class="btn btn-outline-secondary"> Iniciar um processo de seleção </button>
                             </div>
                         </div>
                     </div>
-
+                    @await Html.PartialAsync("DetalhesSelecao.cshtml")
                     @await Html.PartialAsync("QuestionarioSelecao.cshtml")
                 </form>
 
@@ -92,10 +92,16 @@
 
         function mostreQuestionarioSelecao() {
             atribuiRealizaProcessoSeletivo(true);
-            document.getElementById("cadastroBasicoEncomenda").classList.add("d-none");
+            document.getElementById("detalhesSelecao").classList.add("d-none");
             document.getElementById("questionarioSelecao").classList.remove("d-none");
+        }
+        function mostreDetalhesioSelecao() {
+            atribuiRealizaProcessoSeletivo(true);
+            document.getElementById("cadastroBasicoEncomenda").classList.add("d-none");
+            document.getElementById("detalhesSelecao").classList.remove("d-none");
         }
     </script>
 
+    <script src=@Url.Content("~/js/QuestionarioSelecao/DetalhesSelecao.js") asp-append-version="true"></script>
     <script src=@Url.Content("~/js/QuestionarioSelecao/questionarioSelecao.js") asp-append-version="true"></script>
 }

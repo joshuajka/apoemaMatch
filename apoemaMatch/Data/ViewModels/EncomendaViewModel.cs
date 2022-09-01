@@ -27,6 +27,16 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "A descrição da demanda é obrigatorio")]
         public string Descricao { get; set; }
 
+        [Display(Name = "Descreva os detalhes da seleção")]
+        [Required(ErrorMessage = "A descrição da seleção é obrigatorio")]
+        public string DescricaoChamada { get; set; }
+
+        [Display(Name = "Data de validade da seleção")]
+        [Required(ErrorMessage = "A data de validade de seleção é obrigatorio")]
+        public string DataValidadeSelecao { get; set; }
+
+        public string ArquivoDetalheSelecao { get; set; }
+
         public bool RealizaProcessoSeletivo { get; set; }
 
         public EnumStatusEncomenda StatusEncomenda { get; set; }
