@@ -50,26 +50,24 @@
 
                     <input type="hidden" asp-for="RealizaProcessoSeletivo" value="false" />
 
-                        <div class="form-group">
-                            <div class="text-center">
-                                <h6>Como você deseja encontrar um solucionador?</h6>
-                            </div>
+                    <div class="form-group">
+                        <div class="text-center">
+                            <h6>Como você deseja encontrar um solucionador?</h6>
+                        </div>
 
-                            @*<input type="submit" value="Cadastrar" class="btn btn-outline-success float-right" />*@
-                            <div class="float-left">
-                                <input type="submit" onclick="atribuiRealizaProcessoSeletivo(false)" class="btn btn-outline-secondary" value="Ser agenciado pelo APEOMA" />
-                            </div>
-                            <div class="float-right">
-                                <button onclick="mostreDetalhesioSelecao()" type="button" class="btn btn-outline-secondary"> Iniciar um processo de seleção </button>
-                            </div>
+                        <div class="float-left">
+                            <input type="submit" onclick="atribuiRealizaProcessoSeletivo(false)" class="btn btn-outline-secondary" value="Ser agenciado pelo APEOMA" />
+                        </div>
+                        <div class="float-right">
+                            <button onclick="mostreDetalhesioSelecao()" type="button" class="btn btn-outline-secondary"> Iniciar um processo de seleção </button>
                         </div>
                     </div>
-                    @await Html.PartialAsync("DetalhesSelecao.cshtml")
-                    @await Html.PartialAsync("QuestionarioSelecao.cshtml")
-                </form>
-
+                </div>
             </div>
-        </div>
+
+            @await Html.PartialAsync("DetalhesSelecao.cshtml")
+            @await Html.PartialAsync("QuestionarioSelecao.cshtml")
+        </form>
     </div>
 </div>
 
@@ -98,6 +96,5 @@
         }
     </script>
 
-    <script src=@Url.Content("~/js/QuestionarioSelecao/DetalhesSelecao.js") asp-append-version="true"></script>
     <script src=@Url.Content("~/js/QuestionarioSelecao/questionarioSelecao.js") asp-append-version="true"></script>
 }
