@@ -22,8 +22,7 @@ namespace apoemaMatch.Data.Services
         {
             var response = new EncomendaDropDownViewModel()
             {
-                Solucionadores = await _context.Solucionadores.OrderBy(n => n.Nome).ToListAsync()
-
+                Solucionadores = await _context.Solucionadores.Where(_ => _.Disponivel == true).OrderBy(n => n.Nome).ToListAsync()
             };
             return response;
         }

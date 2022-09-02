@@ -230,5 +230,54 @@ namespace apoemaMatch.Controllers
             return RedirectToAction("MeuPerfilSolucionador", "Account");
         }
 
+        public async Task<IActionResult> AtivarDesativarAdmin(int id)
+        {
+            var solucionador = await _service.GetByIdAsync(id);
+
+            if (id != solucionador.Id)
+            {
+                return View("NotFound");
+            }
+
+            if (solucionador.Disponivel)
+            {
+                var solucionadorAlterado = new SolucionadorViewModel()
+                {
+                    Id = solucionador.Id,
+                    Disponivel = false,
+                    ImagemURL = solucionador.ImagemURL,
+                    Cpf = solucionador.Cpf,
+                    Nome = solucionador.Nome,
+                    Email = solucionador.Email,
+                    Telefone = solucionador.Telefone,
+                    MiniBio = solucionador.MiniBio,
+                    Formacao = solucionador.Formacao,
+                    AreaDePesquisa = solucionador.AreaDePesquisa,
+                    CurriculoLattes = solucionador.CurriculoLattes,
+                };
+                await _service.UpdateSolucionadorAsync(solucionadorAlterado);
+            }
+            else
+            {
+                var solucionadorAlterado = new SolucionadorViewModel()
+                {
+                    Id = solucionador.Id,
+                    Disponivel = true,
+                    ImagemURL = solucionador.ImagemURL,
+                    Cpf = solucionador.Cpf,
+                    Nome = solucionador.Nome,
+                    Email = solucionador.Email,
+                    Telefone = solucionador.Telefone,
+                    MiniBio = solucionador.MiniBio,
+                    Formacao = solucionador.Formacao,
+                    AreaDePesquisa = solucionador.AreaDePesquisa,
+                    CurriculoLattes = solucionador.CurriculoLattes,
+                };
+                await _service.UpdateSolucionadorAsync(solucionadorAlterado);
+            }
+
+            return RedirectToAction("Index", "Solucionador");
+        }
+
     }
 }

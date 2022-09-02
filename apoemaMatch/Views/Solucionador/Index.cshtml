@@ -29,10 +29,22 @@
                 <div class="card-footer">
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
-                            <i class="bi bi-trash"></i>Excluir
-                        </a>
-                    }
+
+
+                        @if (item.Disponivel)
+                        {
+                            <a class="btn btn-danger text-white" asp-action="AtivarDesativarAdmin" asp-route-id="@item.Id">
+                                Desativar
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success text-white" asp-action="AtivarDesativarAdmin" asp-route-id="@item.Id">
+                                Ativar
+                            </a>
+                        }
+
+                        }
                     <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
                         <i class="bi bi-eye-fill"></i> Detalhes
                     </a>
