@@ -80,7 +80,8 @@ namespace apoemaMatch.Data
                             Titulo = "Nova Encomenda",
                             TipoEncomenda = EnumTipoEncomenda.DesenvolvimentoTecnologico,
                             Descricao = "Essa é uma nova encomenda",
-                            StatusEncomenda = EnumStatusEncomenda.Inicial
+                            StatusEncomenda = EnumStatusEncomenda.Inicial,
+                            Demandante = context.Demandantes.First()
                         }
                     });
 
@@ -95,8 +96,8 @@ namespace apoemaMatch.Data
 
                         new EncomendaSolucionador()
                         {
-                            EncomendaId = 1,
-                            SolucionadorId =1
+                            EncomendaId = context.Encomendas.First().Id,
+                            SolucionadorId = context.Solucionadores.First().Id
                         }
 
                     });
