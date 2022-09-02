@@ -8,54 +8,59 @@
 <div class="container">
     <h2>Demandantes</h2>
 
+    <form class="form-inline my-2 my-lg-0" asp-controller="Demandante" asp-action="Filter" style="padding-right: 25px;">
+            <input name="searchString" type="text" class="form-control" placeholder="Buscar Demandante" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+
     <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="card border-0 mb-3 mx-auto col-12 col-md-6 col-lg-3" style="min-width: 22rem">
-                    <img src="@item.ImagemURL" class="card-img-top img-fluid" alt="@item.NomeEmpresa">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">
-                            @item.NomeEmpresa
-                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                            {
-                                <a class="text-white float-right" asp-action="Editar" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
-                            }
-                        </h5>
-                        <p class="card-text">@item.Descricao</p>
-                        <p class="card-text"><b>Ramo de atuação: </b>@Extensions.GetEnumDisplayName((EnumRamoDeAtuacao)item.RamoDeAtuacao)</p>
-                        <p class="card-text"><b>Segmento de mercado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
-                        <p class="card-text"><b>Objetivo: </b>@Extensions.GetEnumDisplayName((EnumObjetivoParceria)item.ObjetivoParceria)</p>
-                        <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>
-                    </div>
-                    <div class="card-footer">
+        @foreach (var item in Model)
+        {
+            <div class="card border-0 mb-3 mx-auto col-12 col-md-6 col-lg-3" style="min-width: 22rem">
+                <img src="@item.ImagemURL" class="card-img-top img-fluid" alt="@item.NomeEmpresa">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        @item.NomeEmpresa
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
-                            @*<a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
+                            <a class="text-white float-right" asp-action="Editar" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                        }
+                    </h5>
+                    <p class="card-text">@item.Descricao</p>
+                    <p class="card-text"><b>Ramo de atuação: </b>@Extensions.GetEnumDisplayName((EnumRamoDeAtuacao)item.RamoDeAtuacao)</p>
+                    <p class="card-text"><b>Segmento de mercado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
+                    <p class="card-text"><b>Objetivo: </b>@Extensions.GetEnumDisplayName((EnumObjetivoParceria)item.ObjetivoParceria)</p>
+                    <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>
+                </div>
+                <div class="card-footer">
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        @*<a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
                                 <i class="bi bi-trash"></i>Excluir
                             </a>*@
-                            @*<a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
-                                    <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
-                                </a>*@
-                        }
-                        <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
-                            <i class="bi bi-eye-fill"></i> Detalhes
-                        </a>
-                        @*<a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
-                                asp-controller="Orders"
-                                asp-action="AddItemToShoppingCart"
-                                asp-route-id="@item.Id">
-                                <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
+                        @*<a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
+                                <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
                             </a>*@
-                    </div>
+                    }
+                    <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
+                        <i class="bi bi-eye-fill"></i> Detalhes
+                    </a>
+                    @*<a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
+                            asp-controller="Orders"
+                            asp-action="AddItemToShoppingCart"
+                            asp-route-id="@item.Id">
+                            <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
+                        </a>*@
                 </div>
-            }
+            </div>
+        }
     </div>
     @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-    {
-        <div class="text-white text-center">
-            <a asp-controller="Account" asp-action="RegisterDemandante" class="btn btn-success">
-                <i class="bi bi-plus-circle">Adicionar</i>
-            </a>
-        </div>
-    }*@
+        {
+            <div class="text-white text-center">
+                <a asp-controller="Account" asp-action="RegisterDemandante" class="btn btn-success">
+                    <i class="bi bi-plus-circle">Adicionar</i>
+                </a>
+            </div>
+        }*@
 </div>

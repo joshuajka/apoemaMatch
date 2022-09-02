@@ -6,6 +6,7 @@ using apoemaMatch.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace apoemaMatch.Controllers
@@ -31,6 +32,20 @@ namespace apoemaMatch.Controllers
         {
             var data = await _service.GetAllAsync();
             return View(data);
+        }
+
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var todosSolucionadores = await _service.GetAllAsync();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var resultadoFiltro = todosSolucionadores.Where(n => n.Nome.Contains(searchString))
+                    .ToList();
+                return View("Index", resultadoFiltro);
+            }
+
+            return View("Index", todosSolucionadores);
         }
 
         //Get: Solucionador/Create
