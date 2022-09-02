@@ -79,6 +79,7 @@ namespace apoemaMatch.Controllers
             var response = new SolucionadorViewModel()
             {
                 ImagemURL = solucionador.ImagemURL,
+                Cpf = solucionador.Cpf,
                 Nome = solucionador.Nome,
                 Email = solucionador.Email,
                 Telefone = solucionador.Telefone,
@@ -110,6 +111,7 @@ namespace apoemaMatch.Controllers
             {
                 Id = solucionador.Id,
                 ImagemURL = solucionador.ImagemURL,
+                Cpf = solucionador.Cpf,
                 Nome = solucionador.Nome,
                 Email = solucionador.Email,
                 Telefone = solucionador.Telefone,
@@ -120,7 +122,7 @@ namespace apoemaMatch.Controllers
         };
 
             await _service.UpdateSolucionadorAsync(solucionadorAlterado);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("MeuPerfilSolucionador", "Account");
         }
 
         //Get: Solucionador/Excluir/1

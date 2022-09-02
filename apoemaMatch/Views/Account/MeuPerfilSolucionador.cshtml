@@ -27,6 +27,11 @@
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="Cpf" class="control-label"></label>
+                    <input asp-for="Cpf" class="form-control" readonly />
+                    <span asp-validation-for="Cpf" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="NomeCompleto" class="control-label"></label>
                     <input asp-for="NomeCompleto" class="form-control" readonly />
                     <span asp-validation-for="NomeCompleto" class="text-danger"></span>
@@ -63,7 +68,7 @@
                 </div>
                 <div class="form-group">
                     <a class="btn btn-outline-success float-right" asp-controller="Solucionador" asp-action="Editar" asp-route-id="@Model.Id"> Editar</a>
-                    <a class="btn btn-outline-secondary" asp-controller="Solucionador" asp-action="Index">Voltar</a>
+                    <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="MeuPerfilSolucionador">Voltar</a>
                 </div>
             </div>
         </div>

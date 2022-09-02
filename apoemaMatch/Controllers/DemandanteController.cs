@@ -113,6 +113,7 @@ namespace apoemaMatch.Controllers
             var response = new DemandanteViewModel()
             {
                 Id = demandante.Id,
+                Cnpj = demandante.Cnpj,
                 ImagemURL = demandante.ImagemURL,
                 Email = demandante.Email,
                 NomeDemandante = demandante.NomeDemandante,
@@ -153,6 +154,7 @@ namespace apoemaMatch.Controllers
             {
                 Id = novoDemandante.Id,
                 ImagemURL = novoDemandante.ImagemURL,
+                Cnpj = novoDemandante.Cnpj,
                 Email = novoDemandante.Email,
                 NomeDemandante = novoDemandante.NomeDemandante,
                 Telefone = novoDemandante.Telefone,
@@ -173,7 +175,7 @@ namespace apoemaMatch.Controllers
             await _service.UpdateDemandanteAsync(demandanteAlterado);
 
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("MeuPerfilDemandante", "Account");
         }
 
         //GET: Demandante/VincularSolucionador/3

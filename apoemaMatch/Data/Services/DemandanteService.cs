@@ -107,6 +107,7 @@ namespace apoemaMatch.Data.Services
             if (dbDemandante != null)
             {
                 dbDemandante.ImagemURL = demandante.ImagemURL;
+                dbDemandante.Cnpj = demandante.Cnpj;
                 dbDemandante.Email = demandante.Email;
                 dbDemandante.NomeDemandante = demandante.NomeDemandante;
                 dbDemandante.Telefone = demandante.Telefone;

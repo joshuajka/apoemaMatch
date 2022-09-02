@@ -256,6 +256,7 @@ namespace apoemaMatch.Controllers
             var solucionadorView = new RegisterSolucionadorViewModel()
             {
                 UserName = userSolucionador.UserName,
+                Cpf = solucionador.Cpf,
                 Id = solucionador.Id,
                 ImagemURL = solucionador.ImagemURL,
                 Email = userSolucionador.Email,
@@ -281,6 +282,7 @@ namespace apoemaMatch.Controllers
             var demandanteView = new RegisterDemandanteViewModel()
             {
                 UserName = userDemandante.UserName,
+                Cnpj = demandante.Cnpj,
                 Id = demandante.Id,
                 ImagemURL = demandante.ImagemURL,
                 Email = userDemandante.Email,

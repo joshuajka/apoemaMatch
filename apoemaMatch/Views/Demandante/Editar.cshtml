@@ -33,9 +33,14 @@
                                 <input asp-for="NomeEmpresa" class="form-control" />
                                 <span asp-validation-for="NomeEmpresa" class="text-danger"></span>
                             </div>
+                            <div class="form-group">
+                                <label asp-for="Cnpj" class="control-label"></label>
+                                <input asp-for="Cnpj" class="form-control" />
+                                <span asp-validation-for="Cnpj" class="text-danger"></span>
+                            </div>
                             <div class="form-group hide">
                                 <label asp-for="Email" class="control-label"></label>
-                                <input asp-for="Email" class="form-control" readonly/>
+                                <input asp-for="Email" class="form-control" readonly />
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -112,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Atualizar" class="btn btn-outline-success float-right" />
-                        <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todas</a>
+                        <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="MeuPerfilDemandante">Voltar</a>
                     </div>
                 </form>
 
