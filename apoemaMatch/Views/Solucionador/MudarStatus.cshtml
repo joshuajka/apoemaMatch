@@ -1,0 +1,28 @@
+﻿@using apoemaMatch.Data.Enums
+@model SolucionadorViewModel
+
+@{
+    ViewData["Title"] = "Mudar Status Solucionador";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Status @Model.Nome</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <div class="form-group">
+                    @if (Model.Disponivel)
+                    {
+                        <a class="btn btn-outline-danger" asp-action="AtivarDesativar" asp-route-id="@Model.Id">Desativar</a>
+                    }
+                    @if (!Model.Disponivel)
+                    {
+                        <a class="btn btn-outline-success" asp-action="AtivarDesativar" asp-route-id="@Model.Id">Ativar</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

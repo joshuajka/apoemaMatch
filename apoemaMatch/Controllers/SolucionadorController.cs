@@ -154,5 +154,81 @@ namespace apoemaMatch.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> MudarStatus(int id)
+        {
+            var solucionador = await _service.GetByIdAsync(id);
+
+            if (solucionador == null)
+            {
+                return View("NotFound");
+            }
+
+            var response = new SolucionadorViewModel()
+            {
+                Id = solucionador.Id,
+                ImagemURL = solucionador.ImagemURL,
+                Disponivel = solucionador.Disponivel,
+                Cpf = solucionador.Cpf,
+                Nome = solucionador.Nome,
+                Email = solucionador.Email,
+                Telefone = solucionador.Telefone,
+                MiniBio = solucionador.MiniBio,
+                Formacao = solucionador.Formacao,
+                AreaDePesquisa = solucionador.AreaDePesquisa,
+                CurriculoLattes = solucionador.CurriculoLattes,
+            };
+
+            return View(response);
+        }
+
+        public async Task<IActionResult> AtivarDesativar(int id)
+        {
+            var solucionador = await _service.GetByIdAsync(id);
+
+            if (id != solucionador.Id)
+            {
+                return View("NotFound");
+            }
+
+            if (solucionador.Disponivel)
+            {
+                var solucionadorAlterado = new SolucionadorViewModel()
+                {
+                    Id = solucionador.Id,
+                    Disponivel = false,
+                    ImagemURL = solucionador.ImagemURL,
+                    Cpf = solucionador.Cpf,
+                    Nome = solucionador.Nome,
+                    Email = solucionador.Email,
+                    Telefone = solucionador.Telefone,
+                    MiniBio = solucionador.MiniBio,
+                    Formacao = solucionador.Formacao,
+                    AreaDePesquisa = solucionador.AreaDePesquisa,
+                    CurriculoLattes = solucionador.CurriculoLattes,
+                };
+                await _service.UpdateSolucionadorAsync(solucionadorAlterado);
+            }
+            else
+            {
+                var solucionadorAlterado = new SolucionadorViewModel()
+                {
+                    Id = solucionador.Id,
+                    Disponivel = true,
+                    ImagemURL = solucionador.ImagemURL,
+                    Cpf = solucionador.Cpf,
+                    Nome = solucionador.Nome,
+                    Email = solucionador.Email,
+                    Telefone = solucionador.Telefone,
+                    MiniBio = solucionador.MiniBio,
+                    Formacao = solucionador.Formacao,
+                    AreaDePesquisa = solucionador.AreaDePesquisa,
+                    CurriculoLattes = solucionador.CurriculoLattes,
+                };
+                await _service.UpdateSolucionadorAsync(solucionadorAlterado);
+            }
+            
+            return RedirectToAction("MeuPerfilSolucionador", "Account");
+        }
+
     }
 }

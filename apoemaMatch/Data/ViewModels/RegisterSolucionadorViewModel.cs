@@ -15,6 +15,8 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "Url da imagem é obrigatória")]
         public string ImagemURL { get; set; }
 
+        public bool Disponivel { get; set; }
+
         [Display(Name = "CPF")]
         [Required(ErrorMessage = "CPF é obrigatório")]
         public string Cpf { get; set; }

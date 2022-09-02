@@ -16,6 +16,9 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "Email é obrigatório")]
         public string Email { get; set; }
 
+        public bool Disponivel { get; set; }
+
+        [Display(Name = "CPF")]
         [Required(ErrorMessage = "Cpf é obrigatório")]
         public string Cpf { get; set; }
 

@@ -256,6 +256,7 @@ namespace apoemaMatch.Controllers
             var solucionadorView = new RegisterSolucionadorViewModel()
             {
                 UserName = userSolucionador.UserName,
+                Disponivel = solucionador.Disponivel,
                 Cpf = solucionador.Cpf,
                 Id = solucionador.Id,
                 ImagemURL = solucionador.ImagemURL,

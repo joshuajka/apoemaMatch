@@ -33,6 +33,7 @@ namespace apoemaMatch.Data.Services
             if (dbSolucionador != null)
             {
                 dbSolucionador.ImagemURL = solucionador.ImagemURL;
+                dbSolucionador.Disponivel = solucionador.Disponivel;
                 dbSolucionador.Cpf = solucionador.Cpf;
                 dbSolucionador.Nome = solucionador.Nome;
                 dbSolucionador.Email = solucionador.Email;
