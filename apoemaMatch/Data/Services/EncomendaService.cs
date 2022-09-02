@@ -42,6 +42,32 @@ namespace apoemaMatch.Data.Services
                 dbEncomenda.Questoes = encomenda.Questoes;
                 dbEncomenda.IdDemandante = encomenda.IdDemandante;
                 dbEncomenda.IdSolucionador = encomenda.IdSolucionador;
+                //dbEncomenda.EncomendaAberta = encomenda.EncomendaAberta;
+
+                await _context.SaveChangesAsync();
+
+                //var SolucionadoresVinculado = await _context.EncomendasSolucionadores.Where(n => n.EncomendaId == dbEncomenda.Id).ToListAsync();
+                //var lista = SolucionadoresVinculados.Select(n=>n.SolucionadorId).ToList();
+                //var excecao = encomenda.EncomendaSolucionadorId.Where(p => SolucionadoresVinculados.All(p2 => p2.SolucionadorId != p)).ToList();
+            }
+        }
+
+        public async Task AceitarRecusarEncomendaAsync(Encomenda encomenda)
+        {
+            var dbEncomenda = await _context.Encomendas.FirstOrDefaultAsync(n => n.Id == encomenda.Id);
+
+            if (dbEncomenda != null)
+            {
+                dbEncomenda.RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo;
+                dbEncomenda.SegmentoDeMercado = encomenda.SegmentoDeMercado;
+                dbEncomenda.Titulo = encomenda.Titulo;
+                dbEncomenda.AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada;
+                dbEncomenda.Descricao = encomenda.Descricao;
+                dbEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
+                dbEncomenda.Questoes = encomenda.Questoes;
+                dbEncomenda.IdDemandante = encomenda.IdDemandante;
+                dbEncomenda.IdSolucionador = encomenda.IdSolucionador;
+                dbEncomenda.EncomendaAberta = encomenda.EncomendaAberta;
                 dbEncomenda.EncomendaAberta = encomenda.EncomendaAberta;
 
                 await _context.SaveChangesAsync();

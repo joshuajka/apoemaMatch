@@ -38,11 +38,11 @@
                                     <b>Status: </b>
                                     @if (item.EncomendaAberta)
                                     {
-                                        <span class="badge bg-success text-white">ABERTA</span>
+                                        <span class="badge bg-success text-white">AGUARDANDO RESPOSTA</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-danger text-white">FECHADA</span>
+                                        <span class="badge bg-success text-white">ACEITA</span>
                                     }
                                 </p>
                             </div>
@@ -50,8 +50,11 @@
                         <div class="col-md-12">
                             <div class="card-footer ">
                                 <p class="card-text">
-                                    <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
-                                        <i class="bi bi-trash"></i>Excluir
+                                    <a class="btn btn-danger text-white" asp-action="Recusar" asp-route-id="@item.Id">
+                                        Recusar
+                                    </a>
+                                    <a class="btn btn-success text-white" asp-action="Aceitar" asp-route-id="@item.Id">
+                                        Aceitar
                                     </a>
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                     {

@@ -10,5 +10,7 @@ namespace apoemaMatch.Data.Services
         Task<EncomendaDropDownViewModel> GetSolucionadoresDropDown(Encomenda encomenda);
 
         Task VincularEncomendaAsync(EncomendaViewModel encomenda);
+
+        Task AceitarRecusarEncomendaAsync(Encomenda encomenda);
     }
 }

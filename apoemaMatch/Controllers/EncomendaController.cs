@@ -218,7 +218,7 @@ namespace apoemaMatch.Controllers
             novaEncomenda.Descricao = encomenda.Descricao;
             novaEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
             novaEncomenda.Questoes = encomenda.Questoes;
-            novaEncomenda.EncomendaAberta = false;
+            //novaEncomenda.EncomendaAberta = false;
             novaEncomenda.IdDemandante = encomenda.IdDemandante;
 
 
@@ -232,6 +232,39 @@ namespace apoemaMatch.Controllers
 
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Recusar(int Id)
+        {
+            var encomenda = await _service.GetByIdAsync(Id);
+
+            if (encomenda == null)
+            {
+                return View("NotFound");
+            }
+
+            encomenda.IdSolucionador = null;
+            encomenda.EncomendaAberta = true;
+
+            await _service.AceitarRecusarEncomendaAsync(encomenda);
+
+            return RedirectToAction(nameof(MinhasEncomendasSolucionador));
+        }
+
+        public async Task<IActionResult> Aceitar(int Id)
+        {
+            var encomenda = await _service.GetByIdAsync(Id);
+
+            if (encomenda == null)
+            {
+                return View("NotFound");
+            }
+
+            encomenda.EncomendaAberta = false;
+
+            await _service.AceitarRecusarEncomendaAsync(encomenda);
+
+            return RedirectToAction(nameof(MinhasEncomendasSolucionador));
         }
 
     }
