@@ -123,6 +123,12 @@ namespace apoemaMatch.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        
+        public async Task<IActionResult> EmAberto()
+        {
+            IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
+            return View(encomendas.Select(e => e.Converta()));
+        }
 
     }
 }
