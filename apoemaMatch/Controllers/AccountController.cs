@@ -152,6 +152,7 @@ namespace apoemaMatch.Controllers
                 {
                     IdUsuario = usuarioSolucionador.Id,
                     Disponivel = true,
+                    Cpf = registerViewModel.Cpf,
                     ImagemURL = registerViewModel.ImagemURL,
                     Email = registerViewModel.Email,
                     Nome = registerViewModel.NomeCompleto,
@@ -204,6 +205,7 @@ namespace apoemaMatch.Controllers
                 {
                     IdUsuario = usuarioDemandante.Id,
                     ImagemURL = registerViewModel.ImagemURL,
+                    Cnpj = registerViewModel.Cnpj,
                     Email = registerViewModel.Email,
                     NomeDemandante = registerViewModel.NomeCompleto,
                     Telefone = registerViewModel.Telefone,

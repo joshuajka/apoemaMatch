@@ -10,6 +10,10 @@ namespace apoemaMatch.Models
         [Key]
         public int Id { get; set; }
 
+        public bool Ativo { get; set; }
+
+        public string Cnpj { get; set; }
+
         [Display(Name = "URL Foto")]
         public string ImagemURL { get; set; }
 

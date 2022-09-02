@@ -10,9 +10,13 @@ namespace apoemaMatch.Data.ViewModels
     public class RegisterSolucionadorViewModel
     {
         public int Id { get; set; }
-        [Display(Name = "Foto")]
-        [Required(ErrorMessage = "Imagem é obrigatória")]
+
+        [Display(Name = "Url da imagem")]
+        [Required(ErrorMessage = "Url da imagem é obrigatória")]
         public string ImagemURL { get; set; }
+
+        [Required(ErrorMessage = "Cpf é obrigatório")]
+        public string Cpf { get; set; }
 
         [Required(ErrorMessage = "Email é obrigatório")]
         [RegularExpression("^[A-Za-z0-9._%+-]*@[A-Za-z0-9.-]*\\.[A-Za-z0-9-]{2,}$", ErrorMessage = "Escreva um email válido")]

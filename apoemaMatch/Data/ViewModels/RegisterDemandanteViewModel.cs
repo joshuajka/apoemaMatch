@@ -11,9 +11,12 @@ namespace apoemaMatch.Data.ViewModels
     {
         public int Id { get; set; }
 
-        [Display(Name = "URL Foto")]
+        [Display(Name = "Url da imagem")]
         [Required(ErrorMessage = "Este campo é obrigatório")]
         public string ImagemURL { get; set; }
+
+        [Required(ErrorMessage = "Cnpj é obrigatório")]
+        public string Cnpj { get; set; }
 
         [Display(Name = "Telefone (Com DDD)")]
         [MaxLength(11)]

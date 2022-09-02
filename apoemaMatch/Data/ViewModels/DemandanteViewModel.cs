@@ -9,13 +9,17 @@ namespace apoemaMatch.Data.ViewModels
 
         public int Id { get; set; }
 
-        [Display(Name = "Foto")]
-        [Required(ErrorMessage = "ImagemURL é obrigatória")]
+        [Display(Name = "URL da imagem")]
+        [Required(ErrorMessage = "URL da imagem é obrigatória")]
         public string ImagemURL { get; set; }
 
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Email é obrigatório")]
         public string Email { get; set; }
+
+        [Display(Name = "CNPJ")]
+        [Required(ErrorMessage = "CNPJ é obrigatório")]
+        public string Cnpj { get; set; }
 
         [Display(Name = "Nome Demandante")]
         [Required(ErrorMessage = "Nome Demandante é obrigatório")]

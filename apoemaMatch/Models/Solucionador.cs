@@ -17,6 +17,8 @@ namespace apoemaMatch.Models
 
         public bool Disponivel { get; set; }
 
+        public string Cpf { get; set; }
+
         [Display(Name = "Foto")]
         [Required(ErrorMessage = "Imagem é obrigatória")]
         public string ImagemURL { get; set; }
