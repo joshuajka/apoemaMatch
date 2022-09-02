@@ -40,10 +40,10 @@ namespace apoemaMatch.Controllers
                 return View(encomendaViewModel);
             }
 
-            List<Questao> questoes = null;
+            List<Criterio> questoes = null;
             if (encomendaViewModel.InputQuestoes is not null)
             {
-                questoes = JsonConvert.DeserializeObject<List<Questao>>(encomendaViewModel.InputQuestoes);
+                questoes = JsonConvert.DeserializeObject<List<Criterio>>(encomendaViewModel.InputQuestoes);
             }
 
             if (questoes is not null && questoes.Any())
@@ -102,13 +102,13 @@ namespace apoemaMatch.Controllers
 
             var encomenda = await _service.GetByIdAsync(id);
 
-            novaEncomenda.RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo;
-            novaEncomenda.SegmentoDeMercado = encomenda.SegmentoDeMercado;
+            novaEncomenda.RealizaProcessoSeletivo = encomenda.PossuiChamada;
+            novaEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
             novaEncomenda.Titulo = encomenda.Titulo;
-            novaEncomenda.AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada;
             novaEncomenda.Descricao = encomenda.Descricao;
             novaEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
-            novaEncomenda.Questoes = encomenda.Questoes;
+            //TODO(Chamada)
+            //novaEncomenda.Questoes = encomenda.Questoes;
             novaEncomenda.EncomendaAberta = false;
 
 

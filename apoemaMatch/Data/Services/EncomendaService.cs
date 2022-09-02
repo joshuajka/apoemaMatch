@@ -34,13 +34,13 @@ namespace apoemaMatch.Data.Services
 
             if (dbEncomenda != null)
             {
-                dbEncomenda.RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo;
-                dbEncomenda.SegmentoDeMercado = encomenda.SegmentoDeMercado;
+                dbEncomenda.PossuiChamada = encomenda.RealizaProcessoSeletivo;
+                dbEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
                 dbEncomenda.Titulo = encomenda.Titulo;
-                dbEncomenda.AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada;
                 dbEncomenda.Descricao = encomenda.Descricao;
                 dbEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
-                dbEncomenda.Questoes = encomenda.Questoes;
+                //TODO(Chamada)
+                // dbEncomenda.Questoes = encomenda.Questoes;
 
                 await _context.SaveChangesAsync();
 

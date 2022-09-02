@@ -5,16 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace apoemaMatch.Models
 {
-    public class Questao : IEntityBase
+    public class Criterio : IEntityBase
     {
         [Key]
         public int Id { get; set; }
         
-        public string Pergunta { get; set; }
+        public string Descricao { get; set; }
         
-        public EnumTipoResposta TipoResposta { get; set; }
+        public EnumTipoCriterio TipoCriterio { get; set; }
 
-        public List<OpcaoResposta> OpcoesResposta { get; set; }
+        public List<OpcaoCriterio> OpcoesCriterios { get; set; }
 
         public int Ordem { get; set; }
     }

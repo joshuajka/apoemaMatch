@@ -11,22 +11,22 @@ namespace apoemaMatch.Data.MetodosExtensao
             {
                 Id = encomenda.Id,
                 Titulo = encomenda.Titulo,
-                SegmentoDeMercado = encomenda.SegmentoDeMercado,
-                AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada,
+                TipoEncomenda = encomenda.TipoEncomenda,
                 Descricao = encomenda.Descricao,
-                RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo,
-                Questoes = encomenda.Questoes
+                RealizaProcessoSeletivo = encomenda.PossuiChamada,
+               //TODO(Chamada)
+                //Questoes = encomenda.Questoes
             };
         }
 
-        public static QuestaoViewModel Converta(this Questao questao)
+        public static QuestaoViewModel Converta(this Criterio criterio)
         {
             return new()
             {
-                Id = questao.Id,
-                Pergunta = questao.Pergunta,
-                TipoResposta = questao.TipoResposta,
-                Ordem = questao.Ordem
+                Id = criterio.Id,
+                Pergunta = criterio.Descricao,
+                TipoCriterio = criterio.TipoCriterio,
+                Ordem = criterio.Ordem
             };
         }
     }

@@ -6,28 +6,28 @@ namespace apoemaMatch.Data.MetodosExtensao
 {
     public static class ConversaoViewModelModel
     {
-        public static Encomenda Converta(this EncomendaViewModel encomendaViewModel, EnumStatusEncomenda statusEncomenda = EnumStatusEncomenda.Iniciado)
+        public static Encomenda Converta(this EncomendaViewModel encomendaViewModel, EnumStatusEncomenda statusEncomenda = EnumStatusEncomenda.Inicial)
         {
             return new()
             {
                 Id = encomendaViewModel.Id,
                 Titulo = encomendaViewModel.Titulo,
-                SegmentoDeMercado = encomendaViewModel.SegmentoDeMercado,
-                AreaSolucaoBuscada = encomendaViewModel.AreaSolucaoBuscada,
+                TipoEncomenda = encomendaViewModel.TipoEncomenda,
                 Descricao = encomendaViewModel.Descricao,
                 StatusEncomenda = statusEncomenda,
-                RealizaProcessoSeletivo = encomendaViewModel.RealizaProcessoSeletivo,
-                Questoes = encomendaViewModel.RealizaProcessoSeletivo ? encomendaViewModel.Questoes : null
+                PossuiChamada = encomendaViewModel.RealizaProcessoSeletivo,
+                //TODO(Chamada)
+               // Questoes = encomendaViewModel.RealizaProcessoSeletivo ? encomendaViewModel.Questoes : null
             };
         }
 
-        public static Questao Converta(this QuestaoViewModel questaoViewModel)
+        public static Criterio Converta(this QuestaoViewModel questaoViewModel)
         {
             return new()
             {
                 Id = questaoViewModel.Id,
-                Pergunta = questaoViewModel.Pergunta,
-                TipoResposta = questaoViewModel.TipoResposta,
+                Descricao = questaoViewModel.Pergunta,
+                TipoCriterio = questaoViewModel.TipoCriterio,
                 Ordem = questaoViewModel.Ordem
             };
         }

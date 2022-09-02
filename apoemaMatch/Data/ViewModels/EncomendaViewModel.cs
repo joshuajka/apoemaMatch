@@ -22,6 +22,10 @@ namespace apoemaMatch.Data.ViewModels
         [Display(Name = "Qual serviço procura?")]
         [Required(ErrorMessage = "O tipo de serviço procurado é obrigatorio")]
         public EnumAreaSolucaoBuscada AreaSolucaoBuscada { get; set; }
+        
+        [Display(Name = "Tipo de encomenda")]
+        [Required(ErrorMessage = "O tipo de encomenda é obrigatorio")]
+        public EnumTipoEncomenda TipoEncomenda { get; set; }
 
         [Display(Name = "Descreva sua encomenda")]
         [Required(ErrorMessage = "A descrição da demanda é obrigatorio")]
@@ -43,7 +47,7 @@ namespace apoemaMatch.Data.ViewModels
 
         public string InputQuestoes { get; set; }
 
-        public List<Questao> Questoes { get; set; }
+        public List<Criterio> Questoes { get; set; }
 
         [Display(Name = "Solucionador")]
         public int SolucionadorId { get; set; }

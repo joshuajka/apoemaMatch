@@ -11,7 +11,7 @@ namespace apoemaMatch.Data.ViewModels
         public string Pergunta { get; set; }
         
         [Display(Name = "Tipo de critério")]
-        public EnumTipoResposta TipoResposta { get; set; }
+        public EnumTipoCriterio TipoCriterio { get; set; }
 
         public OpcaoRespostaViewModel OpcaoRespostaBase { get; set; }
 
