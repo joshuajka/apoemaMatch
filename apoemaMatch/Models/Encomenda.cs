@@ -15,6 +15,10 @@ namespace apoemaMatch.Models
         
         public Demandante Demandante { get; set; }
 
+        public int IdDemandante { get; set; }
+
+        public int? IdSolucionador { get; set; }
+
         public string Titulo { get; set; }
 
         public EnumTipoEncomenda TipoEncomenda { get; set; }
@@ -28,9 +32,9 @@ namespace apoemaMatch.Models
         public bool PossuiChamada { get; set; }
 
         public Chamada Chamada { get; set; }
-
-        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
         
         public DateTime DataCadastro { get; set; }
+        
+        public List<Questao> Questoes { get; set; }
     }
 }

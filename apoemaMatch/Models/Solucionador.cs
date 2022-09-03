@@ -17,6 +17,8 @@ namespace apoemaMatch.Models
 
         public bool Disponivel { get; set; }
 
+        public string Cpf { get; set; }
+
         [Display(Name = "Foto")]
         [Required(ErrorMessage = "Imagem é obrigatória")]
         public string ImagemURL { get; set; }
@@ -46,10 +48,6 @@ namespace apoemaMatch.Models
         [Display(Name = "Bio")]
         [Required(ErrorMessage = "Bio é obrigatória")]
         public string MiniBio { get; set; }
-
-        //Relationships
-        public List<EncomendaSolucionador> EncomendaSolucionador { get; set; }
-
 
     }
 }

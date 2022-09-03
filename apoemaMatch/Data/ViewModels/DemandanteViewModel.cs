@@ -9,13 +9,17 @@ namespace apoemaMatch.Data.ViewModels
 
         public int Id { get; set; }
 
-        [Display(Name = "Foto")]
-        [Required(ErrorMessage = "ImagemURL é obrigatória")]
+        [Display(Name = "URL da imagem")]
+        [Required(ErrorMessage = "URL da imagem é obrigatória")]
         public string ImagemURL { get; set; }
 
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Email é obrigatório")]
         public string Email { get; set; }
+
+        [Display(Name = "CNPJ")]
+        [Required(ErrorMessage = "CNPJ é obrigatório")]
+        public string Cnpj { get; set; }
 
         [Display(Name = "Nome Demandante")]
         [Required(ErrorMessage = "Nome Demandante é obrigatório")]
@@ -73,31 +77,6 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "Descrição é obrigatória")]
         public string Descricao { get; set; }
 
-        [Display(Name = "Área de solução buscada")]
-        public EnumAreaSolucaoBuscada EnumAreaSolucaoBuscada { get; set; }
-
-        [Display(Name = "Lei de informática")]
-        public EnumLeiDeInformatica EnumLeiDeInformatica { get; set; }
-
-        [Display(Name = "Linha de atuação TI")]
-        public EnumLinhaDeAtuacaoTI EnumLinhaDeAtuacaoTI { get; set; }
-
-        [Display(Name = "Objetivo parceria")]
-        public EnumObjetivoParceria EnumObjetivoParceria { get; set; }
-
-        [Display(Name = "Porte da empresa")]
-        public EnumPorteDaEmpresa EnumPorteDaEmpresa { get; set; }
-
-        [Display(Name = "Ramo de atuação")]
-        public EnumRamoDeAtuacao EnumRamoDeAtuacao { get; set; }
-
-        [Display(Name = "Segmento de mercado")]
-        public EnumSegmentoDeMercado EnumSegmentoDeMercado { get; set; }
-
-        [Display(Name = "Regime de tributação")]
-        public EnumTributacao EnumTributacao { get; set; }
-        //Relationships
-        [Display(Name = "Solucionador")]
         public int SolucionadorId { get; set; }
 
     }

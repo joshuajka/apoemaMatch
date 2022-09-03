@@ -9,6 +9,7 @@ namespace apoemaMatch.Data.MetodosExtensao
         {
             return new()
             {
+                EncomendaAberta = encomenda.EncomendaAberta,
                 Id = encomenda.Id,
                 Titulo = encomenda.Titulo,
                 TipoEncomenda = encomenda.TipoEncomenda,

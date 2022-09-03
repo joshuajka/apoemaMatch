@@ -4,14 +4,61 @@
 @{
     ViewData["Title"] = "Lista de Solucionadores";
 }
-<h2>Solucionadores</h2>
+<div class="container">
+    <h2>Solucionadores</h2>
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-4 col-xs-6 border-primary mb-3">
+    <form class="form-inline my-2 my-lg-0" asp-controller="Solucionador" asp-action="Filter" style="padding-right: 25px;">
+        <input name="searchString" type="text" class="form-control" placeholder="Buscar Solucionador" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+    </form>
+
+    <div class="row">
+        @*<div class="card-deck">*@
+        @foreach (var item in Model)
+        {
+            <div class="card border-0 mb-3 mx-auto col-12 col-md-6 col-lg-3" style="min-width: 22rem">
+                <img src="@item.ImagemURL" class="card-img-top img-fluid" alt="@item.Nome">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        @item.Nome
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a class="text-white float-right" asp-action="Editar" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                        }
+                    </h5>
+                    <p class="card-text">@item.MiniBio</p>
+                    <p class="card-text"><b>Curriculo Lattes: </b>@item.CurriculoLattes</p>
+                    <p class="card-text"><b>Formação: </b>@item.Formacao</p>
+                    <p class="card-text"><b>Área de Pesquisa: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaDePesquisa)</p>
+                </div>
+                <div class="card-footer">
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+
+
+                        @if (item.Disponivel)
+                        {
+                            <a class="btn btn-danger text-white" asp-action="AtivarDesativarAdmin" asp-route-id="@item.Id">
+                                Desativar
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success text-white" asp-action="AtivarDesativarAdmin" asp-route-id="@item.Id">
+                                Ativar
+                            </a>
+                        }
+
+                    }
+                    <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
+                        <i class="bi bi-eye-fill"></i> Detalhes
+                    </a>
+                </div>
+            </div>
+
+            <!--<div class="col-md-6 border-primary mb-3">
             <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
+                <div class="row no-gutters">
                     <div class="col-md-12">
                         <div class="card-header text-white cor-apoema">
                             <p class="card-text">
@@ -24,38 +71,50 @@
                                 </h5>
                             </p>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="@item.ImagemURL" width="100%" alt="@item.Nome">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <p class="card-text">@item.MiniBio</p>
-                            <p class="card-text"><b>Curriculo Lattes: </b>@item.CurriculoLattes</p>
-                            <p class="card-text"><b>Formação: </b>@item.Formacao</p>
-                            <p class="card-text"><b>Área de Pesquisa: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaDePesquisa)</p>
 
+                    </div>
+                    <div class="row justify-content-around">
+                        <div class="col-4 pr-2">
+                            <img src="@item.ImagemURL" style="height: 220px; width: 200px" class="align-self-center" alt="@item.Nome">
+                        </div>
+                        <div class="col-8 pl-3">
+                            <div class="card-body">
+                                <p class="card-text">@item.MiniBio</p>
+                                <p class="card-text"><b>Curriculo Lattes: </b>@item.CurriculoLattes</p>
+                                <p class="card-text"><b>Formação: </b>@item.Formacao</p>
+                                <p class="card-text"><b>Área de Pesquisa: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaDePesquisa)</p>
+
+                            </div>
                         </div>
                     </div>
+
                     <div class="col-md-12">
-                        <div class="card-footer ">
-                            <p class="card-text">
-                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                {
-                                    <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
-                                        <i class="bi bi-trash"></i>Excluir
-                                    </a>
-                                }
-                                <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
-                                    <i class="bi bi-eye-fill"></i> Detalhes
-                                </a>
-                            </p>
+                        <div class="card-footer ">-->
+            @*<p class="card-text">*@
+            <!--@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
+                    <i class="bi bi-trash"></i>Excluir
+                </a>
+            }
+            <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
+                <i class="bi bi-eye-fill"></i> Detalhes
+            </a>-->
+            @*</p>*@
+            <!--</div>
                         </div>
                     </div>
                 </div>
+            </div>-->
+        }
+        @*</div>*@
+    </div>
+    @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <div class="text-white text-center">
+                <a asp-controller="Account" asp-action="RegisterSolucionador" class="btn btn-success">
+                    <i class="bi bi-plus-circle">Adicionar</i>
+                </a>
             </div>
-        </div>
-    }
+        }*@
 </div>
-@await Html.PartialAsync("_CadastrarItem", "Solucionador")
-

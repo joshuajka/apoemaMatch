@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,17 +20,25 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="navbar-nav flex-grow-1">
-                            <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Demandante" asp-action="Index">
-                                Demandantes
+                            <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Home" asp-action="Privacy">
+                                Política de privacidade
                             </a>
                             <span style="padding: 5px;"></span>
-
-                            <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Solucionador" asp-action="Index">
-                                Solucionadores
+                            <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Home" asp-action="Sobre">
+                                Sobre
                             </a>
-                            <span style="padding: 5px;"></span>
-                            @if (User.Identity.IsAuthenticated)
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
+                                <span style="padding: 5px;"></span>
+                                <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Demandante" asp-action="Index">
+                                    Demandantes
+                                </a>
+                                <span style="padding: 5px;"></span>
+
+                                <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Solucionador" asp-action="Index">
+                                    Solucionadores
+                                </a>
+                                <span style="padding: 5px;"></span>
                                 <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="Index">
                                     Encomendas
                                 </a>
@@ -39,9 +47,36 @@
                                     Em Aberto
                                 </a>
                             }
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador"))
+                            {
+                                <span style="padding: 5px;"></span>
+                                <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="MeuPerfilSolucionador">
+                                    Meu Perfil
+                                </a>
+                                <span style="padding: 5px;"></span>
+                                <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="MinhasEncomendasSolucionador">
+                                    Minhas Encomendas
+                                </a>
+                            }
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Demandante"))
+                            {
+                                <span style="padding: 5px;"></span>
+                                <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="MeuPerfilDemandante">
+                                    Meu Perfil
+                                </a>
+                                <span style="padding: 5px;"></span>
+                                <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="MinhasEncomendasDemandante">
+                                    Minhas Encomendas
+                                </a>
+                            }
+
                         </li>
 
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+
+
+                        @*@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -58,14 +93,14 @@
 
                             </li>
 
-                        }
+                        }*@
 
                     </ul>
 
-                    <form class="form-inline my-2 my-lg-0" asp-controller="Demanda" asp-action="Filter" style="padding-right: 25px;">
+                    @*<form class="form-inline my-2 my-lg-0" asp-controller="Demanda" asp-action="Filter" style="padding-right: 25px;">
                         <input name="searchString" type="text" class="form-control" placeholder="Buscar Encomenda" aria-label="Recipient's username" aria-describedby="button-addon2">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
-                    </form>
+                    </form>*@
 
                     <partial name="_Identity.cshtml" />
 

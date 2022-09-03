@@ -3,6 +3,7 @@ using apoemaMatch.Data.Services;
 using apoemaMatch.Data.Static;
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
+using apoemaMatch.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,15 +20,17 @@ namespace apoemaMatch.Controllers
         private readonly AppDbContext _context;
         private readonly ISolucionadorService _serviceSolucionador;
         private readonly IDemandanteService _serviceDemandante;
+        private readonly IAccountRepository _accountRepository;
 
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context, ISolucionadorService serviceSolucionador,
-            IDemandanteService serviceDemandante)
+            IDemandanteService serviceDemandante, IAccountRepository accountRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _serviceSolucionador = serviceSolucionador;
             _serviceDemandante = serviceDemandante;
+            _accountRepository = accountRepository;
         }
 
         public IActionResult Login()
@@ -54,7 +57,7 @@ namespace apoemaMatch.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Demandante");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 TempData["Error"] = "Credenciais incorretas, tente novamente";
@@ -101,7 +104,7 @@ namespace apoemaMatch.Controllers
 
             var novoUsuario = new ApplicationUser()
             {
-                Nome = registerViewModel.Nome,
+                Nome = textoSemAcentos(registerViewModel.Nome),
                 Email = registerViewModel.Email,
                 UserName = registerViewModel.Email
             };
@@ -133,9 +136,9 @@ namespace apoemaMatch.Controllers
 
             var novoUsuario = new ApplicationUser()
             {
-                Nome = registerViewModel.Nome,
+                Nome = textoSemAcentos(registerViewModel.NomeCompleto),
                 Email = registerViewModel.Email,
-                UserName = registerViewModel.Nome
+                UserName = registerViewModel.UserName
             };
             var novoUsuarioResponse = await _userManager.CreateAsync(novoUsuario, registerViewModel.Password);
 
@@ -149,9 +152,10 @@ namespace apoemaMatch.Controllers
                 {
                     IdUsuario = usuarioSolucionador.Id,
                     Disponivel = true,
+                    Cpf = registerViewModel.Cpf,
                     ImagemURL = registerViewModel.ImagemURL,
                     Email = registerViewModel.Email,
-                    Nome = registerViewModel.Nome,
+                    Nome = registerViewModel.NomeCompleto,
                     Telefone = registerViewModel.Telefone,
                     Formacao = registerViewModel.Formacao,
                     AreaDePesquisa = registerViewModel.AreaDePesquisa,
@@ -160,10 +164,11 @@ namespace apoemaMatch.Controllers
                 };
 
                 await _serviceSolucionador.AddAsync(novoSolucionador);
-
+                return View("RegisterCompleted");
             }
 
-            return View("RegisterCompleted");
+            TempData["Error"] = "Nome de usuário já sendo utilizado";
+            return View(registerViewModel);
 
         }
 
@@ -184,9 +189,9 @@ namespace apoemaMatch.Controllers
 
             var novoUsuario = new ApplicationUser()
             {
-                Nome = registerViewModel.Nome,
+                Nome = textoSemAcentos(registerViewModel.NomeCompleto),
                 Email = registerViewModel.Email,
-                UserName = registerViewModel.Nome
+                UserName = registerViewModel.UserName
             };
             var novoUsuarioResponse = await _userManager.CreateAsync(novoUsuario, registerViewModel.Password);
 
@@ -200,8 +205,9 @@ namespace apoemaMatch.Controllers
                 {
                     IdUsuario = usuarioDemandante.Id,
                     ImagemURL = registerViewModel.ImagemURL,
+                    Cnpj = registerViewModel.Cnpj,
                     Email = registerViewModel.Email,
-                    NomeDemandante = registerViewModel.Nome,
+                    NomeDemandante = registerViewModel.NomeCompleto,
                     Telefone = registerViewModel.Telefone,
                     NomeEmpresa = registerViewModel.NomeEmpresa,
                     CargoDemandante = registerViewModel.CargoDemandante,
@@ -218,11 +224,12 @@ namespace apoemaMatch.Controllers
                 };
 
                 await _serviceDemandante.AddAsync(novoDemandante);
-
+                return View("RegisterCompleted");
             }
 
-            return View("RegisterCompleted");
-
+            
+            TempData["Error"] = "Nome de usuário já sendo utilizado";
+            return View(registerViewModel);
         }
 
         [HttpPost]
@@ -248,10 +255,13 @@ namespace apoemaMatch.Controllers
 
             var solucionadorView = new RegisterSolucionadorViewModel()
             {
+                UserName = userSolucionador.UserName,
+                Disponivel = solucionador.Disponivel,
+                Cpf = solucionador.Cpf,
                 Id = solucionador.Id,
                 ImagemURL = solucionador.ImagemURL,
-                Email = solucionador.Email,
-                Nome = solucionador.Nome,
+                Email = userSolucionador.Email,
+                NomeCompleto = solucionador.Nome,
                 Telefone = solucionador.Telefone,
                 Formacao = solucionador.Formacao,
                 AreaDePesquisa = solucionador.AreaDePesquisa,
@@ -272,10 +282,12 @@ namespace apoemaMatch.Controllers
 
             var demandanteView = new RegisterDemandanteViewModel()
             {
+                UserName = userDemandante.UserName,
+                Cnpj = demandante.Cnpj,
                 Id = demandante.Id,
                 ImagemURL = demandante.ImagemURL,
-                Email = demandante.Email,
-                Nome = demandante.NomeDemandante,
+                Email = userDemandante.Email,
+                NomeCompleto = demandante.NomeDemandante,
                 Telefone = demandante.Telefone,
                 NomeEmpresa = demandante.NomeEmpresa,
                 CargoDemandante = demandante.CargoDemandante,
@@ -299,5 +311,203 @@ namespace apoemaMatch.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        [HttpGet("fotgot-password")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("fotgot-password")]
+        public async Task<IActionResult> ForgotPassword(EsqueciSenhaViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // code here
+                var user = await _accountRepository.GetUserByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    await _accountRepository.GenerateForgotPasswordTokenAsync(user);
+                }
+
+                ModelState.Clear();
+                model.EmailSent = true;
+            }
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("reset-password")]
+        public IActionResult ResetPassword(string uid, string token)
+        {
+            ResetPasswordModel resetPasswordModel = new ResetPasswordModel
+            {
+                Token = token,
+                UserId = uid
+            };
+            return View(resetPasswordModel);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.Token = model.Token.Replace(' ', '+');
+                var result = await _accountRepository.ResetPasswordAsync(model);
+                if (result.Succeeded)
+                {
+                    ModelState.Clear();
+                    model.IsSuccess = true;
+                    return View(model);
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(model);
+        }
+
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+
+        public IActionResult ChangeEmail()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeEmail(MudarEmailViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.CurrentEmail);
+
+                if (user == null)
+                {
+                    TempData["Error"] = "Esse email não está cadastrado";
+                    return View(model);
+                }
+
+                var userVerificador = await _userManager.FindByEmailAsync(model.NewEmail);
+
+                if (userVerificador != null)
+                {
+                    TempData["Error"] = "Esse email já está cadastrado";
+                    return View(model);
+                }
+
+                user.Email = model.NewEmail;
+                user.EmailConfirmed = true;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    ViewBag.IsSuccess = true;
+                    ModelState.Clear();
+                    await _signInManager.SignOutAsync();
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(MudarSenhaViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _accountRepository.ChangePasswordAsync(model);
+                if (result.Succeeded)
+                {
+                    ViewBag.IsSuccess = true;
+                    ModelState.Clear();
+                    return View();
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> ConfirmEmail(string uid, string token, string email)
+        {
+            EmailConfirmModel model = new EmailConfirmModel
+            {
+                Email = email
+            };
+
+            if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
+            {
+                token = token.Replace(' ', '+');
+                var result = await _accountRepository.ConfirmEmailAsync(uid, token);
+                if (result.Succeeded)
+                {
+                    model.EmailVerified = true;
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmEmail(EmailConfirmModel model)
+        {
+            var user = await _accountRepository.GetUserByEmailAsync(model.Email);
+            if (user != null)
+            {
+                if (user.EmailConfirmed)
+                {
+                    model.EmailVerified = true;
+                    return View(model);
+                }
+
+                await _accountRepository.GenerateEmailConfirmationTokenAsync(user);
+                model.EmailSent = true;
+                ModelState.Clear();
+            }
+            else
+            {
+                ModelState.AddModelError("", "Something went wrong.");
+            }
+            return View(model);
+        }
+
+
+        public static string textoSemAcentos(string text)
+        {
+            string withDiacritics = "ÄÅÁÂÀÃäáâàãÉÊËÈéêëèÍÎÏÌíîïìÖÓÔÒÕöóôòõÜÚÛüúûùÇç";
+            string withoutDiacritics = "AAAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUuuuuCc";
+            for (int i = 0; i < withDiacritics.Length; i++)
+            {
+                text = text.Replace(withDiacritics[i].ToString(), withoutDiacritics[i].ToString());
+            }
+            return text;
+
+
+
+        }
+
+
     }
-}
+
+    }

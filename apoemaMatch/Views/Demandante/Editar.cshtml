@@ -34,8 +34,13 @@
                                 <span asp-validation-for="NomeEmpresa" class="text-danger"></span>
                             </div>
                             <div class="form-group">
+                                <label asp-for="Cnpj" class="control-label"></label>
+                                <input asp-for="Cnpj" class="form-control" />
+                                <span asp-validation-for="Cnpj" class="text-danger"></span>
+                            </div>
+                            <div class="form-group hide">
                                 <label asp-for="Email" class="control-label"></label>
-                                <input asp-for="Email" class="form-control" />
+                                <input asp-for="Email" class="form-control" readonly />
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -54,47 +59,47 @@
                                 <span asp-validation-for="ImagemURL" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="EnumAreaSolucaoBuscada" class="control-label"></label>
-                                <select asp-for="EnumAreaSolucaoBuscada" class="form-control" asp-items="Html.GetEnumSelectList<EnumAreaSolucaoBuscada>()"></select>
-                                <span asp-validation-for="EnumAreaSolucaoBuscada" class="text-danger"></span>
+                                <label asp-for="AreaSolucaoBuscada" class="control-label"></label>
+                                <select asp-for="AreaSolucaoBuscada" class="form-control" asp-items="Html.GetEnumSelectList<EnumAreaSolucaoBuscada>()"></select>
+                                <span asp-validation-for="AreaSolucaoBuscada" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="EnumLeiDeInformatica" class="control-label"></label>
-                                <select asp-for="EnumLeiDeInformatica" class="form-control" asp-items="Html.GetEnumSelectList<EnumLeiDeInformatica>()"></select>
-                                <span asp-validation-for="EnumLeiDeInformatica" class="text-danger"></span>
+                                <label asp-for="LeiDeInformatica" class="control-label"></label>
+                                <select asp-for="LeiDeInformatica" class="form-control" asp-items="Html.GetEnumSelectList<EnumLeiDeInformatica>()"></select>
+                                <span asp-validation-for="LeiDeInformatica" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label asp-for="EnumLinhaDeAtuacaoTI" class="control-label"></label>
-                                <select asp-for="EnumLinhaDeAtuacaoTI" class="form-control" asp-items="Html.GetEnumSelectList<EnumLinhaDeAtuacaoTI>()"></select>
-                                <span asp-validation-for="EnumLinhaDeAtuacaoTI" class="text-danger"></span>
+                                <label asp-for="LinhaDeAtuacaoTI" class="control-label"></label>
+                                <select asp-for="LinhaDeAtuacaoTI" class="form-control" asp-items="Html.GetEnumSelectList<EnumLinhaDeAtuacaoTI>()"></select>
+                                <span asp-validation-for="LinhaDeAtuacaoTI" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="EnumObjetivoParceria" class="control-label"></label>
-                                <select asp-for="EnumObjetivoParceria" class="form-control" asp-items="Html.GetEnumSelectList<EnumObjetivoParceria>()"></select>
-                                <span asp-validation-for="EnumObjetivoParceria" class="text-danger"></span>
+                                <label asp-for="ObjetivoParceria" class="control-label"></label>
+                                <select asp-for="ObjetivoParceria" class="form-control" asp-items="Html.GetEnumSelectList<EnumObjetivoParceria>()"></select>
+                                <span asp-validation-for="ObjetivoParceria" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="EnumRamoDeAtuacao" class="control-label"></label>
-                                <select asp-for="EnumRamoDeAtuacao" class="form-control" asp-items="Html.GetEnumSelectList<EnumRamoDeAtuacao>()"></select>
-                                <span asp-validation-for="EnumRamoDeAtuacao" class="text-danger"></span>
+                                <label asp-for="RamoDeAtuacao" class="control-label"></label>
+                                <select asp-for="RamoDeAtuacao" class="form-control" asp-items="Html.GetEnumSelectList<EnumRamoDeAtuacao>()"></select>
+                                <span asp-validation-for="RamoDeAtuacao" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="EnumSegmentoDeMercado" class="control-label"></label>
-                                <select asp-for="EnumSegmentoDeMercado" class="form-control" asp-items="Html.GetEnumSelectList<EnumSegmentoDeMercado>()"></select>
-                                <span asp-validation-for="EnumSegmentoDeMercado" class="text-danger"></span>
+                                <label asp-for="SegmentoDeMercado" class="control-label"></label>
+                                <select asp-for="SegmentoDeMercado" class="form-control" asp-items="Html.GetEnumSelectList<EnumSegmentoDeMercado>()"></select>
+                                <span asp-validation-for="SegmentoDeMercado" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="EnumTributacao" class="control-label"></label>
-                                <select asp-for="EnumTributacao" class="form-control" asp-items="Html.GetEnumSelectList<EnumTributacao>()"></select>
-                                <span asp-validation-for="EnumTributacao" class="text-danger"></span>
+                                <label asp-for="RegimeDeTributacao" class="control-label"></label>
+                                <select asp-for="RegimeDeTributacao" class="form-control" asp-items="Html.GetEnumSelectList<EnumTributacao>()"></select>
+                                <span asp-validation-for="RegimeDeTributacao" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="EnumPorteDaEmpresa" class="control-label"></label>
-                                <select asp-for="EnumPorteDaEmpresa" class="form-control" asp-items="Html.GetEnumSelectList<EnumPorteDaEmpresa>()"></select>
-                                <span asp-validation-for="EnumPorteDaEmpresa" class="text-danger"></span>
+                                <label asp-for="PorteDaEmpresa" class="control-label"></label>
+                                <select asp-for="PorteDaEmpresa" class="form-control" asp-items="Html.GetEnumSelectList<EnumPorteDaEmpresa>()"></select>
+                                <span asp-validation-for="PorteDaEmpresa" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -112,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Atualizar" class="btn btn-outline-success float-right" />
-                        <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todas</a>
+                        <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="MeuPerfilDemandante">Voltar</a>
                     </div>
                 </form>
 

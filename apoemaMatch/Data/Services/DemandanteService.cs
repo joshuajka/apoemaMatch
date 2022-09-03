@@ -44,16 +44,14 @@ namespace apoemaMatch.Data.Services
 
         public async Task<Demandante> GetDemandanteByIdAsync(int Id)
         {
-            var demandanteDetalhes = await _context.Demandantes.Include(dm => dm.EncomendaSolucionador).ThenInclude(s => s.Solucionador)
-                .FirstOrDefaultAsync(n => n.Id == Id);
+            var demandanteDetalhes = await _context.Demandantes.FirstOrDefaultAsync(n => n.Id == Id);
 
             return demandanteDetalhes;
         }
 
         public async Task<Demandante> GetDemandanteByIdUser(string IdUser)
         {
-            var demandanteDetalhes = await _context.Demandantes.Include(dm => dm.EncomendaSolucionador).ThenInclude(s => s.Solucionador)
-                .FirstOrDefaultAsync(n => n.IdUsuario == IdUser);
+            var demandanteDetalhes = await _context.Demandantes.FirstOrDefaultAsync(n => n.IdUsuario == IdUser);
 
             return demandanteDetalhes;
         }
@@ -109,6 +107,7 @@ namespace apoemaMatch.Data.Services
             if (dbDemandante != null)
             {
                 dbDemandante.ImagemURL = demandante.ImagemURL;
+                dbDemandante.Cnpj = demandante.Cnpj;
                 dbDemandante.Email = demandante.Email;
                 dbDemandante.NomeDemandante = demandante.NomeDemandante;
                 dbDemandante.Telefone = demandante.Telefone;

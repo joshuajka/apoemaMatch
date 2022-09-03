@@ -10,8 +10,8 @@ using apoemaMatch.Data;
 namespace apoemaMatch.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220822232011_CorrecoesMigration")]
-    partial class CorrecoesMigration
+    [Migration("20220828211537_initial2808221815")]
+    partial class initial2808221815
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -288,16 +288,28 @@ namespace apoemaMatch.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AreaServico")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("DemandanteId")
+                    b.Property<int>("AreaSolucaoBuscada")
                         .HasColumnType("integer");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("text");
 
-                    b.Property<int>("ServicoBuscado")
+                    b.Property<bool>("EncomendaAberta")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("IdDemandante")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdSolucionador")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("RealizaProcessoSeletivo")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("SegmentoDeMercado")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StatusEncomenda")
                         .HasColumnType("integer");
 
                     b.Property<string>("Titulo")
@@ -305,29 +317,30 @@ namespace apoemaMatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DemandanteId");
-
                     b.ToTable("Encomendas");
                 });
 
-            modelBuilder.Entity("apoemaMatch.Models.EncomendaSolucionador", b =>
+            modelBuilder.Entity("apoemaMatch.Models.Questao", b =>
                 {
-                    b.Property<int>("EncomendaId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("EncomendaId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SolucionadorId")
+                    b.Property<string>("Pergunta")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TipoResposta")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("DemandanteId")
-                        .HasColumnType("integer");
+                    b.HasKey("Id");
 
-                    b.HasKey("EncomendaId", "SolucionadorId");
+                    b.HasIndex("EncomendaId");
 
-                    b.HasIndex("DemandanteId");
-
-                    b.HasIndex("SolucionadorId");
-
-                    b.ToTable("EncomendasSolucionadores");
+                    b.ToTable("Questao");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.Solucionador", b =>
@@ -360,8 +373,7 @@ namespace apoemaMatch.Migrations
 
                     b.Property<string>("ImagemURL")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.Property<string>("MiniBio")
                         .IsRequired()
@@ -431,51 +443,16 @@ namespace apoemaMatch.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("apoemaMatch.Models.Encomenda", b =>
+            modelBuilder.Entity("apoemaMatch.Models.Questao", b =>
                 {
-                    b.HasOne("apoemaMatch.Models.Demandante", null)
-                        .WithMany("Encomendas")
-                        .HasForeignKey("DemandanteId");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.EncomendaSolucionador", b =>
-                {
-                    b.HasOne("apoemaMatch.Models.Demandante", null)
-                        .WithMany("EncomendaSolucionador")
-                        .HasForeignKey("DemandanteId");
-
-                    b.HasOne("apoemaMatch.Models.Encomenda", "Encomenda")
-                        .WithMany("EncomendaSolucionador")
-                        .HasForeignKey("EncomendaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("apoemaMatch.Models.Solucionador", "Solucionador")
-                        .WithMany("EncomendaSolucionador")
-                        .HasForeignKey("SolucionadorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Encomenda");
-
-                    b.Navigation("Solucionador");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.Demandante", b =>
-                {
-                    b.Navigation("Encomendas");
-
-                    b.Navigation("EncomendaSolucionador");
+                    b.HasOne("apoemaMatch.Models.Encomenda", null)
+                        .WithMany("Questoes")
+                        .HasForeignKey("EncomendaId");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.Encomenda", b =>
                 {
-                    b.Navigation("EncomendaSolucionador");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.Solucionador", b =>
-                {
-                    b.Navigation("EncomendaSolucionador");
+                    b.Navigation("Questoes");
                 });
 #pragma warning restore 612, 618
         }

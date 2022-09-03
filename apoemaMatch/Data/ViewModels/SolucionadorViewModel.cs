@@ -1,21 +1,26 @@
 ﻿using apoemaMatch.Data.Enums;
-using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace apoemaMatch.Models
+namespace apoemaMatch.Data.ViewModels
 {
-    public class SolucionadorUser : IdentityUser
+    public class SolucionadorViewModel
     {
+
+        public int Id { get; set; }
+
+        [Display(Name = "URL da Imagem")]
+        [Required(ErrorMessage = "URL da Imagem é obrigatória")]
+        public string ImagemURL { get; set; }
+
+        [Required(ErrorMessage = "Email é obrigatório")]
+        public string Email { get; set; }
+
         public bool Disponivel { get; set; }
 
-        [Display(Name = "URL da Foto")]
-        [Required(ErrorMessage = "Imagem é obrigatória")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome completo deve conter entre 3 a 50 caracteres")]
-        public string ImagemURL { get; set; }
+        [Display(Name = "CPF")]
+        [Required(ErrorMessage = "Cpf é obrigatório")]
+        public string Cpf { get; set; }
 
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "Nome é obrigatório")]
@@ -24,7 +29,7 @@ namespace apoemaMatch.Models
         [Required(ErrorMessage = "Telefone é obrigatório")]
         public string Telefone { get; set; }
 
-        [Required(ErrorMessage = "Formação é obrigatória")]
+        [Required(ErrorMessage = "Formação é obrigatório")]
         [Display(Name = "Formação")]
         public string Formacao { get; set; }
 
@@ -32,12 +37,13 @@ namespace apoemaMatch.Models
         [Display(Name = "Área de Pesquisa")]
         public EnumAreaSolucaoBuscada AreaDePesquisa { get; set; }
 
-        [Required(ErrorMessage = "Link do Currículo Lattes é obrigatório")]
+        [Required(ErrorMessage = "Currículo Lattes é obrigatório")]
         [Display(Name = "Currículo Lattes")]
         public string CurriculoLattes { get; set; }
 
         [Display(Name = "Bio")]
         [Required(ErrorMessage = "Bio é obrigatória")]
         public string MiniBio { get; set; }
+
     }
 }
