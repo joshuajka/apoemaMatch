@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -21,9 +22,10 @@ namespace apoemaMatch.Controllers
         private readonly ISolucionadorService _serviceSolucionador;
         private readonly IDemandanteService _serviceDemandante;
         private readonly IAccountRepository _accountRepository;
+        private readonly IEmailService _emailService;
 
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AppDbContext context, ISolucionadorService serviceSolucionador,
-            IDemandanteService serviceDemandante, IAccountRepository accountRepository)
+            IDemandanteService serviceDemandante, IAccountRepository accountRepository, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -31,6 +33,7 @@ namespace apoemaMatch.Controllers
             _serviceSolucionador = serviceSolucionador;
             _serviceDemandante = serviceDemandante;
             _accountRepository = accountRepository;
+            _emailService = emailService;
         }
 
         public IActionResult Login()
@@ -163,6 +166,8 @@ namespace apoemaMatch.Controllers
                     MiniBio = registerViewModel.MiniBio,
                 };
 
+                UserEmailOptions dados = DadosEmail(novoSolucionador.Email, novoSolucionador.Nome);
+                await _emailService.SendForConfirmationRegistrationEmail(dados);
                 await _serviceSolucionador.AddAsync(novoSolucionador);
                 return View("RegisterCompleted");
             }
@@ -223,11 +228,13 @@ namespace apoemaMatch.Controllers
                     Descricao = registerViewModel.Descricao
                 };
 
+                UserEmailOptions dados = DadosEmail(novoDemandante.Email, novoDemandante.NomeDemandante);
+                await _emailService.SendForConfirmationRegistrationEmail(dados);
                 await _serviceDemandante.AddAsync(novoDemandante);
                 return View("RegisterCompleted");
             }
 
-            
+
             TempData["Error"] = "Nome de usuário já sendo utilizado";
             return View(registerViewModel);
         }
@@ -492,6 +499,25 @@ namespace apoemaMatch.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ConfirmacaoCadastro(ConfirmacaoCadastroViewModel model)
+        {
+            model.EmailSent = true;
+            return View(model);
+        }
+
+        public UserEmailOptions DadosEmail(string Email, string Nome)
+        {
+            UserEmailOptions dados = new UserEmailOptions
+            {
+                ToEmails = new List<string>() { Email },
+                PlaceHolders = new List<KeyValuePair<string, string>>()
+                    {
+                        new KeyValuePair<string, string>("{{UserName}}", Nome)
+                    }
+            };
+            return dados;
+        }
 
         public static string textoSemAcentos(string text)
         {
@@ -502,12 +528,6 @@ namespace apoemaMatch.Controllers
                 text = text.Replace(withDiacritics[i].ToString(), withoutDiacritics[i].ToString());
             }
             return text;
-
-
-
         }
-
-
     }
-
-    }
+}

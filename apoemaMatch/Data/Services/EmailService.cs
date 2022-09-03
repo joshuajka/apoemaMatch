@@ -1,9 +1,7 @@
 ﻿using apoemaMatch.Data.ViewModels;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -39,6 +37,15 @@ namespace apoemaMatch.Data.Services
             userEmailOptions.Subject = UpdatePlaceHolders("Hello {{UserName}}, reset your password.", userEmailOptions.PlaceHolders);
 
             userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("ForgotPassword"), userEmailOptions.PlaceHolders);
+
+            await SendEmail(userEmailOptions);
+        }
+
+        public async Task SendForConfirmationRegistrationEmail(UserEmailOptions userEmailOptions)
+        {
+            userEmailOptions.Subject = UpdatePlaceHolders(" Olá, {{UserName}}, boas vindas à nossa plataforma ApoemaMatch!", userEmailOptions.PlaceHolders);
+
+            userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("ConfirmacaoCadastro"), userEmailOptions.PlaceHolders);
 
             await SendEmail(userEmailOptions);
         }
