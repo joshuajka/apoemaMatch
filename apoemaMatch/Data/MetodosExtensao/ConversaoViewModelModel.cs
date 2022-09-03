@@ -1,6 +1,7 @@
 ﻿using apoemaMatch.Data.Enums;
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
+using System;
 
 namespace apoemaMatch.Data.MetodosExtensao
 {
@@ -17,19 +18,19 @@ namespace apoemaMatch.Data.MetodosExtensao
                 Descricao = encomendaViewModel.Descricao,
                 StatusEncomenda = statusEncomenda,
                 PossuiChamada = encomendaViewModel.PossuiChamada,
+                Chamada = !encomendaViewModel.PossuiChamada ?
+                    null
+                    : new()
+                    {
+                        Id = encomendaViewModel.ChamadaId,
+                        DescricaoChamada = encomendaViewModel.DescricaoChamada,
+                        DataValidade = DateTime.Parse(encomendaViewModel.DataValidadeChamada),
+                        ArquivoAnexo = encomendaViewModel.ArquivoDetalheChamada,
+                        Criterios = encomendaViewModel.Criterios,
+                        EncomendaId = encomendaViewModel.Id
+                    }
                 //TODO(Chamada)
                // Questoes = encomendaViewModel.RealizaProcessoSeletivo ? encomendaViewModel.Questoes : null
-            };
-        }
-
-        public static Criterio Converta(this CriterioViewModel questaoViewModel)
-        {
-            return new()
-            {
-                Id = questaoViewModel.Id,
-                Descricao = questaoViewModel.Descricao,
-                TipoCriterio = questaoViewModel.TipoCriterio,
-                Ordem = questaoViewModel.Ordem
             };
         }
     }
