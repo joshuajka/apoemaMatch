@@ -10,7 +10,7 @@ namespace apoemaMatch.Data.ViewModels
         public int Id { get; set; }
 
         #region EncomendaBase
-        [Display(Name = "Título da encomenda")]
+        
         [Display(Name ="Solucionador")]
         public int? IdSolucionador { get; set; }
 
@@ -18,7 +18,7 @@ namespace apoemaMatch.Data.ViewModels
 
         public bool EncomendaAberta { get; set; }
 
-        [Display(Name = "Título da requisição")]
+        [Display(Name = "Título da encomenda")]
         [Required(ErrorMessage = "O Título da requisição é obrigatório")]
         public string Titulo { get; set; }
         

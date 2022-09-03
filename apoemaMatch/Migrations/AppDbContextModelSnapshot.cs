@@ -279,7 +279,13 @@ namespace apoemaMatch.Migrations
                     b.Property<int>("AreaSolucaoBuscada")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("CargoDemandante")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Cnpj")
                         .HasColumnType("text");
 
                     b.Property<string>("Descricao")
@@ -342,11 +348,20 @@ namespace apoemaMatch.Migrations
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("DemandanteId")
+                    b.Property<int?>("DemandanteId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("text");
+
+                    b.Property<bool>("EncomendaAberta")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("IdDemandante")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdSolucionador")
+                        .HasColumnType("integer");
 
                     b.Property<string>("JustificativaRecusa")
                         .HasColumnType("text");
@@ -368,26 +383,6 @@ namespace apoemaMatch.Migrations
                     b.HasIndex("DemandanteId");
 
                     b.ToTable("Encomendas");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.EncomendaSolucionador", b =>
-                {
-                    b.Property<int>("EncomendaId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SolucionadorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("DemandanteId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("EncomendaId", "SolucionadorId");
-
-                    b.HasIndex("DemandanteId");
-
-                    b.HasIndex("SolucionadorId");
-
-                    b.ToTable("EncomendasSolucionadores");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.OpcaoCriterio", b =>
@@ -480,6 +475,9 @@ namespace apoemaMatch.Migrations
 
                     b.Property<int>("AreaDePesquisa")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Cpf")
+                        .HasColumnType("text");
 
                     b.Property<string>("CurriculoLattes")
                         .IsRequired()
@@ -592,35 +590,10 @@ namespace apoemaMatch.Migrations
             modelBuilder.Entity("apoemaMatch.Models.Encomenda", b =>
                 {
                     b.HasOne("apoemaMatch.Models.Demandante", "Demandante")
-                        .WithMany("Encomendas")
-                        .HasForeignKey("DemandanteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Demandante");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.EncomendaSolucionador", b =>
-                {
-                    b.HasOne("apoemaMatch.Models.Demandante", null)
-                        .WithMany("EncomendaSolucionador")
+                        .WithMany()
                         .HasForeignKey("DemandanteId");
 
-                    b.HasOne("apoemaMatch.Models.Encomenda", "Encomenda")
-                        .WithMany("EncomendaSolucionador")
-                        .HasForeignKey("EncomendaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("apoemaMatch.Models.Solucionador", "Solucionador")
-                        .WithMany("EncomendaSolucionador")
-                        .HasForeignKey("SolucionadorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Encomenda");
-
-                    b.Navigation("Solucionador");
+                    b.Navigation("Demandante");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.OpcaoCriterio", b =>
@@ -678,18 +651,9 @@ namespace apoemaMatch.Migrations
                     b.Navigation("OpcoesCriterios");
                 });
 
-            modelBuilder.Entity("apoemaMatch.Models.Demandante", b =>
-                {
-                    b.Navigation("Encomendas");
-
-                    b.Navigation("EncomendaSolucionador");
-                });
-
             modelBuilder.Entity("apoemaMatch.Models.Encomenda", b =>
                 {
                     b.Navigation("Chamada");
-
-                    b.Navigation("EncomendaSolucionador");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.Proposta", b =>
@@ -700,11 +664,6 @@ namespace apoemaMatch.Migrations
             modelBuilder.Entity("apoemaMatch.Models.RespostaCriterio", b =>
                 {
                     b.Navigation("OpcoesSelecionadas");
-                });
-
-            modelBuilder.Entity("apoemaMatch.Models.Solucionador", b =>
-                {
-                    b.Navigation("EncomendaSolucionador");
                 });
 #pragma warning restore 612, 618
         }

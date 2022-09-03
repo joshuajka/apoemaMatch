@@ -10,9 +10,9 @@ namespace apoemaMatch.Models
     {
         [Key]
         public int Id { get; set; }
-        
-        public int DemandanteId { get; set; }
-        
+
+        public bool EncomendaAberta { get; set; }
+
         public Demandante Demandante { get; set; }
 
         public int IdDemandante { get; set; }
@@ -35,6 +35,5 @@ namespace apoemaMatch.Models
         
         public DateTime DataCadastro { get; set; }
         
-        public List<Questao> Questoes { get; set; }
     }
 }

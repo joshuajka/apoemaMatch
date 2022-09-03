@@ -187,7 +187,7 @@ namespace apoemaMatch.Controllers
             //TODO(Chamada)
             //novaEncomenda.Questoes = encomenda.Questoes;
             //novaEncomenda.EncomendaAberta = false;
-            novaEncomenda.Questoes = encomenda.Questoes;
+            novaEncomenda.ChamadaId = encomenda.Chamada.Id;
             novaEncomenda.EncomendaAberta = false;
             novaEncomenda.IdDemandante = encomenda.IdDemandante;
 
@@ -237,13 +237,12 @@ namespace apoemaMatch.Controllers
 
             var encomenda = await _service.GetByIdAsync(id);
 
-            novaEncomenda.RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo;
-            novaEncomenda.SegmentoDeMercado = encomenda.SegmentoDeMercado;
+            novaEncomenda.PossuiChamada = encomenda.PossuiChamada;
+            novaEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
             novaEncomenda.Titulo = encomenda.Titulo;
-            novaEncomenda.AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada;
             novaEncomenda.Descricao = encomenda.Descricao;
             novaEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
-            novaEncomenda.Questoes = encomenda.Questoes;
+            novaEncomenda.ChamadaId = encomenda.Chamada.Id;
             //novaEncomenda.EncomendaAberta = false;
             novaEncomenda.IdDemandante = encomenda.IdDemandante;
 
