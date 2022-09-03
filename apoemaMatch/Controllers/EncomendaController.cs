@@ -1,7 +1,9 @@
 ﻿using apoemaMatch.Data.MetodosExtensao;
 using apoemaMatch.Data.Services;
+using apoemaMatch.Data.Static;
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -26,14 +28,16 @@ namespace apoemaMatch.Controllers
             return View(encomendas.Select(e => e.Converta()));
         }
 
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         [HttpGet]
         public IActionResult Cadastrar()
         {
             return View();
         }
-        
+
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         [HttpPost]
-        public async Task<IActionResult> Cadastrar(EncomendaViewModel encomendaViewModel)
+        public async Task<IActionResult> Cadastrar(int demandanteId, EncomendaViewModel encomendaViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -41,15 +45,15 @@ namespace apoemaMatch.Controllers
             }
 
             List<Criterio> questoes = null;
-            if (encomendaViewModel.InputQuestoes is not null)
+            if (encomendaViewModel.InputCriterios is not null)
             {
-                questoes = JsonConvert.DeserializeObject<List<Criterio>>(encomendaViewModel.InputQuestoes);
+                questoes = JsonConvert.DeserializeObject<List<Criterio>>(encomendaViewModel.InputCriterios);
             }
 
             if (questoes is not null && questoes.Any())
             {
-                encomendaViewModel.Questoes = new();
-                encomendaViewModel.Questoes.AddRange(questoes);
+                encomendaViewModel.Criterios = new();
+                encomendaViewModel.Criterios.AddRange(questoes);
             }
 
             await _service.AddAsync(encomendaViewModel.Converta());
@@ -102,14 +106,14 @@ namespace apoemaMatch.Controllers
 
             var encomenda = await _service.GetByIdAsync(id);
 
-            novaEncomenda.RealizaProcessoSeletivo = encomenda.PossuiChamada;
+            novaEncomenda.PossuiChamada = encomenda.PossuiChamada;
             novaEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
             novaEncomenda.Titulo = encomenda.Titulo;
             novaEncomenda.Descricao = encomenda.Descricao;
             novaEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
             //TODO(Chamada)
             //novaEncomenda.Questoes = encomenda.Questoes;
-            novaEncomenda.EncomendaAberta = false;
+            //novaEncomenda.EncomendaAberta = false;
 
 
             //if (!ModelState.IsValid)

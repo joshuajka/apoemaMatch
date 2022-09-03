@@ -13,18 +13,18 @@ namespace apoemaMatch.Data.MetodosExtensao
                 Titulo = encomenda.Titulo,
                 TipoEncomenda = encomenda.TipoEncomenda,
                 Descricao = encomenda.Descricao,
-                RealizaProcessoSeletivo = encomenda.PossuiChamada,
+                PossuiChamada = encomenda.PossuiChamada,
                //TODO(Chamada)
                 //Questoes = encomenda.Questoes
             };
         }
 
-        public static QuestaoViewModel Converta(this Criterio criterio)
+        public static CriterioViewModel Converta(this Criterio criterio)
         {
             return new()
             {
                 Id = criterio.Id,
-                Pergunta = criterio.Descricao,
+                Descricao = criterio.Descricao,
                 TipoCriterio = criterio.TipoCriterio,
                 Ordem = criterio.Ordem
             };

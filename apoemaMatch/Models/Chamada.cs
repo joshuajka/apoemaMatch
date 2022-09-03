@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata;
 
 namespace apoemaMatch.Models
 {
@@ -24,5 +23,6 @@ namespace apoemaMatch.Models
         
         public List<Proposta> Propostas { get; set; }
 
+        public string NumeroChamada => $"{Id:00}/{Encomenda.DataCadastro.Year}";
     }
 }

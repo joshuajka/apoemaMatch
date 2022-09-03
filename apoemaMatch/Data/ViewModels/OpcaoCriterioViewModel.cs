@@ -1,6 +1,6 @@
-﻿namespace apoemaMatch.Models
+﻿namespace apoemaMatch.Data.ViewModels
 {
-    public class OpcaoCriterio
+    public class OpcaoCriterioViewModel
     {
         public int Id { get; set; }
 

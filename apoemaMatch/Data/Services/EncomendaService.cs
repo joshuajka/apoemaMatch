@@ -34,7 +34,7 @@ namespace apoemaMatch.Data.Services
 
             if (dbEncomenda != null)
             {
-                dbEncomenda.PossuiChamada = encomenda.RealizaProcessoSeletivo;
+                dbEncomenda.PossuiChamada = encomenda.PossuiChamada;
                 dbEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
                 dbEncomenda.Titulo = encomenda.Titulo;
                 dbEncomenda.Descricao = encomenda.Descricao;

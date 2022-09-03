@@ -14,19 +14,19 @@
                     <div class="card-header text-white cor-apoema">
                         <p class="card-text">
                             <h5 class="card-title">
-                                @Model.Titulo
+                                Encomenda @Model.Id
                             </h5>
                         </p>
                     </div>
                 </div>
                 <div class="col-md-12 offset-2">
                     <div class="card-body">
-                        <p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)Model.AreaSolucaoBuscada)</p>
-                        <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)Model.SegmentoDeMercado)</p>
-                        <p class="card-text"><b>Descrição: </b>@Model.Descricao</p>
+                        <p class="card-text"><b>Título da encomenda: </b>@Model.Titulo</p>
+                        <p class="card-text"><b>Tipo da encomenda: </b>@Extensions.GetEnumDisplayName((EnumTipoEncomenda)Model.TipoEncomenda)</p>
+                        <p class="card-text"><b>Descrição da encomenda: </b>@Model.Descricao</p>
                         <p class="card-text">
-                            <b>Realiza processo seletivo: </b>
-                            @if (Model.RealizaProcessoSeletivo)
+                            <b>Possui chamada: </b>
+                            @if (Model.PossuiChamada)
                             {
                                 <span>Sim</span>
                             }
@@ -37,13 +37,26 @@
                         </p>
                         <p class="card-text ">
                             <b>Status: </b>
-                            @if (Model.EncomendaAberta)
+                            @switch (Model.StatusEncomenda)
                             {
-                                <span class="badge bg-success text-white">ABERTA</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-danger text-white">FECHADA</span>
+                                case EnumStatusEncomenda.Inicial:
+                                    <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
+                                    break;
+                                case EnumStatusEncomenda.AnalisandoEncomenda:
+                                    <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
+                                    break;
+                                case EnumStatusEncomenda.Recusada:
+                                    <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
+                                    break;
+                                case EnumStatusEncomenda.Aberta:
+                                    <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
+                                    break;
+                                case EnumStatusEncomenda.AguardandoAnaliseChamada:
+                                    <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
+                                    break;
+                                case EnumStatusEncomenda.Finalizada:
+                                    <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
+                                    break;
                             }
                         </p>
                     </div>

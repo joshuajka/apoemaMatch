@@ -27,17 +27,17 @@
                             <input asp-for="Titulo" class="form-control" />
                             <span asp-validation-for="Titulo" class="text-danger"></span>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <div class="form-group">
-                                <label asp-for="SegmentoDeMercado" class="control-label"></label>
-                                <select asp-for="SegmentoDeMercado" class="form-control" asp-items="Html.GetEnumSelectList<EnumSegmentoDeMercado>()"></select>
-                                <span asp-validation-for="SegmentoDeMercado" class="text-danger"></span>
+                                <label asp-for="TipoEncomenda" class="control-label"></label>
+                                <select asp-for="TipoEncomenda" class="form-control" asp-items="Html.GetEnumSelectList<EnumTipoEncomenda>()"></select>
+                                <span asp-validation-for="TipoEncomenda" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="AreaSolucaoBuscada" class="control-label"></label>
-                                <select asp-for="AreaSolucaoBuscada" class="form-control" asp-items="Html.GetEnumSelectList<EnumAreaSolucaoBuscada>()"></select>
-                                <span asp-validation-for="AreaSolucaoBuscada" class="text-danger"></span>
-                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="TipoEncomendaOutros" class="control-label"></label>
+                            <input asp-for="TipoEncomendaOutros" class="form-control" />
+                            <span asp-validation-for="TipoEncomendaOutros" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="form-group">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" asp-for="RealizaProcessoSeletivo" value="false" />
+                    <input type="hidden" asp-for="PossuiChamada" value="false" />
 
                     <div class="form-group">
                         <div class="text-center">
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="float-left">
-                            <input type="submit" onclick="atribuiRealizaProcessoSeletivo(false)" class="btn btn-outline-secondary" value="Ser agenciado pelo APEOMA" />
+                            <input type="submit" onclick="setPossuiChamada(false)" class="btn btn-outline-secondary" value="Ser agenciado pelo APEOMA" />
                         </div>
                         <div class="float-right">
                             <button onclick="mostreDetalhesioSelecao()" type="button" class="btn btn-outline-secondary"> Iniciar um processo de seleção </button>
@@ -66,17 +66,17 @@
             </div>
 
             @await Html.PartialAsync("DetalhesSelecao.cshtml")
-            @await Html.PartialAsync("QuestionarioSelecao.cshtml")
+            @await Html.PartialAsync("CriteriosChamada.cshtml")
         </form>
     </div>
 </div>
 
 @section Scripts{
     <script>
-        let inputRealizaProcessoSeletivo = document.getElementById("RealizaProcessoSeletivo");
+        let inputPossuiChamada = document.getElementById("PossuiChamada");
 
-        function atribuiRealizaProcessoSeletivo(realiza) {
-            inputRealizaProcessoSeletivo.value = realiza;
+        function setPossuiChamada(possui) {
+            inputPossuiChamada.value = possui;
         }
 
         function fecheAlertaSucesso() {
@@ -84,17 +84,17 @@
             alert.close();
         }
 
-        function mostreQuestionarioSelecao() {
-            atribuiRealizaProcessoSeletivo(true);
+        function mostreCriteriosChamada() {
+            setPossuiChamada(true);
             document.getElementById("detalhesSelecao").classList.add("d-none");
-            document.getElementById("questionarioSelecao").classList.remove("d-none");
+            document.getElementById("criteriosChamada").classList.remove("d-none");
         }
         function mostreDetalhesioSelecao() {
-            atribuiRealizaProcessoSeletivo(true);
+            setPossuiChamada(true);
             document.getElementById("cadastroBasicoEncomenda").classList.add("d-none");
             document.getElementById("detalhesSelecao").classList.remove("d-none");
         }
     </script>
 
-    <script src=@Url.Content("~/js/QuestionarioSelecao/questionarioSelecao.js") asp-append-version="true"></script>
+    <script src=@Url.Content("~/js/QuestionarioSelecao/criteriosChamada.js") asp-append-version="true"></script>
 }
