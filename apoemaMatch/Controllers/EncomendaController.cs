@@ -65,6 +65,7 @@ namespace apoemaMatch.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         public IActionResult Cadastrar()
         {
             return View();
@@ -87,20 +88,20 @@ namespace apoemaMatch.Controllers
             {
                 string userEmail = User.FindFirstValue(ClaimTypes.Email);
                 var userDemandante= await _userManager.FindByEmailAsync(userEmail);
-                var demandante = await _serviceSolucionador.GetSolucionadorByIdUser(userDemandante.Id);
+                var demandante = await _serviceDemandante.GetDemandanteByIdUser(userDemandante.Id);
                 encomendaViewModel.IdDemandante = demandante.Id;
             }
 
-            List<Criterio> questoes = null;
+            List<Criterio> criterios = null;
             if (encomendaViewModel.InputCriterios is not null)
             {
-                questoes = JsonConvert.DeserializeObject<List<Criterio>>(encomendaViewModel.InputCriterios);
+                criterios = JsonConvert.DeserializeObject<List<Criterio>>(encomendaViewModel.InputCriterios);
             }
 
-            if (questoes is not null && questoes.Any())
+            if (criterios is not null && criterios.Any())
             {
                 encomendaViewModel.Criterios = new();
-                encomendaViewModel.Criterios.AddRange(questoes);
+                encomendaViewModel.Criterios.AddRange(criterios);
             }
 
             encomendaViewModel.EncomendaAberta = true;
