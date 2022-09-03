@@ -140,5 +140,22 @@ namespace apoemaMatch.Repository
 
             await _emailService.SendEmailForForgotPassword(options);
         }
+
+        private async Task SendConfirmationRegistrationEmail(ApplicationUser user, string token)
+        {
+            string appDomain = _configuration.GetSection("Application:AppDomain").Value;
+            string confirmationLink = _configuration.GetSection("Application:ConfirmacaoCadastro").Value;
+
+            UserEmailOptions options = new UserEmailOptions
+            {
+                ToEmails = new List<string>() { user.Email },
+                PlaceHolders = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{UserName}}", user.Nome)
+                }
+            };
+
+            await _emailService.SendForConfirmationRegistrationEmail(options);
+        }
     }
 }

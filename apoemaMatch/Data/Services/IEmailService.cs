@@ -1,7 +1,4 @@
 ﻿using apoemaMatch.Data.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace apoemaMatch.Data.Services
@@ -13,5 +10,7 @@ namespace apoemaMatch.Data.Services
         Task SendEmailForEmailConfirmation(UserEmailOptions userEmailOptions);
 
         Task SendEmailForForgotPassword(UserEmailOptions userEmailOptions);
+
+        Task SendForConfirmationRegistrationEmail(UserEmailOptions userEmailOptions);
     }
 }
