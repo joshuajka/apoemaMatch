@@ -7,14 +7,16 @@
 }
 
 <h2>Lista de Encomendas</h2>
-
-<div class="row justify-content-end">
-    <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
-        <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="Cadastrar">
-            Criar nova encomenda
-        </a>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Demandante"))
+{
+    <div class="row justify-content-end">
+        <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
+            <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="Cadastrar">
+                Criar nova encomenda
+            </a>
+        </div>
     </div>
-</div>
+}
 
 <div class="row">
     @if (Model is not null)
