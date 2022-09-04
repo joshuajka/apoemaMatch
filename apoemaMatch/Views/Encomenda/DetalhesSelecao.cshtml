@@ -7,7 +7,7 @@
 <div class="d-none" id="detalhesSelecao">
     <div class="row">
         <div class="col-md-12 mb-3">
-            <h2 style="text-align: center;">Insira os detalhes para o processo de seleção</h2>
+            <h2 style="text-align: center;">Informe aqui os detalhes da chamada e/ou anexe um arquivo contendo todas as especificações da chamada</h2>
         </div>
 
         <div class="col-md-12">
@@ -20,13 +20,14 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label asp-for="DataValidadeChamada" class="control-label"></label>
-                <input type="date" asp-for="DataValidadeChamada" class="form-control"></input>
+                <input type="date" asp-for="DataValidadeChamada" class="form-control" />
                 <span asp-validation-for="DataValidadeChamada" class="text"></span>
             </div>
         </div>
         <div class="col-md-12">
-            <div class="input-group mb-3">
-                <input type="file" asp-for="ArquivoDetalheChamada" class="form-control"></input>
+            <div class="form-group">
+                <label asp-for="ArquivoDetalheChamada" class="control-label"></label>
+                <input asp-for="ArquivoDetalheChamada" class="form-control" />
                 <span asp-validation-for="ArquivoDetalheChamada" class="text"></span>
             </div>
         </div>

@@ -49,9 +49,10 @@ namespace apoemaMatch.Data.ViewModels
         [Display(Name = "Descreva os detalhes da seleção")]
         public string DescricaoChamada { get; set; }
 
-        [Display(Name = "Data de validade da seleção")]
+        [Display(Name = "Data de validade da chamada")]
         public string DataValidadeChamada { get; set; }
 
+        [Display(Name = "Link de Arquivo")]
         public string ArquivoDetalheChamada { get; set; }
         #endregion
 
