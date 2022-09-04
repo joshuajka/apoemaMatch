@@ -112,5 +112,11 @@ namespace apoemaMatch.Data.Services
 
             return encomendaBuscada;
         }
+
+        public async Task InsereProposta(Proposta proposta)
+        {
+            await _context.Proposta.AddAsync(proposta);
+            await _context.SaveChangesAsync();
+        }
     }
 }

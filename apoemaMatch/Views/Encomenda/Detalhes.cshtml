@@ -39,7 +39,7 @@
                             <b>Status: </b>
                             @switch (Model.StatusEncomenda)
                             {
-                                case EnumStatusEncomenda.Inicial:
+                                @*case EnumStatusEncomenda.Inicial:
                                     <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
                                     break;
                                 case EnumStatusEncomenda.AnalisandoEncomenda:
@@ -47,7 +47,7 @@
                                     break;
                                 case EnumStatusEncomenda.Recusada:
                                     <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
-                                    break;
+                                    break;*@
                                 case EnumStatusEncomenda.Aberta:
                                     <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
                                     break;

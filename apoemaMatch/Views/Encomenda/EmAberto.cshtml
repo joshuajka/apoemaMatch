@@ -3,11 +3,11 @@
 @model IEnumerable<EncomendaViewModel>
 
 @{
-    ViewData["Title"] = "Lista de Encomendas";
+    ViewData["Title"] = "Lista de Chamadas em aberto";
 }
 
 <div class="text-center">
-    <h2>Lista de Encomendas</h2>
+    <h2>Chamadas em aberto</h2>
 </div>
 
 <div class="row">
@@ -15,7 +15,7 @@
     {
         @foreach (var item in Model)
         {
-            @if (Equals(item.StatusEncomenda, EnumStatusEncomenda.Aberta) && item.PossuiChamada)
+            @if (@*Equals(item.StatusEncomenda, EnumStatusEncomenda.Aberta) &&*@ item.PossuiChamada)
             {
                 <div class="col-md-4 col-xs-6 border-primary mb-3">
                     <div class="card mb-3">
@@ -54,7 +54,7 @@
                             <div class="col-md-12">
                                 <div class="card-footer ">
                                     <p class="card-text">
-                                        <a class="btn btn-outline-success" asp-action="" asp-route-id="@item.Id">
+                                        <a class="btn btn-outline-success" asp-action="CadastrarProposta" asp-route-id="@item.Id">
                                             <i class="bi bi-arrow-up-square"></i> Enviar Proposta
                                         </a>
                                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))

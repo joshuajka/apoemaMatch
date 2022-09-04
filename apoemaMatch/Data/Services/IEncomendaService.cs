@@ -14,5 +14,7 @@ namespace apoemaMatch.Data.Services
         Task AceitarRecusarEncomendaAsync(Encomenda encomenda);
 
         Task<Encomenda> GetEncomendaAsync(Encomenda encomenda);
+
+        Task InsereProposta(Proposta proposta);
     }
 }

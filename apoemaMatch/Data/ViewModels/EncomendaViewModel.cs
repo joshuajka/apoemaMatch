@@ -64,6 +64,12 @@ namespace apoemaMatch.Data.ViewModels
         public List<Criterio> Criterios { get; set; }
         #endregion
 
+        #region Proposta
+
+        public Proposta Proposta { get; set; }
+
+        #endregion
+
         #endregion
 
     }

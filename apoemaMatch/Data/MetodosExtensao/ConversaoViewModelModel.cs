@@ -7,7 +7,7 @@ namespace apoemaMatch.Data.MetodosExtensao
 {
     public static class ConversaoViewModelModel
     {
-        public static Encomenda Converta(this EncomendaViewModel encomendaViewModel, EnumStatusEncomenda statusEncomenda = EnumStatusEncomenda.Inicial)
+        public static Encomenda Converta(this EncomendaViewModel encomendaViewModel, EnumStatusEncomenda statusEncomenda = EnumStatusEncomenda.Aberta)
         {
             return new()
             {
@@ -31,8 +31,6 @@ namespace apoemaMatch.Data.MetodosExtensao
                         Criterios = encomendaViewModel.Criterios,
                         EncomendaId = encomendaViewModel.Id
                     }
-                //TODO(Chamada)
-               // Questoes = encomendaViewModel.RealizaProcessoSeletivo ? encomendaViewModel.Questoes : null
             };
         }
     }

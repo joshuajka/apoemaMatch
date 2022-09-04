@@ -15,6 +15,8 @@ namespace apoemaMatch.Data.MetodosExtensao
                 TipoEncomenda = encomenda.TipoEncomenda,
                 Descricao = encomenda.Descricao,
                 PossuiChamada = encomenda.PossuiChamada,
+                Criterios = encomenda.PossuiChamada ? encomenda.Chamada?.Criterios : null,
+                ChamadaId = encomenda.Chamada?.Id ?? 0
                //TODO(Chamada)
                 //Questoes = encomenda.Questoes
             };

@@ -301,5 +301,31 @@ namespace apoemaMatch.Controllers
             return RedirectToAction(nameof(MinhasEncomendasSolucionador));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CadastrarProposta(int Id)
+        {
+            Encomenda encomenda = await _service.GetEncomendaAsync(new() { Id = Id });
+
+            return View(encomenda.Converta());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CadastrarProposta(EncomendaViewModel encomendaViewModel)
+        {
+            foreach(var teste in encomendaViewModel.Proposta.RespostasCriterios
+                .Where(r => r.OpcoesSelecionadas is not null && r.OpcoesSelecionadas.Any()))
+            {
+                teste.OpcoesSelecionadas = teste.OpcoesSelecionadas.Where(op => !Equals(op, "false")).ToList();
+            }
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var userSolucionador = await _userManager.FindByEmailAsync(userEmail);
+            var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(userSolucionador.Id);
+
+            encomendaViewModel.Proposta.SolucionadorId = solucionador.Id;
+            encomendaViewModel.Proposta.ChamadaId = encomendaViewModel.ChamadaId;
+            await _service.InsereProposta(encomendaViewModel.Proposta);
+
+            return RedirectToAction(nameof(EmAberto));
+        }
     }
 }
