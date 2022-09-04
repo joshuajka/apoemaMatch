@@ -67,9 +67,28 @@
                 <div class="col-md-12">
                     <div class="card-footer ">
                         <p class="card-text">
-                            <a class="btn btn-outline-primary float-right" asp-action="Index">
-                                Voltar à lista
-                            </a>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                    Voltar à lista
+                                </a>
+
+                            }
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador"))
+                            {
+                                <a class="btn btn-outline-primary float-right" asp-action="MinhasEncomendasSolucionador">
+                                    Voltar à lista
+                                </a>
+
+                            }
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Demandante"))
+                            {
+                                <a class="btn btn-outline-primary float-right" asp-action="MinhasEncomendasDemandante">
+                                    Voltar à lista
+                                </a>
+
+                            }
+
                         </p>
                     </div>
                 </div>
