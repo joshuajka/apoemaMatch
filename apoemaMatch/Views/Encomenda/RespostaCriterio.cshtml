@@ -1,0 +1,18 @@
+﻿@using apoemaMatch.Data.Enums
+@model apoemaMatch.Data.ViewModels.EncomendaViewModel
+@{
+    ViewData["Title"] = "Inserir detalhes da Seleção";
+}
+
+<div class="d-none" id="detalhesSelecao">
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <h2 style="text-align: center;">Para participar do processo de seleção preencha os critérios abaixo</h2>
+        </div>
+
+
+        <div class="col text-center">
+            <button onclick="mostreQuestionarioSelecao()" type="button" class="btn btn-outline-secondary">Definir Critérios</button>
+        </div>
+    </div>
+</div>
