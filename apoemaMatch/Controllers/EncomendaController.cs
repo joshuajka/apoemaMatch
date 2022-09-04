@@ -62,7 +62,7 @@ namespace apoemaMatch.Controllers
 
             var encomendasDemandante = encomendas.Where(n => n.IdDemandante == demamandante.Id);
 
-            return View(encomendas.Select(e => e.Converta()));
+            return View(encomendasDemandante.Select(e => e.Converta()));
         }
 
         [HttpGet]
