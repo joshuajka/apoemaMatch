@@ -244,7 +244,7 @@ namespace apoemaMatch.Controllers
             novaEncomenda.Titulo = encomenda.Titulo;
             novaEncomenda.Descricao = encomenda.Descricao;
             novaEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
-            novaEncomenda.ChamadaId = encomenda.Chamada.Id;
+            //novaEncomenda.ChamadaId = encomenda.Chamada.Id;
             //novaEncomenda.EncomendaAberta = false;
             novaEncomenda.IdDemandante = encomenda.IdDemandante;
 
