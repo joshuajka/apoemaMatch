@@ -37,7 +37,7 @@ namespace apoemaMatch.Controllers
             return View(encomendas.Select(e => e.Converta()));
         }
 
-        [Authorize(Roles = PapeisUsuarios.Demandante)]
+        [Authorize(Roles = PapeisUsuarios.Solucionador)]
         public async Task<IActionResult> MinhasEncomendasSolucionador()
         {
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -51,6 +51,7 @@ namespace apoemaMatch.Controllers
             return View(encomendasSolucionador.Select(e => e.Converta()));
         }
 
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         public async Task<IActionResult> MinhasEncomendasDemandante()
         {
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -188,8 +189,8 @@ namespace apoemaMatch.Controllers
             //TODO(Chamada)
             //novaEncomenda.Questoes = encomenda.Questoes;
             //novaEncomenda.EncomendaAberta = false;
-            novaEncomenda.ChamadaId = encomenda.Chamada.Id;
-            novaEncomenda.EncomendaAberta = false;
+            //novaEncomenda.ChamadaId = encomenda.Chamada.Id;
+            novaEncomenda.EncomendaAberta = true;
             novaEncomenda.IdDemandante = encomenda.IdDemandante;
 
 
