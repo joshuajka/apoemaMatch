@@ -1,4 +1,5 @@
-﻿using apoemaMatch.Data.Base;
+﻿using System;
+using apoemaMatch.Data.Base;
 using apoemaMatch.Data.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,26 +11,29 @@ namespace apoemaMatch.Models
         [Key]
         public int Id { get; set; }
 
+        public bool EncomendaAberta { get; set; }
+
+        public Demandante Demandante { get; set; }
+
         public int IdDemandante { get; set; }
 
         public int? IdSolucionador { get; set; }
 
         public string Titulo { get; set; }
 
-        public bool EncomendaAberta { get; set; }
-
-        public EnumSegmentoDeMercado SegmentoDeMercado { get; set; }
-
-        public EnumAreaSolucaoBuscada AreaSolucaoBuscada { get; set; }
+        public EnumTipoEncomenda TipoEncomenda { get; set; }
 
         public string Descricao { get; set; }
 
         public EnumStatusEncomenda StatusEncomenda { get; set; }
 
-        //TODO(Inserir um campo para o agenciador justificar a recusa)
+        public string JustificativaRecusa { get; set; }
 
-        public bool RealizaProcessoSeletivo { get; set; }
+        public bool PossuiChamada { get; set; }
 
-        public List<Questao> Questoes { get; set; }
+        public Chamada Chamada { get; set; }
+        
+        public DateTime DataCadastro { get; set; }
+        
     }
 }

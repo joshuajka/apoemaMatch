@@ -83,10 +83,10 @@ namespace apoemaMatch.Data
                             IdDemandante = 1,
                             EncomendaAberta = true,
                             Titulo = "Nova Encomenda",
-                            SegmentoDeMercado = EnumSegmentoDeMercado.Educacao,
-                            AreaSolucaoBuscada = EnumAreaSolucaoBuscada.Bioinformatica,
+                            TipoEncomenda = EnumTipoEncomenda.DesenvolvimentoTecnologico,
                             Descricao = "Essa é uma nova encomenda",
-                            StatusEncomenda = EnumStatusEncomenda.Iniciado
+                            StatusEncomenda = EnumStatusEncomenda.Inicial,
+                            Demandante = context.Demandantes.First()
                         }
                     });
 

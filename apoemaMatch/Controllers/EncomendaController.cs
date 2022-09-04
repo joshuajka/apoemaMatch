@@ -1,10 +1,13 @@
 ﻿using apoemaMatch.Data.MetodosExtensao;
 using apoemaMatch.Data.Services;
+using apoemaMatch.Data.Static;
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -34,6 +37,7 @@ namespace apoemaMatch.Controllers
             return View(encomendas.Select(e => e.Converta()));
         }
 
+        [Authorize(Roles = PapeisUsuarios.Solucionador)]
         public async Task<IActionResult> MinhasEncomendasSolucionador()
         {
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -47,6 +51,7 @@ namespace apoemaMatch.Controllers
             return View(encomendasSolucionador.Select(e => e.Converta()));
         }
 
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         public async Task<IActionResult> MinhasEncomendasDemandante()
         {
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -61,13 +66,15 @@ namespace apoemaMatch.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         public IActionResult Cadastrar()
         {
             return View();
         }
-        
+
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
         [HttpPost]
-        public async Task<IActionResult> Cadastrar(EncomendaViewModel encomendaViewModel)
+        public async Task<IActionResult> Cadastrar(int demandanteId, EncomendaViewModel encomendaViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -82,13 +89,26 @@ namespace apoemaMatch.Controllers
             {
                 string userEmail = User.FindFirstValue(ClaimTypes.Email);
                 var userDemandante= await _userManager.FindByEmailAsync(userEmail);
-                var demandante = await _serviceSolucionador.GetSolucionadorByIdUser(userDemandante.Id);
+                var demandante = await _serviceDemandante.GetDemandanteByIdUser(userDemandante.Id);
                 encomendaViewModel.IdDemandante = demandante.Id;
+            }
+
+            List<Criterio> criterios = null;
+            if (encomendaViewModel.InputCriterios is not null)
+            {
+                criterios = JsonConvert.DeserializeObject<List<Criterio>>(encomendaViewModel.InputCriterios);
+            }
+
+            if (criterios is not null && criterios.Any())
+            {
+                encomendaViewModel.Criterios = new();
+                encomendaViewModel.Criterios.AddRange(criterios);
             }
 
             encomendaViewModel.EncomendaAberta = true;
             await _service.AddAsync(encomendaViewModel.Converta());
-            return RedirectToAction(nameof(Index));
+            TempData["Sucesso"] = true;
+            return RedirectToAction(nameof(Cadastrar));
         }
 
         public IActionResult FormularioAvaliacao()
@@ -161,14 +181,16 @@ namespace apoemaMatch.Controllers
 
             var encomenda = await _service.GetByIdAsync(id);
 
-            novaEncomenda.RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo;
-            novaEncomenda.SegmentoDeMercado = encomenda.SegmentoDeMercado;
+            novaEncomenda.PossuiChamada = encomenda.PossuiChamada;
+            novaEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
             novaEncomenda.Titulo = encomenda.Titulo;
-            novaEncomenda.AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada;
             novaEncomenda.Descricao = encomenda.Descricao;
             novaEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
-            novaEncomenda.Questoes = encomenda.Questoes;
-            novaEncomenda.EncomendaAberta = false;
+            //TODO(Chamada)
+            //novaEncomenda.Questoes = encomenda.Questoes;
+            //novaEncomenda.EncomendaAberta = false;
+            //novaEncomenda.ChamadaId = encomenda.Chamada.Id;
+            novaEncomenda.EncomendaAberta = true;
             novaEncomenda.IdDemandante = encomenda.IdDemandante;
 
 
@@ -182,6 +204,12 @@ namespace apoemaMatch.Controllers
 
 
             return RedirectToAction(nameof(Index));
+        }
+        
+        public async Task<IActionResult> EmAberto()
+        {
+            IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
+            return View(encomendas.Select(e => e.Converta()));
         }
 
         public async Task<IActionResult> AlterarSolucionador(int Id)
@@ -211,13 +239,12 @@ namespace apoemaMatch.Controllers
 
             var encomenda = await _service.GetByIdAsync(id);
 
-            novaEncomenda.RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo;
-            novaEncomenda.SegmentoDeMercado = encomenda.SegmentoDeMercado;
+            novaEncomenda.PossuiChamada = encomenda.PossuiChamada;
+            novaEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
             novaEncomenda.Titulo = encomenda.Titulo;
-            novaEncomenda.AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada;
             novaEncomenda.Descricao = encomenda.Descricao;
             novaEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
-            novaEncomenda.Questoes = encomenda.Questoes;
+            //novaEncomenda.ChamadaId = encomenda.Chamada.Id;
             //novaEncomenda.EncomendaAberta = false;
             novaEncomenda.IdDemandante = encomenda.IdDemandante;
 

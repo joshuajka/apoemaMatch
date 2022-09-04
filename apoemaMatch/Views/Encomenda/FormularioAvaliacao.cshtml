@@ -4,109 +4,51 @@
 }
 
 
-<div class="row">
+<div class="row" id="formularioAvaliacao">
     <div class="col-md-8 offset-2">
         <p>
             <h4>Faça aqui um questionário para o processo de avaliação</h4>
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
-                <form asp-action="FormularioAvaliacao">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div id="inputList">
-                                <div class="col text-center">
-                                    <a class="btn btn-primary" onclick="AddInput()"><i class="bi bi-plus text-white"></i></a>
-                                    <br/><br/>
-                                </div>
-                                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="inputList">
+                            <div class="col text-center">
+                                <a class="btn btn-primary" onclick="AddInput()"><i class="bi bi-plus text-white"></i></a>
+                                <br /><br />
+                            </div>
+                            <div class="input-group  teste-class">
                                 <div class="input-group">
-                                    <input asp-for="Titulo" class="form-control" placeholder="Insira a questão"/>
-                                        <div class="dropdown demolist">
-                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="AddElement()">
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">Textual</a>
-                                                <a class="dropdown-item" href="#">Opções</a>
-                                                <a class="dropdown-item" href="#">Seleção única</a>
-                                            </div>
+                                    <input asp-for="Titulo" class="form-control" placeholder="Insira a questão" />
+                                    <div class="dropdown demolist">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="AddElement()">
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Textual</a>
+                                            <a class="dropdown-item" href="#">Opções</a>
+                                            <a class="dropdown-item" href="#">Seleção única</a>
                                         </div>
+                                    </div>
                                     <a class="btn btn-danger text-white rmv_btn" onclick="RemoveInput()"><i class="bi bi-trash"></i></a>
                                 </div>
                                 <div class="input-element"></div>
                             </div>
-                            <br/><br/>
-                            <div class="col text-center">
-                                <a class="btn btn-outline-warning">Publicar demanda</a>
-                            </div>
+
+                        </div>
+                        <br /><br />
+                        <div class="col text-center">
+                            <button type="submit" class="btn btn-outline-warning" asp-controller="Encomenda" asp-action="Cadastrar">Publicar demanda</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
 @section Scripts{
-    <script>
-    function AddInput() {
-        var inputList = document.getElementById("inputList");
-        var inputCount = inputList.getElementsByTagName('input').length;
-        var newInput = `<div class="input-group">
-                        <input asp-for="Titulo" class="form-control" id="EventMembers_${inputCount}" name="EventMembers[${inputCount}]"  placeholder="Insira a questão"/>
-                        <div class="dropdown demolist">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="AddElement()">
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                               <a class="dropdown-item" href="#">Textual</a>
-                               <a class="dropdown-item" href="#">Opções</a>
-                                <a class="dropdown-item" href="#">Seleção única</a>
-                            </div>
-                        </div>
-                        <a class="btn btn-danger text-white rmv_btn" onclick="RemoveInput()"><i class="bi bi-trash"></i></a>
-                        </div>
-                        <div class="input-element"></div>`;
-        var element = document.createElement("div");
-        element.classList.add('input-group');
-        element.innerHTML = newInput ;
-        inputList.appendChild(element);
-    }  
-        
-    function RemoveInput() {
-        $(document).on('click', '.rmv_btn', function(){
-                     // "this" is current button event occurs on
-                     $(this).closest('.input-group').remove()
-                  })  
-    }
-    
-    function AddElement() {
-        $(document).ready(function () {
-          $('.demolist a').one('click', function () {
-            var txt= ($(this).text());
-            if (txt == "Textual"){
-                console.log(txt);
-                //$(this).closest('.input-element').remove()
-                //$(this).closest('.inputList').find('.none').replaceWith('<div class="input-element">Opções</div>');
-                console.log($(this).closest('#inputList').find('.none').get());
-                $(this).closest('#inputList').find('.input-element').replaceWith("<div class='input-element'>Textual</div>");
-                //$(this).closest('.inputList').find('.input-element').replaceWith("<div class='input-element'>Opções</div>")
-                //$(this).closest('.input-element').replaceWith("<div class='input-element'>Opções</div>")
-                //console.log($(this).closest("#inputList").find('.none'));
-                //$(this).parent().parent().parent().after("<div class='input-element'>Textual</div>");
-            }else if (txt == "Opções"){
-                console.log(txt);
-                console.log($(this).closest('#inputList').find('.none').get());
-                $(this).closest('#inputList').find('.input-element').replaceWith("<div class='input-element'>Opções</div>");
-                //$(this).parent().parent().parent().after("<div class='input-element'>Opções</div>");
-            }else if (txt == "Seleção única"){
-                console.log(txt);
-                console.log($(this).closest('#inputList').find('.none').get());
-                $(this).closest('#inputList').find('.input-element').replaceWith("<div class='input-element'>Seleção unica</div>");
-                         }
-          });
-        });
-    }
-    
-     
-    </script>
+    <script src=@Url.Content("~/js/FormularioAvaliacao/formularioAvaliacao.js") asp-append-version="true"></script>
 }

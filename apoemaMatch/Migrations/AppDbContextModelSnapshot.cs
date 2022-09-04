@@ -216,6 +216,59 @@ namespace apoemaMatch.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("apoemaMatch.Models.Chamada", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ArquivoAnexo")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DataValidade")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DescricaoChamada")
+                        .HasColumnType("text");
+
+                    b.Property<int>("EncomendaId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EncomendaId")
+                        .IsUnique();
+
+                    b.ToTable("Chamada");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.Criterio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("ChamadaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Ordem")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TipoCriterio")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChamadaId");
+
+                    b.ToTable("Criterio");
+                });
+
             modelBuilder.Entity("apoemaMatch.Models.Demandante", b =>
                 {
                     b.Property<int>("Id")
@@ -292,7 +345,10 @@ namespace apoemaMatch.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AreaSolucaoBuscada")
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("DemandanteId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Descricao")
@@ -307,13 +363,16 @@ namespace apoemaMatch.Migrations
                     b.Property<int?>("IdSolucionador")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("RealizaProcessoSeletivo")
+                    b.Property<string>("JustificativaRecusa")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("PossuiChamada")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("SegmentoDeMercado")
+                    b.Property<int>("StatusEncomenda")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StatusEncomenda")
+                    b.Property<int>("TipoEncomenda")
                         .HasColumnType("integer");
 
                     b.Property<string>("Titulo")
@@ -321,30 +380,90 @@ namespace apoemaMatch.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DemandanteId");
+
                     b.ToTable("Encomendas");
                 });
 
-            modelBuilder.Entity("apoemaMatch.Models.Questao", b =>
+            modelBuilder.Entity("apoemaMatch.Models.OpcaoCriterio", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("EncomendaId")
+                    b.Property<int?>("CriterioId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Pergunta")
+                    b.Property<int?>("RespostaCriterioId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Texto")
                         .HasColumnType("text");
 
-                    b.Property<int>("TipoResposta")
+                    b.HasKey("Id");
+
+                    b.HasIndex("CriterioId");
+
+                    b.HasIndex("RespostaCriterioId");
+
+                    b.ToTable("OpcaoCriterio");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.Proposta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ChamadaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SolucionadorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StatusProposta")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EncomendaId");
+                    b.HasIndex("ChamadaId");
 
-                    b.ToTable("Questao");
+                    b.HasIndex("SolucionadorId");
+
+                    b.ToTable("Proposta");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.RespostaCriterio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("CriterioId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Nota")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PropostaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RespostaTextual")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RespostaUpload")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CriterioId");
+
+                    b.HasIndex("PropostaId");
+
+                    b.ToTable("RespostaCriterio");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.Solucionador", b =>
@@ -450,16 +569,101 @@ namespace apoemaMatch.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("apoemaMatch.Models.Questao", b =>
+            modelBuilder.Entity("apoemaMatch.Models.Chamada", b =>
                 {
-                    b.HasOne("apoemaMatch.Models.Encomenda", null)
-                        .WithMany("Questoes")
-                        .HasForeignKey("EncomendaId");
+                    b.HasOne("apoemaMatch.Models.Encomenda", "Encomenda")
+                        .WithOne("Chamada")
+                        .HasForeignKey("apoemaMatch.Models.Chamada", "EncomendaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Encomenda");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.Criterio", b =>
+                {
+                    b.HasOne("apoemaMatch.Models.Chamada", null)
+                        .WithMany("Criterios")
+                        .HasForeignKey("ChamadaId");
                 });
 
             modelBuilder.Entity("apoemaMatch.Models.Encomenda", b =>
                 {
-                    b.Navigation("Questoes");
+                    b.HasOne("apoemaMatch.Models.Demandante", "Demandante")
+                        .WithMany()
+                        .HasForeignKey("DemandanteId");
+
+                    b.Navigation("Demandante");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.OpcaoCriterio", b =>
+                {
+                    b.HasOne("apoemaMatch.Models.Criterio", null)
+                        .WithMany("OpcoesCriterios")
+                        .HasForeignKey("CriterioId");
+
+                    b.HasOne("apoemaMatch.Models.RespostaCriterio", null)
+                        .WithMany("OpcoesSelecionadas")
+                        .HasForeignKey("RespostaCriterioId");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.Proposta", b =>
+                {
+                    b.HasOne("apoemaMatch.Models.Chamada", "Chamada")
+                        .WithMany("Propostas")
+                        .HasForeignKey("ChamadaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("apoemaMatch.Models.Solucionador", "Solucionador")
+                        .WithMany()
+                        .HasForeignKey("SolucionadorId");
+
+                    b.Navigation("Chamada");
+
+                    b.Navigation("Solucionador");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.RespostaCriterio", b =>
+                {
+                    b.HasOne("apoemaMatch.Models.Criterio", "Criterio")
+                        .WithMany()
+                        .HasForeignKey("CriterioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("apoemaMatch.Models.Proposta", null)
+                        .WithMany("RespostasCriterios")
+                        .HasForeignKey("PropostaId");
+
+                    b.Navigation("Criterio");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.Chamada", b =>
+                {
+                    b.Navigation("Criterios");
+
+                    b.Navigation("Propostas");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.Criterio", b =>
+                {
+                    b.Navigation("OpcoesCriterios");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.Encomenda", b =>
+                {
+                    b.Navigation("Chamada");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.Proposta", b =>
+                {
+                    b.Navigation("RespostasCriterios");
+                });
+
+            modelBuilder.Entity("apoemaMatch.Models.RespostaCriterio", b =>
+                {
+                    b.Navigation("OpcoesSelecionadas");
                 });
 #pragma warning restore 612, 618
         }

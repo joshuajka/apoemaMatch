@@ -33,13 +33,13 @@ namespace apoemaMatch.Data.Services
 
             if (dbEncomenda != null)
             {
-                dbEncomenda.RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo;
-                dbEncomenda.SegmentoDeMercado = encomenda.SegmentoDeMercado;
+                dbEncomenda.PossuiChamada = encomenda.PossuiChamada;
+                dbEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
                 dbEncomenda.Titulo = encomenda.Titulo;
-                dbEncomenda.AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada;
                 dbEncomenda.Descricao = encomenda.Descricao;
                 dbEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
-                dbEncomenda.Questoes = encomenda.Questoes;
+                //TODO(Chamada)
+                // dbEncomenda.Questoes = encomenda.Questoes;
                 dbEncomenda.IdDemandante = encomenda.IdDemandante;
                 dbEncomenda.IdSolucionador = encomenda.IdSolucionador;
                 //dbEncomenda.EncomendaAberta = encomenda.EncomendaAberta;
@@ -58,13 +58,12 @@ namespace apoemaMatch.Data.Services
 
             if (dbEncomenda != null)
             {
-                dbEncomenda.RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo;
-                dbEncomenda.SegmentoDeMercado = encomenda.SegmentoDeMercado;
+                dbEncomenda.PossuiChamada = encomenda.PossuiChamada;
+                dbEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
                 dbEncomenda.Titulo = encomenda.Titulo;
-                dbEncomenda.AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada;
                 dbEncomenda.Descricao = encomenda.Descricao;
                 dbEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
-                dbEncomenda.Questoes = encomenda.Questoes;
+                dbEncomenda.Chamada = encomenda.Chamada;
                 dbEncomenda.IdDemandante = encomenda.IdDemandante;
                 dbEncomenda.IdSolucionador = encomenda.IdSolucionador;
                 dbEncomenda.EncomendaAberta = encomenda.EncomendaAberta;

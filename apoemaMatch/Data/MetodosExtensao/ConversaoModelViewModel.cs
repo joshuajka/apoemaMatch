@@ -1,5 +1,4 @@
-﻿using apoemaMatch.Data.Enums;
-using apoemaMatch.Data.ViewModels;
+﻿using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
 
 namespace apoemaMatch.Data.MetodosExtensao
@@ -13,22 +12,22 @@ namespace apoemaMatch.Data.MetodosExtensao
                 EncomendaAberta = encomenda.EncomendaAberta,
                 Id = encomenda.Id,
                 Titulo = encomenda.Titulo,
-                SegmentoDeMercado = encomenda.SegmentoDeMercado,
-                AreaSolucaoBuscada = encomenda.AreaSolucaoBuscada,
+                TipoEncomenda = encomenda.TipoEncomenda,
                 Descricao = encomenda.Descricao,
-                RealizaProcessoSeletivo = encomenda.RealizaProcessoSeletivo,
-                TipoResposta = EnumTipoResposta.RespostaCurta,
-                Questoes = encomenda.Questoes
+                PossuiChamada = encomenda.PossuiChamada,
+               //TODO(Chamada)
+                //Questoes = encomenda.Questoes
             };
         }
 
-        public static QuestaoViewModel Converta(this Questao questao)
+        public static CriterioViewModel Converta(this Criterio criterio)
         {
             return new()
             {
-                Id = questao.Id,
-                Pergunta = questao.Pergunta,
-                TipoResposta = questao.TipoResposta
+                Id = criterio.Id,
+                Descricao = criterio.Descricao,
+                TipoCriterio = criterio.TipoCriterio,
+                Ordem = criterio.Ordem
             };
         }
     }

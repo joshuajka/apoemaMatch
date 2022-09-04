@@ -1,0 +1,78 @@
+﻿@using apoemaMatch.Data.Enums
+@model apoemaMatch.Data.ViewModels.EncomendaViewModel
+
+<div class="row d-none" id="criteriosChamada">
+    <div class="col-md-8 offset-2">
+        <div class="col-md-12 mb-3">
+            <h2 style="text-align: center;">Quais critérios e atributos você gostaria de avaliar para sua encomenda?</h2>
+        </div>
+
+        <div class="col-md-12 mb-3">
+            <label asp-for="CriterioBase.Descricao" class="control-label"></label>
+            <input asp-for="CriterioBase.Descricao" class="form-control" />
+            <span id="spanDescricaoCriterio" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-12 mb-3">
+            <div class="form-group">
+                <label asp-for="CriterioBase.TipoCriterio" class="control-label"></label>
+                <select asp-for="CriterioBase.TipoCriterio" class="form-control" asp-items="Html.GetEnumSelectList<EnumTipoCriterio>()"></select>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-3 d-none" id="div_opcoes_criterio">
+            <table class="table" id="tabela_opcoes_criterio">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-md-11">Texto da opção</th>
+                        <th scope="col" class="col-md-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input asp-for="CriterioBase.OpcoesCriterioBase[0].Texto" class="form-control" />
+                            <span id="spanOpcaoCriterioTexto0" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <button onclick="removaOpcao(this)" type="button" class="btn btn-danger text-white">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input asp-for="CriterioBase.OpcoesCriterioBase[1].Texto" class="form-control" />
+                            <span id="spanOpcaoCriterioTexto1" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <button onclick="removaOpcao(this)" type="button" class="btn btn-danger text-white">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="col-md-12 mb-3 d-flex justify-content-center">
+                <button type="button" class="btn btn-primary" id="botaoAdicionarOpcaoCriterio">
+                    <i class="bi bi-plus text-white"></i>
+                </button>
+            </div>
+        </div>
+
+
+        <div class="col-md-12 mb-3 d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" id="botaoAdicionarCriterio">Adicionar</button>
+        </div>
+
+        <input type="hidden" asp-for="InputCriterios" />
+
+        <div class="row mb-3 d-none" id="div_criterios">
+        </div>
+
+        @*TODO: Validar se tem pelo menos um criterio*@
+        <div class="col text-center">
+            <button type="submit" onclick="setPossuiChamada(true)" class="btn btn-outline-warning" asp-controller="Encomenda" asp-action="Cadastrar">Publicar encomenda</button>
+        </div>
+    </div>
+</div>

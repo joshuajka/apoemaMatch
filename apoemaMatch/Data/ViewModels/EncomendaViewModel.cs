@@ -9,6 +9,8 @@ namespace apoemaMatch.Data.ViewModels
     {
         public int Id { get; set; }
 
+        #region EncomendaBase
+        
         [Display(Name ="Solucionador")]
         public int? IdSolucionador { get; set; }
 
@@ -16,30 +18,53 @@ namespace apoemaMatch.Data.ViewModels
 
         public bool EncomendaAberta { get; set; }
 
-        [Display(Name = "Título da requisição")]
+        [Display(Name = "Título da encomenda")]
         [Required(ErrorMessage = "O Título da requisição é obrigatório")]
         public string Titulo { get; set; }
+        
+        [Display(Name = "Tipo de encomenda")]
+        [Required(ErrorMessage = "O tipo de encomenda é obrigatorio")]
+        public EnumTipoEncomenda TipoEncomenda { get; set; }
 
-        [Display(Name = "Qual serviço procura?")]
-        [Required(ErrorMessage = "O tipo de serviço procurado é obrigatorio")]
-        public EnumSegmentoDeMercado SegmentoDeMercado { get; set; }
-
-        [Display(Name = "Área de solução buscada?")]
-        [Required(ErrorMessage = "A área de solução buscada é obrigatorio")]
-        public EnumAreaSolucaoBuscada AreaSolucaoBuscada { get; set; }
+        [Display(Name = "Descreva a tipo da encomenda")]
+        public string TipoEncomendaOutros { get; set; }
 
         [Display(Name = "Descreva sua encomenda")]
         [Required(ErrorMessage = "A descrição da demanda é obrigatorio")]
         public string Descricao { get; set; }
 
-        [Required(ErrorMessage = "É necessário informar se realiza processo seletivo")]
-        public bool RealizaProcessoSeletivo { get; set; }
-
+        public bool PossuiChamada { get; set; }
+        
         public EnumStatusEncomenda StatusEncomenda { get; set; }
 
-        public EnumTipoResposta TipoResposta { get; set; }
+        #endregion
 
-        public List<Questao> Questoes { get; set; }
+        #region Chamada
+
+        public int ChamadaId { get; set; }
+
+        public int NumeroChamada { get; set; }
+
+        #region Detalhes
+        [Display(Name = "Descreva os detalhes da seleção")]
+        public string DescricaoChamada { get; set; }
+
+        [Display(Name = "Data de validade da chamada")]
+        public string DataValidadeChamada { get; set; }
+
+        [Display(Name = "Link de Arquivo")]
+        public string ArquivoDetalheChamada { get; set; }
+        #endregion
+
+        #region Criterios
+        public CriterioViewModel CriterioBase { get; set; }
+
+        public string InputCriterios { get; set; }
+
+        public List<Criterio> Criterios { get; set; }
+        #endregion
+
+        #endregion
 
     }
 }

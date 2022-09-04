@@ -1,0 +1,78 @@
+@using apoemaMatch.Data.Enums
+@using apoemaMatch.Data.ViewModels
+@model IEnumerable<EncomendaViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Encomendas";
+}
+
+<div class="text-center">
+    <h2>Lista de Encomendas</h2>
+</div>
+
+<div class="row">
+    @if (Model is not null)
+    {
+        @foreach (var item in Model)
+        {
+            @if (Equals(item.StatusEncomenda, EnumStatusEncomenda.Aberta) && item.PossuiChamada)
+            {
+                <div class="col-md-4 col-xs-6 border-primary mb-3">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-12">
+                                <div class="card-header text-white cor-apoema">
+                                    <p class="card-text">
+                                        <h5 class="card-title">
+                                            Chamada @item.NumeroChamada
+                                        </h5>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <p class="card-text"><b>Título da encomenda: </b>@item.Titulo</p>
+                                    <p class="card-text"><b>Tipo encomenda: </b>@Extensions.GetEnumDisplayName((EnumTipoEncomenda)item.TipoEncomenda)</p>
+                                    <p class="card-text"><b>Descrição da encomenda: </b>@item.Descricao</p>
+                                    <p class="card-text">
+                                        <b>Realiza processo seletivo: </b>
+                                        @if (item.PossuiChamada)
+                                        {
+                                            <span>Sim</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Não</span>
+                                        }
+                                    </p>
+                                    <p class="card-text">
+                                        <b>Status: </b>
+                                        <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card-footer ">
+                                    <p class="card-text">
+                                        <a class="btn btn-outline-success" asp-action="" asp-route-id="@item.Id">
+                                            <i class="bi bi-arrow-up-square"></i> Enviar Proposta
+                                        </a>
+                                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                        {
+                                            <a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
+                                                <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
+                                            </a>
+                                        }
+                                        <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
+                                            <i class="bi bi-eye-fill"></i> Detalhes
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>

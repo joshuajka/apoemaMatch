@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace apoemaMatch.Migrations
 {
-    public partial class initial2808221815 : Migration
+    public partial class initialMerge : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,6 +54,8 @@ namespace apoemaMatch.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Ativo = table.Column<bool>(type: "boolean", nullable: false),
+                    Cnpj = table.Column<string>(type: "text", nullable: true),
                     ImagemURL = table.Column<string>(type: "text", nullable: true),
                     IdUsuario = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
@@ -78,27 +80,6 @@ namespace apoemaMatch.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Encomendas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    IdDemandante = table.Column<int>(type: "integer", nullable: false),
-                    IdSolucionador = table.Column<int>(type: "integer", nullable: true),
-                    Titulo = table.Column<string>(type: "text", nullable: true),
-                    EncomendaAberta = table.Column<bool>(type: "boolean", nullable: false),
-                    SegmentoDeMercado = table.Column<int>(type: "integer", nullable: false),
-                    AreaSolucaoBuscada = table.Column<int>(type: "integer", nullable: false),
-                    Descricao = table.Column<string>(type: "text", nullable: true),
-                    StatusEncomenda = table.Column<int>(type: "integer", nullable: false),
-                    RealizaProcessoSeletivo = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Encomendas", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Solucionadores",
                 columns: table => new
                 {
@@ -106,6 +87,7 @@ namespace apoemaMatch.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     IdUsuario = table.Column<string>(type: "text", nullable: true),
                     Disponivel = table.Column<bool>(type: "boolean", nullable: false),
+                    Cpf = table.Column<string>(type: "text", nullable: true),
                     ImagemURL = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Nome = table.Column<string>(type: "text", nullable: false),
@@ -227,22 +209,157 @@ namespace apoemaMatch.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Questao",
+                name: "Encomendas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Pergunta = table.Column<string>(type: "text", nullable: true),
-                    TipoResposta = table.Column<int>(type: "integer", nullable: false),
-                    EncomendaId = table.Column<int>(type: "integer", nullable: true)
+                    EncomendaAberta = table.Column<bool>(type: "boolean", nullable: false),
+                    DemandanteId = table.Column<int>(type: "integer", nullable: true),
+                    IdDemandante = table.Column<int>(type: "integer", nullable: false),
+                    IdSolucionador = table.Column<int>(type: "integer", nullable: true),
+                    Titulo = table.Column<string>(type: "text", nullable: true),
+                    TipoEncomenda = table.Column<int>(type: "integer", nullable: false),
+                    Descricao = table.Column<string>(type: "text", nullable: true),
+                    StatusEncomenda = table.Column<int>(type: "integer", nullable: false),
+                    JustificativaRecusa = table.Column<string>(type: "text", nullable: true),
+                    PossuiChamada = table.Column<bool>(type: "boolean", nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Questao", x => x.Id);
+                    table.PrimaryKey("PK_Encomendas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Questao_Encomendas_EncomendaId",
+                        name: "FK_Encomendas_Demandantes_DemandanteId",
+                        column: x => x.DemandanteId,
+                        principalTable: "Demandantes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Chamada",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EncomendaId = table.Column<int>(type: "integer", nullable: false),
+                    DataValidade = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    DescricaoChamada = table.Column<string>(type: "text", nullable: true),
+                    ArquivoAnexo = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chamada", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Chamada_Encomendas_EncomendaId",
                         column: x => x.EncomendaId,
                         principalTable: "Encomendas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Criterio",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Descricao = table.Column<string>(type: "text", nullable: true),
+                    TipoCriterio = table.Column<int>(type: "integer", nullable: false),
+                    Ordem = table.Column<int>(type: "integer", nullable: false),
+                    ChamadaId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Criterio", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Criterio_Chamada_ChamadaId",
+                        column: x => x.ChamadaId,
+                        principalTable: "Chamada",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Proposta",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ChamadaId = table.Column<int>(type: "integer", nullable: false),
+                    StatusProposta = table.Column<int>(type: "integer", nullable: false),
+                    SolucionadorId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proposta", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Proposta_Chamada_ChamadaId",
+                        column: x => x.ChamadaId,
+                        principalTable: "Chamada",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Proposta_Solucionadores_SolucionadorId",
+                        column: x => x.SolucionadorId,
+                        principalTable: "Solucionadores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RespostaCriterio",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CriterioId = table.Column<int>(type: "integer", nullable: false),
+                    RespostaUpload = table.Column<string>(type: "text", nullable: true),
+                    RespostaTextual = table.Column<string>(type: "text", nullable: true),
+                    Nota = table.Column<int>(type: "integer", nullable: false),
+                    PropostaId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RespostaCriterio", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RespostaCriterio_Criterio_CriterioId",
+                        column: x => x.CriterioId,
+                        principalTable: "Criterio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RespostaCriterio_Proposta_PropostaId",
+                        column: x => x.PropostaId,
+                        principalTable: "Proposta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OpcaoCriterio",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Texto = table.Column<string>(type: "text", nullable: true),
+                    CriterioId = table.Column<int>(type: "integer", nullable: true),
+                    RespostaCriterioId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OpcaoCriterio", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OpcaoCriterio_Criterio_CriterioId",
+                        column: x => x.CriterioId,
+                        principalTable: "Criterio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OpcaoCriterio_RespostaCriterio_RespostaCriterioId",
+                        column: x => x.RespostaCriterioId,
+                        principalTable: "RespostaCriterio",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -285,9 +402,50 @@ namespace apoemaMatch.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questao_EncomendaId",
-                table: "Questao",
-                column: "EncomendaId");
+                name: "IX_Chamada_EncomendaId",
+                table: "Chamada",
+                column: "EncomendaId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Criterio_ChamadaId",
+                table: "Criterio",
+                column: "ChamadaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Encomendas_DemandanteId",
+                table: "Encomendas",
+                column: "DemandanteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OpcaoCriterio_CriterioId",
+                table: "OpcaoCriterio",
+                column: "CriterioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OpcaoCriterio_RespostaCriterioId",
+                table: "OpcaoCriterio",
+                column: "RespostaCriterioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proposta_ChamadaId",
+                table: "Proposta",
+                column: "ChamadaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proposta_SolucionadorId",
+                table: "Proposta",
+                column: "SolucionadorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RespostaCriterio_CriterioId",
+                table: "RespostaCriterio",
+                column: "CriterioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RespostaCriterio_PropostaId",
+                table: "RespostaCriterio",
+                column: "PropostaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -308,13 +466,7 @@ namespace apoemaMatch.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Demandantes");
-
-            migrationBuilder.DropTable(
-                name: "Questao");
-
-            migrationBuilder.DropTable(
-                name: "Solucionadores");
+                name: "OpcaoCriterio");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -323,7 +475,25 @@ namespace apoemaMatch.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "RespostaCriterio");
+
+            migrationBuilder.DropTable(
+                name: "Criterio");
+
+            migrationBuilder.DropTable(
+                name: "Proposta");
+
+            migrationBuilder.DropTable(
+                name: "Chamada");
+
+            migrationBuilder.DropTable(
+                name: "Solucionadores");
+
+            migrationBuilder.DropTable(
                 name: "Encomendas");
+
+            migrationBuilder.DropTable(
+                name: "Demandantes");
         }
     }
 }

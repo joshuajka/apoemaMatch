@@ -36,8 +36,8 @@
                         <div class="col-md-12">
                             <div class="card-body">
                                 <p class="card-text">@item.Descricao</p>
-                                <p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
-                                <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>
+                                @*<p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
+                                <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>*@
                                 <p class="card-text ">
                                     <b>Status: </b>
                                     @if (item.EncomendaAberta)
