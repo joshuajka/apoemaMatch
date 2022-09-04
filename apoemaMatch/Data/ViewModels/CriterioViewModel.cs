@@ -14,7 +14,7 @@ namespace apoemaMatch.Data.ViewModels
         [Display(Name = "Tipo de critério")]
         public EnumTipoCriterio TipoCriterio { get; set; }
 
-        public List<OpcaoCriterioViewModel> OpcoesCriterioBase { get; set; } = new(2);
+        public List<string> OpcoesCriterioBase { get; set; } = new(2);
 
         public int Ordem { get; set; }
     }

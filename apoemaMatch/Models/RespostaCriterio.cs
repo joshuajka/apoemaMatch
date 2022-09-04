@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using apoemaMatch.Models;
+using Microsoft.JSInterop.Infrastructure;
 
 namespace apoemaMatch.Models
 {
@@ -16,7 +18,7 @@ namespace apoemaMatch.Models
         
         public string RespostaTextual { get; set; }
         
-        public List<OpcaoCriterio> OpcoesSelecionadas { get; set; }
+        public List<string> OpcoesSelecionadas { get; set; }
         
         public int Nota { get; set; }
 

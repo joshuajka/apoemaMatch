@@ -31,7 +31,6 @@ namespace apoemaMatch.Data
         public DbSet<Encomenda> Encomendas { get; set; }
         public DbSet<Chamada> Chamada { get; set; }
         public DbSet<Criterio> Criterio { get; set; }
-        public DbSet<OpcaoCriterio> OpcaoCriterio { get; set; }
         public DbSet<Proposta> Proposta { get; set; }
         public DbSet<RespostaCriterio> RespostaCriterio { get; set; }
 

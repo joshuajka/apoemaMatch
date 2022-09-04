@@ -14,7 +14,7 @@ namespace apoemaMatch.Models
         
         public EnumTipoCriterio TipoCriterio { get; set; }
 
-        public List<OpcaoCriterio> OpcoesCriterios { get; set; }
+        public List<string> OpcoesCriterios { get; set; }
 
         public int Ordem { get; set; }
 

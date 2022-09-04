@@ -89,13 +89,7 @@ namespace apoemaMatch.Data.Services
                 if (chamada is not null)
                 {
                     List<Criterio> criterios = await _context.Criterio.Where(c => c.ChamadaId == chamada.Id).ToListAsync();
-
-                    foreach (Criterio criterio in criterios)
-                    {
-                        criterio.OpcoesCriterios = 
-                            await _context.OpcaoCriterio.Where(op => op.CriterioId == criterio.Id).ToListAsync();
-                    }
-
+                    
                     List<Proposta> propostas = await _context.Proposta.Where(p => p.ChamadaId == chamada.Id).ToListAsync();
 
                     foreach (Proposta proposta in propostas)
@@ -106,12 +100,6 @@ namespace apoemaMatch.Data.Services
                             RespostaCriterio respostaCriterio = 
                                 await _context.RespostaCriterio
                                 .FirstOrDefaultAsync(r => r.CriterioId == criterio.Id && r.PropostaId == proposta.Id);
-
-                            //TODO: Opcoes selecionadas na resposta ao criterio com opcoes
-                            //respostaCriterio.OpcoesSelecionadas =
-                            //    await _context.OpcaoCriterio
-                            //    .Where(op => op.RespostaCriterioId == respostaCriterio.Id).ToListAsync();
-
                             proposta.RespostasCriterios.Add(respostaCriterio);
                         }
                     }
