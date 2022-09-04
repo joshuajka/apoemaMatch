@@ -12,5 +12,7 @@ namespace apoemaMatch.Data.Services
         Task VincularEncomendaAsync(EncomendaViewModel encomenda);
 
         Task AceitarRecusarEncomendaAsync(Encomenda encomenda);
+
+        Task<Encomenda> GetEncomendaAsync(Encomenda encomenda);
     }
 }

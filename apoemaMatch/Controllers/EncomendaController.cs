@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -106,7 +107,11 @@ namespace apoemaMatch.Controllers
             }
 
             encomendaViewModel.EncomendaAberta = true;
-            await _service.AddAsync(encomendaViewModel.Converta());
+
+            Encomenda encomenda = encomendaViewModel.Converta();
+            encomenda.DataCadastro = DateTime.Now;
+
+            await _service.AddAsync(encomenda);
             TempData["Sucesso"] = true;
             return RedirectToAction(nameof(Cadastrar));
         }
@@ -126,9 +131,11 @@ namespace apoemaMatch.Controllers
         [HttpGet]
         public async Task<IActionResult> Detalhes(int Id)
         {
-            Encomenda encomenda = await _service.GetByIdAsync(Id);
+            //Encomenda encomenda = await _service.GetByIdAsync(Id);
 
-            if(encomenda.IdSolucionador != null)
+            var encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
+
+            if (encomenda.IdSolucionador != null)
             {
                 var solucionador = await _serviceSolucionador.GetByIdAsync((int)encomenda.IdSolucionador);
                 ViewData["NomeSolucionador"] = solucionador.Nome;

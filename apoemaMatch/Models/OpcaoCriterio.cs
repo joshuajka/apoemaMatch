@@ -5,5 +5,9 @@
         public int Id { get; set; }
 
         public string Texto { get; set; }
+
+        public int CriterioId { get; set; }
+
+        public Criterio Criterio { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace apoemaMatch.Data.Services
     {
         private readonly AppDbContext _context;
 
-        public EncomendaService(AppDbContext context) : base(context) 
+        public EncomendaService(AppDbContext context) : base(context)
         {
             _context = context;
         }
@@ -29,7 +29,7 @@ namespace apoemaMatch.Data.Services
 
         public async Task VincularEncomendaAsync(EncomendaViewModel encomenda)
         {
-            var dbEncomenda= await _context.Encomendas.FirstOrDefaultAsync(n => n.Id == encomenda.Id);
+            var dbEncomenda = await _context.Encomendas.FirstOrDefaultAsync(n => n.Id == encomenda.Id);
 
             if (dbEncomenda != null)
             {
@@ -76,6 +76,53 @@ namespace apoemaMatch.Data.Services
                 //var excecao = encomenda.EncomendaSolucionadorId.Where(p => SolucionadoresVinculados.All(p2 => p2.SolucionadorId != p)).ToList();
             }
         }
+        public async Task<Encomenda> GetEncomendaAsync(Encomenda encomenda)
+        {
+            Encomenda encomendaBuscada =
+                await _context.Encomendas
+                              .FirstOrDefaultAsync(e => e.Id == encomenda.Id);
 
+            if (encomendaBuscada is not null)
+            {
+                Chamada chamada = await _context.Chamada.FirstOrDefaultAsync(c => c.EncomendaId == encomendaBuscada.Id);
+
+                if (chamada is not null)
+                {
+                    List<Criterio> criterios = await _context.Criterio.Where(c => c.ChamadaId == chamada.Id).ToListAsync();
+
+                    foreach (Criterio criterio in criterios)
+                    {
+                        criterio.OpcoesCriterios = 
+                            await _context.OpcaoCriterio.Where(op => op.CriterioId == criterio.Id).ToListAsync();
+                    }
+
+                    List<Proposta> propostas = await _context.Proposta.Where(p => p.ChamadaId == chamada.Id).ToListAsync();
+
+                    foreach (Proposta proposta in propostas)
+                    {
+                        proposta.RespostasCriterios = new();
+                        foreach (Criterio criterio in criterios)
+                        {
+                            RespostaCriterio respostaCriterio = 
+                                await _context.RespostaCriterio
+                                .FirstOrDefaultAsync(r => r.CriterioId == criterio.Id && r.PropostaId == proposta.Id);
+
+                            //TODO: Opcoes selecionadas na resposta ao criterio com opcoes
+                            //respostaCriterio.OpcoesSelecionadas =
+                            //    await _context.OpcaoCriterio
+                            //    .Where(op => op.RespostaCriterioId == respostaCriterio.Id).ToListAsync();
+
+                            proposta.RespostasCriterios.Add(respostaCriterio);
+                        }
+                    }
+
+                    chamada.Criterios = criterios;
+                    chamada.Propostas = propostas;
+                    encomendaBuscada.Chamada = chamada;
+                }
+            }
+
+            return encomendaBuscada;
+        }
     }
 }

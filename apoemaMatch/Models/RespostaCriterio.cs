@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata;
 
 namespace apoemaMatch.Models
 {
@@ -21,6 +19,9 @@ namespace apoemaMatch.Models
         public List<OpcaoCriterio> OpcoesSelecionadas { get; set; }
         
         public int Nota { get; set; }
-        
+
+        public int PropostaId { get; set; }
+
+        public Proposta Proposta { get; set; }
     }
 }
