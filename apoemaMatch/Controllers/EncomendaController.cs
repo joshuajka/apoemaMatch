@@ -345,9 +345,11 @@ namespace apoemaMatch.Controllers
         [HttpGet]
         public async Task<IActionResult> VisualizarPropostas(int Id)
         {
-            var encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
+            Encomenda encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
+            var encomendaViewModel = encomenda.Converta();
+            encomendaViewModel.Proposta = encomenda.Chamada.Propostas.FirstOrDefault();
 
-            return View(encomenda.Chamada.Propostas);
+            return View(encomendaViewModel);
         }
 
         [HttpGet]
@@ -370,9 +372,14 @@ namespace apoemaMatch.Controllers
 
         //TODO
         [HttpPost]
-        public async Task FinalizeProcessoSeletivo()
+        public async Task<IActionResult> FinalizeProcessoSeletivo(int Id)
         {
-
+            Encomenda encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
+            List<Proposta> propostas_ordenadas = encomenda.Chamada.Propostas.OrderByDescending(o=>o.Pontuacao).ToList();
+            encomenda.IdSolucionador = propostas_ordenadas[0].Solucionador.Id;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Finalizada;
+            await _service.AtualizaEncomendaAsync(encomenda);
+            return RedirectToAction(nameof(Detalhes), new { id = encomenda.Id });
         }
     }
 }

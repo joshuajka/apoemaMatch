@@ -25,5 +25,7 @@ namespace apoemaMatch.Data.Services
         Task UpdateNotasRespostasCriteriosProposta(Proposta proposta);
         
         Task<Encomenda> GetEncomendaByChamada(int Id);
+        
+        Task AtualizaEncomendaAsync(Encomenda encomenda);
     }
 }

@@ -208,5 +208,25 @@ namespace apoemaMatch.Data.Services
             var encomenda = await _context.Encomendas.FirstOrDefaultAsync(e => e.Id == chamadaBuscada.EncomendaId);
             return encomenda;
         }
+        
+        public async Task AtualizaEncomendaAsync(Encomenda encomenda)
+        {
+            var dbEncomenda = await _context.Encomendas.FirstOrDefaultAsync(n => n.Id == encomenda.Id);
+
+            if (dbEncomenda != null)
+            {
+                dbEncomenda.PossuiChamada = encomenda.PossuiChamada;
+                dbEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
+                dbEncomenda.Titulo = encomenda.Titulo;
+                dbEncomenda.Descricao = encomenda.Descricao;
+                dbEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
+                dbEncomenda.Chamada = encomenda.Chamada;
+                dbEncomenda.IdDemandante = encomenda.IdDemandante;
+                dbEncomenda.IdSolucionador = encomenda.IdSolucionador;
+                dbEncomenda.EncomendaAberta = encomenda.EncomendaAberta;
+
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

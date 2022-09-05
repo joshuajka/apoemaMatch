@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Proposta>
+﻿@model EncomendaViewModel
 
 @{
     ViewData["Title"] = "Lista de Propostas";
@@ -6,23 +6,24 @@
 
 <h2>Lista de Propostas</h2>
 
-@if (Model is null || Model.Count() == 0)
+@if (Model is null || Model.Propostas.Count() == 0)
 {
     <h4>Ainda não foi cadastrada nenhuma proposta</h4>
 }
-
-<div class="row justify-content-end">
-    <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
-            <button @(Model is null || Model.Count() == 0 ? "disabled" : "") type="button" class="btn btn-outline-primary my-2 my-sm-0" asp-controller="" asp-action="">
+<form asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo" asp-route-id="@Model.Id">
+    <div class="row justify-content-end">
+        <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
+            <button @(Model is null || Model.Propostas.Count() == 0 ? "disabled" : "") type="submit" class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo">
                 Finalizar processo seletivo
             </button>
+        </div>
     </div>
-</div>
+</form>
 
 <div class="row">
     @if (Model is not null)
     {
-        @foreach (var item in Model)
+        @foreach (var item in Model.Propostas)
         {
             <div class="col-md-4 col-xs-6 border-primary mb-3">
                 <div class="card mb-3">
