@@ -2,14 +2,14 @@
 @using apoemaMatch.Data.ViewModels
 @model EncomendaViewModel
 @{
-    ViewData["Title"] = "Cadastrar proposta";
+    ViewData["Title"] = "Analisar proposta";
     int indexRespostaCriterio = 0;
 }
 
 <div class="row">
     <div class="col-md-8 offset-2">
         <p>
-            <h4>Cadastrar proposta</h4>
+            <h4>Analisar proposta</h4>
         </p>
 
         <form asp-action="SalvarNotasProposta">
@@ -124,7 +124,7 @@
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <a onclick="window.open('@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaUpload')" class="btn btn-outline-primary">Link</a>
+                            <a onclick="window.open('@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaUpload')" class="btn btn-outline-primary">Donwload</a>
                             <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
                         </div>
                     }
