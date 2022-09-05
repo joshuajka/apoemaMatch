@@ -88,7 +88,7 @@
                                     <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
                                         <i class="bi bi-trash"></i>Excluir
                                     </a>
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") && !item.PossuiChamada)
                                     {
                                         <a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
                                             <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
