@@ -43,7 +43,7 @@ namespace apoemaMatch.Data.ViewModels
 
         public int ChamadaId { get; set; }
 
-        public int NumeroChamada { get; set; }
+        public string NumeroChamada { get; set; }
 
         #region Detalhes
         [Display(Name = "Descreva os detalhes da seleção")]
@@ -67,6 +67,10 @@ namespace apoemaMatch.Data.ViewModels
         #region Proposta
 
         public Proposta Proposta { get; set; }
+
+        public List<Proposta> Propostas { get; set; }
+
+        public bool SolucionadorLogadoPossuiPropostaNaEncomenda { get; set; }
 
         #endregion
 
