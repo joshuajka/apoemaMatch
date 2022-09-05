@@ -54,9 +54,12 @@
                             <div class="col-md-12">
                                 <div class="card-footer ">
                                     <p class="card-text">
-                                        <a class="btn btn-outline-success" asp-action="CadastrarProposta" asp-route-id="@item.Id">
-                                            <i class="bi bi-arrow-up-square"></i> Enviar Proposta
-                                        </a>
+                                        @if (!item.SolucionadorLogadoPossuiPropostaNaEncomenda)
+                                        {
+                                            <a class="btn btn-outline-success" asp-action="CadastrarProposta" asp-route-id="@item.Id">
+                                                <i class="bi bi-arrow-up-square"></i> Enviar Proposta
+                                            </a>
+                                        }
                                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                         {
                                             <a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
