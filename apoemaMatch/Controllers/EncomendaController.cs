@@ -364,8 +364,8 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> SalvarNotasProposta(EncomendaViewModel encomendaViewModel)
         {
             await _service.UpdateNotasRespostasCriteriosProposta(encomendaViewModel.Proposta);
-
-            return RedirectToAction(nameof(MinhasEncomendasDemandante));
+            var encomenda = await _service.GetEncomendaByChamada(encomendaViewModel.ChamadaId);
+            return RedirectToAction(nameof(VisualizarPropostas), new { id = encomenda.Id });
         }
 
         //TODO

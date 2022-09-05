@@ -23,5 +23,7 @@ namespace apoemaMatch.Data.Services
         Task<Encomenda> GetEncomendaByProposta(Proposta proposta);
 
         Task UpdateNotasRespostasCriteriosProposta(Proposta proposta);
+        
+        Task<Encomenda> GetEncomendaByChamada(int Id);
     }
 }
