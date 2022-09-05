@@ -54,15 +54,15 @@
                                     <b>Status: </b>
                                     @switch (item.StatusEncomenda)
                                     {
-                                        @*case EnumStatusEncomenda.Inicial:
+                                        case EnumStatusEncomenda.Inicial:
                                             <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
                                             break;
-                                        case EnumStatusEncomenda.AnalisandoEncomenda:
+                                        @*case EnumStatusEncomenda.AnalisandoEncomenda:
                                             <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                            break;
+                                            break;*@
                                         case EnumStatusEncomenda.Recusada:
                                             <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                            break;*@
+                                            break;
                                         case EnumStatusEncomenda.Aberta:
                                             <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
                                             break;

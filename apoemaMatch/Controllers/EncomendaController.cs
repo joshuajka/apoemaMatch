@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using apoemaMatch.Data.Enums;
 
 namespace apoemaMatch.Controllers
 {
@@ -279,10 +280,12 @@ namespace apoemaMatch.Controllers
 
             encomenda.IdSolucionador = null;
             encomenda.EncomendaAberta = true;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Recusada;
 
             await _service.AceitarRecusarEncomendaAsync(encomenda);
 
-            return RedirectToAction(nameof(MinhasEncomendasSolucionador));
+            //return RedirectToAction(nameof(MinhasEncomendasSolucionador));
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Aceitar(int Id)
@@ -295,10 +298,12 @@ namespace apoemaMatch.Controllers
             }
 
             encomenda.EncomendaAberta = false;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Aberta;
 
             await _service.AceitarRecusarEncomendaAsync(encomenda);
 
-            return RedirectToAction(nameof(MinhasEncomendasSolucionador));
+            //return RedirectToAction(nameof(MinhasEncomendasSolucionador));
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

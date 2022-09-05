@@ -39,15 +39,15 @@
                             <b>Status: </b>
                             @switch (Model.StatusEncomenda)
                             {
-                                @*case EnumStatusEncomenda.Inicial:
+                                case EnumStatusEncomenda.Inicial:
                                     <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
                                     break;
-                                case EnumStatusEncomenda.AnalisandoEncomenda:
+                                @*case EnumStatusEncomenda.AnalisandoEncomenda:
                                     <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
-                                    break;
+                                    break;*@
                                 case EnumStatusEncomenda.Recusada:
                                     <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
-                                    break;*@
+                                    break;
                                 case EnumStatusEncomenda.Aberta:
                                     <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
                                     break;
@@ -69,6 +69,15 @@
                         <p class="card-text">
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
+                                @if (Model.StatusEncomenda == EnumStatusEncomenda.Inicial)
+                                {
+                                    <a class="btn btn-outline-success" asp-action="Aceitar" asp-route-id="@Model.Id">
+                                        <i class="bi bi-check"></i> Aceitar
+                                    </a>
+                                    <a class="btn btn-outline-danger" asp-action="Recusar" asp-route-id="@Model.Id">
+                                        <i class="bi bi-x"></i> Recusar
+                                    </a>
+                                }
                                 <a class="btn btn-outline-primary float-right" asp-action="Index">
                                     Voltar à lista
                                 </a>
