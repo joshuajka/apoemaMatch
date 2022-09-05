@@ -71,11 +71,17 @@
                             {
                                 @if (Model.StatusEncomenda == EnumStatusEncomenda.Inicial)
                                 {
-                                    <a class="btn btn-outline-success" asp-action="Aceitar" asp-route-id="@Model.Id">
+                                    <a class="btn btn-outline-success" asp-action="AceitarEncomenda" asp-route-id="@Model.Id">
                                         <i class="bi bi-check"></i> Aceitar
                                     </a>
-                                    <a class="btn btn-outline-danger" asp-action="Recusar" asp-route-id="@Model.Id">
+                                    <a class="btn btn-outline-danger" asp-action="RecusarEncomenda" asp-route-id="@Model.Id">
                                         <i class="bi bi-x"></i> Recusar
+                                    </a>
+                                }
+                                @if (Model.StatusEncomenda == EnumStatusEncomenda.Aberta)
+                                {
+                                    <a class="btn btn-outline-secondary" asp-action="HabilitarStatusAguardandoAnaliseChamada" asp-route-id="@Model.Id">
+                                        <i class="bi bi-hourglass-split"></i> Desabilitar submissões
                                     </a>
                                 }
                                 <a class="btn btn-outline-primary float-right" asp-action="Index">

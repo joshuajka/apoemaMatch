@@ -379,5 +379,58 @@ namespace apoemaMatch.Controllers
             await _service.AtualizaEncomendaAsync(encomenda);
             return RedirectToAction(nameof(Detalhes), new { id = encomenda.Id });
         }
+        
+        [Authorize(Roles = PapeisUsuarios.Admin)]
+        public async Task<IActionResult> RecusarEncomenda(int Id)
+        {
+            var encomenda = await _service.GetByIdAsync(Id);
+
+            if (encomenda == null)
+            {
+                return View("NotFound");
+            }
+
+            //encomenda.IdSolucionador = null;
+            //encomenda.EncomendaAberta = true;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Recusada;
+
+            await _service.AceitarRecusarEncomendaAsync(encomenda);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> AceitarEncomenda(int Id)
+        {
+            var encomenda = await _service.GetByIdAsync(Id);
+
+            if (encomenda == null)
+            {
+                return View("NotFound");
+            }
+
+            //encomenda.EncomendaAberta = false;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Aberta;
+
+            await _service.AceitarRecusarEncomendaAsync(encomenda);
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+        public async Task<IActionResult> HabilitarStatusAguardandoAnaliseChamada(int Id)
+        {
+            var encomenda = await _service.GetByIdAsync(Id);
+
+            if (encomenda == null)
+            {
+                return View("NotFound");
+            }
+
+            //encomenda.EncomendaAberta = false;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
+
+            await _service.AceitarRecusarEncomendaAsync(encomenda);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
