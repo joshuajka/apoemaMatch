@@ -294,12 +294,11 @@ namespace apoemaMatch.Controllers
 
             encomenda.IdSolucionador = null;
             encomenda.EncomendaAberta = true;
-            encomenda.StatusEncomenda = EnumStatusEncomenda.Recusada;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Inicial;
 
             await _service.AceitarRecusarEncomendaAsync(encomenda);
 
-            //return RedirectToAction(nameof(MinhasEncomendasSolucionador));
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MinhasEncomendasSolucionador));
         }
 
         public async Task<IActionResult> Aceitar(int Id)
@@ -312,12 +311,11 @@ namespace apoemaMatch.Controllers
             }
 
             encomenda.EncomendaAberta = false;
-            encomenda.StatusEncomenda = EnumStatusEncomenda.Aberta;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Finalizada;
 
             await _service.AceitarRecusarEncomendaAsync(encomenda);
 
-            //return RedirectToAction(nameof(MinhasEncomendasSolucionador));
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MinhasEncomendasSolucionador));
         }
 
         [HttpGet]
