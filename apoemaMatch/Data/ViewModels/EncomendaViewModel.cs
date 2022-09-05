@@ -26,7 +26,7 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "O tipo de encomenda é obrigatorio")]
         public EnumTipoEncomenda TipoEncomenda { get; set; }
 
-        [Display(Name = "Descreva a tipo da encomenda")]
+        [Display(Name = "Descreva o tipo da encomenda")]
         public string TipoEncomendaOutros { get; set; }
 
         [Display(Name = "Descreva sua encomenda")]
