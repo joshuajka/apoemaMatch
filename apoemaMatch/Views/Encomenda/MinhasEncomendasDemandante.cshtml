@@ -40,13 +40,26 @@
                                 <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>*@
                                 <p class="card-text ">
                                     <b>Status: </b>
-                                    @if (item.EncomendaAberta)
+                                    @switch (item.StatusEncomenda)
                                     {
-                                        <span class="badge bg-success text-white">ABERTA</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-danger text-white">FECHADA</span>
+                                        case EnumStatusEncomenda.Inicial:
+                                            <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        @*case EnumStatusEncomenda.AnalisandoEncomenda:
+                                            <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;*@
+                                        case EnumStatusEncomenda.Recusada:
+                                            <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        case EnumStatusEncomenda.Aberta:
+                                            <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        case EnumStatusEncomenda.AguardandoAnaliseChamada:
+                                            <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        case EnumStatusEncomenda.Finalizada:
+                                            <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
                                     }
                                 </p>
                             </div>
