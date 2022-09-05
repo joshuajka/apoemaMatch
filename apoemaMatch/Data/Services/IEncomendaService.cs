@@ -1,6 +1,7 @@
 ﻿using apoemaMatch.Data.Base;
 using apoemaMatch.Data.ViewModels;
 using apoemaMatch.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace apoemaMatch.Data.Services
@@ -13,8 +14,12 @@ namespace apoemaMatch.Data.Services
 
         Task AceitarRecusarEncomendaAsync(Encomenda encomenda);
 
+        Task<List<Encomenda>> GetAllEncomendasAsync();
+
         Task<Encomenda> GetEncomendaAsync(Encomenda encomenda);
 
         Task InsereProposta(Proposta proposta);
+
+        Task<Encomenda> GetEncomendaByProposta(Proposta proposta);
     }
 }
