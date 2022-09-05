@@ -30,14 +30,14 @@
                         <div class="col-md-12 mb-3">
                             <div class="form-group">
                                 <label asp-for="TipoEncomenda" class="control-label"></label>
-                                <select asp-for="TipoEncomenda" class="form-control" asp-items="Html.GetEnumSelectList<EnumTipoEncomenda>()"></select>
+                                <select onchange="onChangeTipoEncomenda(this)" asp-for="TipoEncomenda" class="form-control" asp-items="Html.GetEnumSelectList<EnumTipoEncomenda>()"></select>
                                 <span asp-validation-for="TipoEncomenda" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-12 mb-3 d-none" id="div_tipoEncomendaOutros">
                             <label asp-for="TipoEncomendaOutros" class="control-label"></label>
                             <input asp-for="TipoEncomendaOutros" class="form-control" />
-                            <span asp-validation-for="TipoEncomendaOutros" class="text-danger"></span>
+                            <span id="spanTipoEncomendaOutros" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="form-group">
@@ -89,10 +89,20 @@
             document.getElementById("detalhesSelecao").classList.add("d-none");
             document.getElementById("criteriosChamada").classList.remove("d-none");
         }
+
         function mostreDetalhesioSelecao() {
             setPossuiChamada(true);
             document.getElementById("cadastroBasicoEncomenda").classList.add("d-none");
             document.getElementById("detalhesSelecao").classList.remove("d-none");
+        }
+
+        function onChangeTipoEncomenda(select) {
+            if (select.options[select.selectedIndex].text == "Outros") {
+                document.getElementById("div_tipoEncomendaOutros").classList.remove('d-none');
+            }
+            else {
+                document.getElementById("div_tipoEncomendaOutros").classList.add('d-none');
+            }
         }
     </script>
 
