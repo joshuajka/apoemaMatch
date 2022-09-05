@@ -76,6 +76,47 @@ namespace apoemaMatch.Data.Services
                 //var excecao = encomenda.EncomendaSolucionadorId.Where(p => SolucionadoresVinculados.All(p2 => p2.SolucionadorId != p)).ToList();
             }
         }
+
+        public async Task<List<Encomenda>> GetAllEncomendasAsync()
+        {
+            List<Encomenda> encomendas = await _context.Encomendas.ToListAsync();
+
+            foreach(var encomenda in encomendas)
+            {
+                Chamada chamada = await _context.Chamada.FirstOrDefaultAsync(c => c.EncomendaId == encomenda.Id);
+
+                if (chamada is not null)
+                {
+                    List<Criterio> criterios = await _context.Criterio.Where(c => c.ChamadaId == chamada.Id).ToListAsync();
+
+                    List<Proposta> propostas = await _context.Proposta.Where(p => p.ChamadaId == chamada.Id).ToListAsync();
+
+                    foreach (Proposta proposta in propostas)
+                    {
+                        proposta.RespostasCriterios = new();
+                        foreach (Criterio criterio in criterios)
+                        {
+                            RespostaCriterio respostaCriterio =
+                                await _context.RespostaCriterio
+                                .FirstOrDefaultAsync(r => r.CriterioId == criterio.Id && r.PropostaId == proposta.Id);
+                        }
+
+                        var solucionador = await _context.Solucionadores.FirstOrDefaultAsync(s => s.Id == proposta.SolucionadorId);
+                        proposta.Solucionador = solucionador;
+
+                        proposta.Chamada = chamada;
+                        proposta.ChamadaId = chamada.Id;
+                    }
+
+                    chamada.Criterios = criterios;
+                    chamada.Propostas = propostas;
+                    encomenda.Chamada = chamada;
+                }
+            }
+
+            return encomendas;
+        }
+
         public async Task<Encomenda> GetEncomendaAsync(Encomenda encomenda)
         {
             Encomenda encomendaBuscada =
@@ -100,8 +141,13 @@ namespace apoemaMatch.Data.Services
                             RespostaCriterio respostaCriterio = 
                                 await _context.RespostaCriterio
                                 .FirstOrDefaultAsync(r => r.CriterioId == criterio.Id && r.PropostaId == proposta.Id);
-                            proposta.RespostasCriterios.Add(respostaCriterio);
                         }
+
+                        var solucionador = await _context.Solucionadores.FirstOrDefaultAsync(s => s.Id == proposta.SolucionadorId);
+                        proposta.Solucionador = solucionador;
+
+                        proposta.Chamada = chamada;
+                        proposta.ChamadaId = chamada.Id;
                     }
 
                     chamada.Criterios = criterios;
@@ -117,6 +163,30 @@ namespace apoemaMatch.Data.Services
         {
             await _context.Proposta.AddAsync(proposta);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Encomenda> GetEncomendaByProposta(Proposta proposta)
+        {
+            Proposta propostaBuscada = await _context.Proposta.FirstOrDefaultAsync(p => p.Id == proposta.Id);
+            var chamada = await _context.Chamada.FirstOrDefaultAsync(c => c.Id == propostaBuscada.ChamadaId);
+            var criteriosChamada = await _context.Criterio.Where(c => c.ChamadaId == chamada.Id).ToListAsync();
+            propostaBuscada.RespostasCriterios = new();
+            foreach (Criterio criterio in criteriosChamada)
+            {
+                RespostaCriterio respostaCriterio =
+                    await _context.RespostaCriterio
+                    .FirstOrDefaultAsync(r => r.CriterioId == criterio.Id && r.PropostaId == propostaBuscada.Id);
+            }
+            var encomenda = await _context.Encomendas.FirstOrDefaultAsync(e => e.Id == chamada.EncomendaId);
+
+            chamada.Criterios = criteriosChamada;
+            chamada.Propostas = new()
+            {
+                propostaBuscada
+            };
+            encomenda.Chamada = chamada;
+
+            return encomenda;
         }
     }
 }

@@ -19,10 +19,11 @@
             {
                 @foreach (var criterio in Model.Criterios)
                 {
+                    var descricao = $"{indexRespostaCriterio + 1}" + ". " + criterio.Descricao;
                     if (Equals(criterio.TipoCriterio, EnumTipoCriterio.Textual))
                     {
                         <div class="col-md-12 mb-3">
-                            <label class="control-label">@criterio.Descricao</label>
+                            <label class="control-label">@descricao</label>
                             <input type="text" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaTextual" class="form-control" />
                             <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
                         </div>
@@ -31,7 +32,7 @@
                     if (Equals(criterio.TipoCriterio, EnumTipoCriterio.SelecaoUnica))
                     {
                         <div class="col-md-12 mb-3">
-                            <label class="control-label">@criterio.Descricao</label>
+                            <label class="control-label">@descricao</label>
                             @foreach (var opcao in criterio.OpcoesCriterios)
                             {
                                 <div class="col-md-12 mb-3">
@@ -48,7 +49,7 @@
                         var indexMultiplaSelecao = 0;
 
                         <div class="col-md-12 mb-3">
-                            <label class="control-label">@criterio.Descricao</label>
+                            <label class="control-label">@descricao</label>
                             @foreach (var opcao in criterio.OpcoesCriterios)
                             {
                                 <div class="col-md-12 mb-3">
@@ -65,12 +66,13 @@
                     if (Equals(criterio.TipoCriterio, EnumTipoCriterio.Upload))
                     {
                         <div class="col-md-12 mb-3">
-                            <label class="control-label">@criterio.Descricao</label>
+                            <label class="control-label">@descricao</label>
                             <input type="text" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaUpload" class="form-control" />
                             <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
                         </div>
                     }
 
+                    <hr />
                     indexRespostaCriterio++;
                 }
 

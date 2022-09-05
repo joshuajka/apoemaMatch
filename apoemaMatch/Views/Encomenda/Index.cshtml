@@ -7,6 +7,12 @@
 }
 
 <h2>Lista de Encomendas</h2>
+
+@if (Model is not null && Model.Count() == 0)
+{
+    <h4>Ainda não foi cadastrada nenhuma encomenda</h4>
+}
+
 @if (User.Identity.IsAuthenticated && User.IsInRole("Demandante"))
 {
     <div class="row justify-content-end">

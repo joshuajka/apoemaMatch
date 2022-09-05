@@ -213,11 +213,24 @@ namespace apoemaMatch.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
+        [Authorize(Roles = PapeisUsuarios.Solucionador)]
         public async Task<IActionResult> EmAberto()
         {
-            IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
-            return View(encomendas.Select(e => e.Converta()));
+            List<Encomenda> encomendas = await _service.GetAllEncomendasAsync();
+            List<EncomendaViewModel> encomendasViewModel = encomendas.ConvertAll(e => e.Converta());
+
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var userSolucionador = await _userManager.FindByEmailAsync(userEmail);
+            var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(userSolucionador.Id);
+
+            foreach (var encomendaViewModel in encomendasViewModel)
+            {
+                encomendaViewModel.SolucionadorLogadoPossuiPropostaNaEncomenda =
+                    encomendaViewModel.Propostas is not null && encomendaViewModel.Propostas.Any(p => p.SolucionadorId == solucionador.Id); 
+            }
+
+            return View(encomendasViewModel);
         }
 
         public async Task<IActionResult> AlterarSolucionador(int Id)
@@ -317,11 +330,6 @@ namespace apoemaMatch.Controllers
         [HttpPost]
         public async Task<IActionResult> CadastrarProposta(EncomendaViewModel encomendaViewModel)
         {
-            foreach(var teste in encomendaViewModel.Proposta.RespostasCriterios
-                .Where(r => r.OpcoesSelecionadas is not null && r.OpcoesSelecionadas.Any()))
-            {
-                teste.OpcoesSelecionadas = teste.OpcoesSelecionadas.Where(op => !Equals(op, "false")).ToList();
-            }
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
             var userSolucionador = await _userManager.FindByEmailAsync(userEmail);
             var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(userSolucionador.Id);
@@ -331,6 +339,35 @@ namespace apoemaMatch.Controllers
             await _service.InsereProposta(encomendaViewModel.Proposta);
 
             return RedirectToAction(nameof(EmAberto));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> VisualizarPropostas(int Id)
+        {
+            var encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
+
+            return View(encomenda.Chamada.Propostas);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AnalisarProposta(int Id)
+        {
+            Encomenda encomenda = await _service.GetEncomendaByProposta(new Proposta { Id = Id });
+            var encomendaViewModel = encomenda.Converta();
+            encomendaViewModel.Proposta = encomenda.Chamada.Propostas.FirstOrDefault();
+
+            return View(encomendaViewModel);
+        }
+
+        //TODO
+        [HttpGet]
+        public async Task<IActionResult> SalvarNotasProposta(EncomendaViewModel encomendaViewModel)
+        {
+            //Encomenda encomenda = await _service.GetEncomendaByProposta(new Proposta { Id = Id });
+            //var encomendaViewModel = encomenda.Converta();
+            //encomendaViewModel.Proposta = encomenda.Chamada.Propostas.FirstOrDefault();
+
+            return View(encomendaViewModel);
         }
     }
 }
