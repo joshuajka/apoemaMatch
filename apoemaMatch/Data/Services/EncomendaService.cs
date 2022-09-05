@@ -188,5 +188,18 @@ namespace apoemaMatch.Data.Services
 
             return encomenda;
         }
+
+        public async Task UpdateNotasRespostasCriteriosProposta(Proposta proposta)
+        {
+            foreach (var resposta in proposta.RespostasCriterios)
+            {
+                var respostaPersistida =
+                    await _context.RespostaCriterio
+                    .FirstOrDefaultAsync(r => r.CriterioId == resposta.CriterioId && r.PropostaId == proposta.Id);
+
+                respostaPersistida.Nota = resposta.Nota;
+            }
+            await _context.SaveChangesAsync();
+        }
     }
 }

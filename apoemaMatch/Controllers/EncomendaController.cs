@@ -33,6 +33,7 @@ namespace apoemaMatch.Controllers
             _serviceDemandante = serviceDemandante;
         }
 
+        [Authorize(Roles = PapeisUsuarios.Admin)]
         public async Task<IActionResult> Index()
         {
             IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
@@ -359,15 +360,19 @@ namespace apoemaMatch.Controllers
             return View(encomendaViewModel);
         }
 
-        //TODO
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> SalvarNotasProposta(EncomendaViewModel encomendaViewModel)
         {
-            //Encomenda encomenda = await _service.GetEncomendaByProposta(new Proposta { Id = Id });
-            //var encomendaViewModel = encomenda.Converta();
-            //encomendaViewModel.Proposta = encomenda.Chamada.Propostas.FirstOrDefault();
+            await _service.UpdateNotasRespostasCriteriosProposta(encomendaViewModel.Proposta);
 
-            return View(encomendaViewModel);
+            return RedirectToAction(nameof(MinhasEncomendasDemandante));
+        }
+
+        //TODO
+        [HttpPost]
+        public async Task FinalizeProcessoSeletivo()
+        {
+
         }
     }
 }

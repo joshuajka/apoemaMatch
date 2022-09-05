@@ -21,5 +21,7 @@ namespace apoemaMatch.Data.Services
         Task InsereProposta(Proposta proposta);
 
         Task<Encomenda> GetEncomendaByProposta(Proposta proposta);
+
+        Task UpdateNotasRespostasCriteriosProposta(Proposta proposta);
     }
 }
