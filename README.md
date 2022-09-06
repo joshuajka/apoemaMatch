@@ -33,9 +33,10 @@ Funcionalidade| Descrição
 05| Alteração de senha e e-mail do Agenciador, Demandante e Solucionador
 06| Ação de Vinculação do solucionador à encomenda por parte do Agenciador
 07| Ação de Alteração do solucionador de uma encomenda por parte do Agenciador
-08|
-09|
-10|
+08| Possibilidade do solucionador alterar seu status para inativo
+09| A visualização por parte do solucionador das encomendas em que ele foi atribuido e a possibilidade de ele aceitar ou recusar a encomenda
+10| A capacidade do agenciador de listar, filtrar, alterar os dados e alterar o status dos solucionadores 
+11| A capacidade do agenciador de listar, filtrar e alterar os dados dos demandantes 
 
 <h1 align="center"> :file_folder: Acesso ao projeto </h1>
 
@@ -242,13 +243,13 @@ rm -rf index.html
 
 Pare o servico com ```sudo systemctl stop apoema.service```, faça o clone novamente, com as alterações da nova versão: ```git clone https://github.com/joshuajka/apoemaMatch.git```
 
-Entre no postgres e delete o banco
+Entre no postgres usando ```sudo -u postgres psql``` e delete o banco:
 ```sudo -u postgres psql
 drop database "apoemamatch-app-db";
 ```
-Utilize ```\c "apoemamatch-app-db"``` para verificar se o banco ainda existe, e caso exista faça o drop novamente, conferindo o nome do banco.
+Utilize ```\c "apoemamatch-app-db"``` para verificar se o banco ainda existe, e caso exista faça o drop novamente, conferindo o nome do banco. Saia do banco usando ```\q```.
 
-E utilize o comando abaixo para fazer o update do banco:
+Entre na pasta do projeto e utilize o comando abaixo para fazer o update do banco:
 ```
 dotnet tool install -g dotnet-ef --version 5
 dotnet ef database update
