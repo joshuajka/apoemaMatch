@@ -25,13 +25,12 @@
                         <div class="col-md-12 mb-3">
                             <label asp-for="Titulo" class="control-label"></label>
                             <input asp-for="Titulo" class="form-control" />
-                            <span asp-validation-for="Titulo" class="text-danger"></span>
+                            <span id="spanTitulo" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="form-group">
                                 <label asp-for="TipoEncomenda" class="control-label"></label>
                                 <select onchange="onChangeTipoEncomenda(this)" asp-for="TipoEncomenda" class="form-control" asp-items="Html.GetEnumSelectList<EnumTipoEncomenda>()"></select>
-                                <span asp-validation-for="TipoEncomenda" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3 d-none" id="div_tipoEncomendaOutros">
@@ -43,7 +42,7 @@
                             <div class="form-group">
                                 <label asp-for="Descricao" class="control-label"></label>
                                 <textarea asp-for="Descricao" class="form-control"></textarea>
-                                <span asp-validation-for="Descricao" class="text-danger"></span>
+                                <span id="spanDescricao" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -56,10 +55,10 @@
                         </div>
 
                         <div class="float-left">
-                            <input type="submit" onclick="setPossuiChamada(false)" class="btn btn-outline-secondary" value="Ser agenciado pelo APOEMA" />
+                            <input id="agenciadado" type="submit" class="btn btn-outline-secondary" value="Ser agenciado pelo APOEMA" />
                         </div>
                         <div class="float-right">
-                            <button onclick="mostreDetalhesioSelecao()" type="button" class="btn btn-outline-secondary"> Iniciar um processo de seleção </button>
+                            <button id="processoSeletivo" type="button" class="btn btn-outline-secondary"> Iniciar um processo de seleção </button>
                         </div>
                     </div>
                 </div>
@@ -85,13 +84,11 @@
         }
 
         function mostreCriteriosChamada() {
-            setPossuiChamada(true);
             document.getElementById("detalhesSelecao").classList.add("d-none");
             document.getElementById("criteriosChamada").classList.remove("d-none");
         }
 
         function mostreDetalhesioSelecao() {
-            setPossuiChamada(true);
             document.getElementById("cadastroBasicoEncomenda").classList.add("d-none");
             document.getElementById("detalhesSelecao").classList.remove("d-none");
         }
@@ -104,6 +101,82 @@
                 document.getElementById("div_tipoEncomendaOutros").classList.add('d-none');
             }
         }
+
+        function valideEncomendaBasica() {
+            let titulo = document.getElementById("Titulo");
+            let spanTitulo = document.getElementById("spanTitulo");
+            let tituloEstaValido = inputEstaValido(titulo);
+
+            let descricao = document.getElementById("Descricao");
+            let spanDescricao = document.getElementById("spanDescricao");
+            let descricaoEstaValido = inputEstaValido(descricao);
+
+            let tipoEncomenda = document.getElementById("TipoEncomenda");
+
+            let tipoEncomendaOutros = document.getElementById("TipoEncomendaOutros");
+            let spanTipoEncomendaOutros = document.getElementById("spanTipoEncomendaOutros");
+            let tipoEncomendaOutrosEstaValido = tipoEncomenda.options[tipoEncomenda.selectedIndex].text != "Outros" ||
+                inputEstaValido(tipoEncomendaOutros)
+
+            valideInput(tituloEstaValido, spanTitulo, "O Título da encomenda é obrigatório");
+            valideInput(descricaoEstaValido, spanDescricao, "A descrição da encomenda é obrigatoria");
+            valideInput(tipoEncomendaOutrosEstaValido, spanTipoEncomendaOutros, "A descrição do tipo da encomenda é obrigatória");
+
+            return tituloEstaValido && descricaoEstaValido && tipoEncomendaOutrosEstaValido;
+        }
+
+        function valideDetalhesSelecao() {
+            let descricaoChamada = document.getElementById("DescricaoChamada");
+            let spanDescricaoChamada = document.getElementById("spanDescricaoChamada");
+            let descricaoChamadaEstaValida = inputEstaValido(descricaoChamada);
+
+            let dataValidadeChamada = document.getElementById("DataValidadeChamada");
+            let spanDataValidadeChamada = document.getElementById("spanDataValidadeChamada");
+            let dataValidadeChamadaEstaValida = inputEstaValido(dataValidadeChamada);
+
+            valideInput(descricaoChamadaEstaValida, spanDescricaoChamada, "Os detalhes da chamada são obrigatórios");
+            valideInput(dataValidadeChamadaEstaValida, spanDataValidadeChamada, "A data de validade da chamada é obrigatoria");
+
+            return descricaoChamadaEstaValida && dataValidadeChamadaEstaValida;
+        }
+
+        window.addEventListener('load', () => {
+            let botaoAgenciado = document.getElementById("agenciadado");
+            let botaoProcessoSeletivo = document.getElementById("processoSeletivo");
+            let botaoDefinirCriterios = document.getElementById("definirCriterios");
+
+            botaoAgenciado.addEventListener('click', (ev) => {
+                if (!valideEncomendaBasica()) {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    return;
+                }
+                setPossuiChamada(false);
+            });
+
+            botaoProcessoSeletivo.addEventListener('click', (ev) => {
+                if (!valideEncomendaBasica()) {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    return;
+                }
+                mostreDetalhesioSelecao();
+            });
+
+            botaoDefinirCriterios.addEventListener('click', (ev) => {
+                if (!valideDetalhesSelecao()) {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    return;
+                }
+                mostreCriteriosChamada();
+            });
+
+            DataValidadeChamada.addEventListener('change', (ev) => {
+                if (ev.target.value < ev.target.getAttribute('min'))
+                    ev.target.value = ev.target.getAttribute('min')
+            })
+        })
     </script>
 
     <script src=@Url.Content("~/js/QuestionarioSelecao/criteriosChamada.js") asp-append-version="true"></script>

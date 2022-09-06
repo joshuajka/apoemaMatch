@@ -1,5 +1,5 @@
-﻿@using apoemaMatch.Data.Enums
-@model apoemaMatch.Data.ViewModels.EncomendaViewModel
+﻿@model apoemaMatch.Data.ViewModels.EncomendaViewModel
+@using System 
 @{
     ViewData["Title"] = "Inserir detalhes da Seleção";
 }
@@ -7,34 +7,33 @@
 <div class="d-none" id="detalhesSelecao">
     <div class="row">
         <div class="col-md-12 mb-3">
-            <h2 style="text-align: center;">Informe aqui os detalhes da chamada e/ou anexe um arquivo contendo todas as especificações da chamada</h2>
+            <h2 style="text-align: center;">Informe aqui os detalhes da chamada e anexe um arquivo, caso necessário, contendo todas as especificações da chamada</h2>
         </div>
 
         <div class="col-md-12">
             <div class="form-group">
                 <label asp-for="DescricaoChamada" class="control-label"></label>
                 <textarea asp-for="DescricaoChamada" class="form-control"></textarea>
-                <span asp-validation-for="DescricaoChamada" class="text-danger"></span>
+                <span id="spanDescricaoChamada" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label asp-for="DataValidadeChamada" class="control-label"></label>
-                <input type="date" asp-for="DataValidadeChamada" class="form-control" />
-                <span asp-validation-for="DataValidadeChamada" class="text"></span>
+                <input type="date" asp-for="DataValidadeChamada" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")"/>
+                <span id="spanDataValidadeChamada" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label asp-for="ArquivoDetalheChamada" class="control-label"></label>
                 <input asp-for="ArquivoDetalheChamada" class="form-control" />
-                <span asp-validation-for="ArquivoDetalheChamada" class="text"></span>
             </div>
         </div>
 
 
         <div class="col text-center">
-            <button onclick="mostreCriteriosChamada()" type="button" class="btn btn-outline-secondary">Definir Critérios</button>
+            <button id="definirCriterios" type="button" class="btn btn-outline-secondary">Definir Critérios</button>
         </div>
     </div>
 </div>
