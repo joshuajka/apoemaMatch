@@ -24,7 +24,7 @@ namespace apoemaMatch.Controllers
         private readonly ISolucionadorService _serviceSolucionador;
         private readonly IDemandanteService _serviceDemandante;
 
-        public EncomendaController(IEncomendaService service, UserManager<ApplicationUser> userManager,ISolucionadorService serviceSolucionador,
+        public EncomendaController(IEncomendaService service, UserManager<ApplicationUser> userManager, ISolucionadorService serviceSolucionador,
             IDemandanteService serviceDemandante)
         {
             _service = service;
@@ -83,7 +83,7 @@ namespace apoemaMatch.Controllers
             {
                 return View(encomendaViewModel);
             }
-            
+
             if (User.IsInRole("Admin"))
             {
                 encomendaViewModel.IdDemandante = 1;
@@ -91,7 +91,7 @@ namespace apoemaMatch.Controllers
             else
             {
                 string userEmail = User.FindFirstValue(ClaimTypes.Email);
-                var userDemandante= await _userManager.FindByEmailAsync(userEmail);
+                var userDemandante = await _userManager.FindByEmailAsync(userEmail);
                 var demandante = await _serviceDemandante.GetDemandanteByIdUser(userDemandante.Id);
                 encomendaViewModel.IdDemandante = demandante.Id;
             }
@@ -127,7 +127,11 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> Excluir(int Id)
         {
             await _service.DeleteAsync(Id);
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(
+                User.IsInRole("Admin") ?
+                    nameof(Index)
+                    : nameof(MinhasEncomendasDemandante));
         }
 
         [HttpGet]
@@ -157,7 +161,7 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> VincularSolucionador(int Id)
         {
             var encomenda = await _service.GetByIdAsync(Id);
-            
+
             if (encomenda == null)
             {
                 return View("NotFound");
@@ -228,7 +232,7 @@ namespace apoemaMatch.Controllers
             foreach (var encomendaViewModel in encomendasViewModel)
             {
                 encomendaViewModel.SolucionadorLogadoPossuiPropostaNaEncomenda =
-                    encomendaViewModel.Propostas is not null && encomendaViewModel.Propostas.Any(p => p.SolucionadorId == solucionador.Id); 
+                    encomendaViewModel.Propostas is not null && encomendaViewModel.Propostas.Any(p => p.SolucionadorId == solucionador.Id);
             }
 
             return View(encomendasViewModel);
@@ -373,13 +377,13 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> FinalizeProcessoSeletivo(int Id)
         {
             Encomenda encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
-            List<Proposta> propostas_ordenadas = encomenda.Chamada.Propostas.OrderByDescending(o=>o.Pontuacao).ToList();
+            List<Proposta> propostas_ordenadas = encomenda.Chamada.Propostas.OrderByDescending(o => o.Pontuacao).ToList();
             encomenda.IdSolucionador = propostas_ordenadas[0].Solucionador.Id;
             encomenda.StatusEncomenda = EnumStatusEncomenda.Finalizada;
             await _service.AtualizaEncomendaAsync(encomenda);
             return RedirectToAction(nameof(Detalhes), new { id = encomenda.Id });
         }
-        
+
         [Authorize(Roles = PapeisUsuarios.Admin)]
         public async Task<IActionResult> RecusarEncomenda(int Id)
         {
@@ -415,7 +419,7 @@ namespace apoemaMatch.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         public async Task<IActionResult> HabilitarStatusAguardandoAnaliseChamada(int Id)
         {
             var encomenda = await _service.GetByIdAsync(Id);
