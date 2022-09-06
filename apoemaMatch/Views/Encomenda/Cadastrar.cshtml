@@ -172,7 +172,7 @@
                 mostreCriteriosChamada();
             });
 
-            DataValidadeChamada.addEventListener('change', (ev) => {
+            DataValidadeChamada.addEventListener('blur', (ev) => {
                 if (ev.target.value < ev.target.getAttribute('min'))
                     ev.target.value = ev.target.getAttribute('min')
             })
