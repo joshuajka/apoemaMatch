@@ -15,7 +15,7 @@
     {
         @foreach (var item in Model)
         {
-            @if (@*Equals(item.StatusEncomenda, EnumStatusEncomenda.Aberta) &&*@ item.PossuiChamada)
+            @if (Equals(item.StatusEncomenda, EnumStatusEncomenda.Aberta) && item.PossuiChamada)
 {
 <div class="col-md-4 col-xs-6 border-primary mb-3">
     <div class="card mb-3">

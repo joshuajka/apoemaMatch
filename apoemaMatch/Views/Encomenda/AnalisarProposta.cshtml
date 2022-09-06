@@ -133,9 +133,8 @@
                     <hr />
                     indexRespostaCriterio++;
                 }
-
                 <div class="col text-center">
-                    <button type="submit" class="btn btn-outline-success" asp-controller="Encomenda" asp-action="SalvarNotasProposta">Enviar análise</button>
+                    <button @(Model.StatusEncomenda != EnumStatusEncomenda.AguardandoAnaliseChamada  ? "disabled" : "") type="submit" class="btn btn-outline-success" asp-controller="Encomenda" asp-action="SalvarNotasProposta">Enviar análise</button>
                 </div>
             }
 

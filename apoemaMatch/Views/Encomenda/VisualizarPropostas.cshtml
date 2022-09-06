@@ -1,4 +1,5 @@
-﻿@model EncomendaViewModel
+﻿@using apoemaMatch.Data.Enums
+@model EncomendaViewModel
 
 @{
     ViewData["Title"] = "Lista de Propostas";
@@ -13,7 +14,7 @@
 <form asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo" asp-route-id="@Model.Id">
     <div class="row justify-content-end">
         <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
-            <button @(Model is null || Model.Propostas.Count() == 0 ? "disabled" : "") type="submit" class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo">
+            <button @(Model is null || Model.Propostas.Count() == 0 || Model.StatusEncomenda != EnumStatusEncomenda.AguardandoAnaliseChamada ? "disabled" : "") type="submit" class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo">
                 Finalizar processo seletivo
             </button>
         </div>
