@@ -9,13 +9,17 @@ namespace apoemaMatch.Models
     {
         [Key]
         public int Id { get; set; }
-        
+
         public string Descricao { get; set; }
         
         public EnumTipoCriterio TipoCriterio { get; set; }
 
-        public List<OpcaoCriterio> OpcoesCriterios { get; set; }
+        public List<string> OpcoesCriterios { get; set; }
 
         public int Ordem { get; set; }
+
+        public int ChamadaId { get; set; }
+
+        public Chamada Chamada { get; set; }
     }
 }

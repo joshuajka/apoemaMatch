@@ -13,7 +13,7 @@ namespace apoemaMatch.Data.Services
     {
         private readonly AppDbContext _context;
 
-        public EncomendaService(AppDbContext context) : base(context) 
+        public EncomendaService(AppDbContext context) : base(context)
         {
             _context = context;
         }
@@ -29,7 +29,7 @@ namespace apoemaMatch.Data.Services
 
         public async Task VincularEncomendaAsync(EncomendaViewModel encomenda)
         {
-            var dbEncomenda= await _context.Encomendas.FirstOrDefaultAsync(n => n.Id == encomenda.Id);
+            var dbEncomenda = await _context.Encomendas.FirstOrDefaultAsync(n => n.Id == encomenda.Id);
 
             if (dbEncomenda != null)
             {
@@ -77,5 +77,156 @@ namespace apoemaMatch.Data.Services
             }
         }
 
+        public async Task<List<Encomenda>> GetAllEncomendasAsync()
+        {
+            List<Encomenda> encomendas = await _context.Encomendas.ToListAsync();
+
+            foreach(var encomenda in encomendas)
+            {
+                Chamada chamada = await _context.Chamada.FirstOrDefaultAsync(c => c.EncomendaId == encomenda.Id);
+
+                if (chamada is not null)
+                {
+                    List<Criterio> criterios = await _context.Criterio.Where(c => c.ChamadaId == chamada.Id).ToListAsync();
+
+                    List<Proposta> propostas = await _context.Proposta.Where(p => p.ChamadaId == chamada.Id).ToListAsync();
+
+                    foreach (Proposta proposta in propostas)
+                    {
+                        proposta.RespostasCriterios = new();
+                        foreach (Criterio criterio in criterios)
+                        {
+                            RespostaCriterio respostaCriterio =
+                                await _context.RespostaCriterio
+                                .FirstOrDefaultAsync(r => r.CriterioId == criterio.Id && r.PropostaId == proposta.Id);
+                        }
+
+                        var solucionador = await _context.Solucionadores.FirstOrDefaultAsync(s => s.Id == proposta.SolucionadorId);
+                        proposta.Solucionador = solucionador;
+
+                        proposta.Chamada = chamada;
+                        proposta.ChamadaId = chamada.Id;
+                    }
+
+                    chamada.Criterios = criterios;
+                    chamada.Propostas = propostas;
+                    encomenda.Chamada = chamada;
+                }
+            }
+
+            return encomendas;
+        }
+
+        public async Task<Encomenda> GetEncomendaAsync(Encomenda encomenda)
+        {
+            Encomenda encomendaBuscada =
+                await _context.Encomendas
+                              .FirstOrDefaultAsync(e => e.Id == encomenda.Id);
+
+            if (encomendaBuscada is not null)
+            {
+                Chamada chamada = await _context.Chamada.FirstOrDefaultAsync(c => c.EncomendaId == encomendaBuscada.Id);
+
+                if (chamada is not null)
+                {
+                    List<Criterio> criterios = await _context.Criterio.Where(c => c.ChamadaId == chamada.Id).ToListAsync();
+                    
+                    List<Proposta> propostas = await _context.Proposta.Where(p => p.ChamadaId == chamada.Id).ToListAsync();
+
+                    foreach (Proposta proposta in propostas)
+                    {
+                        proposta.RespostasCriterios = new();
+                        foreach (Criterio criterio in criterios)
+                        {
+                            RespostaCriterio respostaCriterio = 
+                                await _context.RespostaCriterio
+                                .FirstOrDefaultAsync(r => r.CriterioId == criterio.Id && r.PropostaId == proposta.Id);
+                        }
+
+                        var solucionador = await _context.Solucionadores.FirstOrDefaultAsync(s => s.Id == proposta.SolucionadorId);
+                        proposta.Solucionador = solucionador;
+
+                        proposta.Chamada = chamada;
+                        proposta.ChamadaId = chamada.Id;
+                    }
+
+                    chamada.Criterios = criterios;
+                    chamada.Propostas = propostas;
+                    encomendaBuscada.Chamada = chamada;
+                }
+            }
+
+            return encomendaBuscada;
+        }
+
+        public async Task InsereProposta(Proposta proposta)
+        {
+            await _context.Proposta.AddAsync(proposta);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Encomenda> GetEncomendaByProposta(Proposta proposta)
+        {
+            Proposta propostaBuscada = await _context.Proposta.FirstOrDefaultAsync(p => p.Id == proposta.Id);
+            var chamada = await _context.Chamada.FirstOrDefaultAsync(c => c.Id == propostaBuscada.ChamadaId);
+            var criteriosChamada = await _context.Criterio.Where(c => c.ChamadaId == chamada.Id).ToListAsync();
+            propostaBuscada.RespostasCriterios = new();
+            foreach (Criterio criterio in criteriosChamada)
+            {
+                RespostaCriterio respostaCriterio =
+                    await _context.RespostaCriterio
+                    .FirstOrDefaultAsync(r => r.CriterioId == criterio.Id && r.PropostaId == propostaBuscada.Id);
+            }
+            var encomenda = await _context.Encomendas.FirstOrDefaultAsync(e => e.Id == chamada.EncomendaId);
+
+            chamada.Criterios = criteriosChamada;
+            chamada.Propostas = new()
+            {
+                propostaBuscada
+            };
+            encomenda.Chamada = chamada;
+
+            return encomenda;
+        }
+
+        public async Task UpdateNotasRespostasCriteriosProposta(Proposta proposta)
+        {
+            foreach (var resposta in proposta.RespostasCriterios)
+            {
+                var respostaPersistida =
+                    await _context.RespostaCriterio
+                    .FirstOrDefaultAsync(r => r.CriterioId == resposta.CriterioId && r.PropostaId == proposta.Id);
+
+                respostaPersistida.Nota = resposta.Nota;
+            }
+            await _context.SaveChangesAsync();
+        }
+        
+        public async Task<Encomenda> GetEncomendaByChamada(int Id)
+        {
+            Chamada chamadaBuscada = await _context.Chamada.FirstOrDefaultAsync(p => p.Id == Id);
+            var encomenda = await _context.Encomendas.FirstOrDefaultAsync(e => e.Id == chamadaBuscada.EncomendaId);
+            return encomenda;
+        }
+        
+        public async Task AtualizaEncomendaAsync(Encomenda encomenda)
+        {
+            var dbEncomenda = await _context.Encomendas.FirstOrDefaultAsync(n => n.Id == encomenda.Id);
+
+            if (dbEncomenda != null)
+            {
+                dbEncomenda.PossuiChamada = encomenda.PossuiChamada;
+                dbEncomenda.TipoEncomenda = encomenda.TipoEncomenda;
+                dbEncomenda.Titulo = encomenda.Titulo;
+                dbEncomenda.Descricao = encomenda.Descricao;
+                dbEncomenda.StatusEncomenda = encomenda.StatusEncomenda;
+                dbEncomenda.Chamada = encomenda.Chamada;
+                dbEncomenda.IdDemandante = encomenda.IdDemandante;
+                dbEncomenda.IdSolucionador = encomenda.IdSolucionador;
+                dbEncomenda.EncomendaAberta = encomenda.EncomendaAberta;
+
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

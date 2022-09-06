@@ -31,8 +31,6 @@ namespace apoemaMatch.Data.MetodosExtensao
                         Criterios = encomendaViewModel.Criterios,
                         EncomendaId = encomendaViewModel.Id
                     }
-                //TODO(Chamada)
-               // Questoes = encomendaViewModel.RealizaProcessoSeletivo ? encomendaViewModel.Questoes : null
             };
         }
     }

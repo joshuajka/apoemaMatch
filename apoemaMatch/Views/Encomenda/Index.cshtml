@@ -7,6 +7,12 @@
 }
 
 <h2>Lista de Encomendas</h2>
+
+@if (Model is not null && Model.Count() == 0)
+{
+    <h4>Ainda não foi cadastrada nenhuma encomenda</h4>
+}
+
 @if (User.Identity.IsAuthenticated && User.IsInRole("Demandante"))
 {
     <div class="row justify-content-end">
@@ -57,9 +63,9 @@
                                         case EnumStatusEncomenda.Inicial:
                                             <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
                                             break;
-                                        case EnumStatusEncomenda.AnalisandoEncomenda:
+                                        @*case EnumStatusEncomenda.AnalisandoEncomenda:
                                             <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                            break;
+                                            break;*@
                                         case EnumStatusEncomenda.Recusada:
                                             <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
                                             break;
@@ -82,7 +88,7 @@
                                     <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
                                         <i class="bi bi-trash"></i>Excluir
                                     </a>
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") && !item.PossuiChamada)
                                     {
                                         <a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
                                             <i class="bi bi-file-earmark-person"></i> Vincular Solucionador

@@ -42,9 +42,9 @@
                                 case EnumStatusEncomenda.Inicial:
                                     <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
                                     break;
-                                case EnumStatusEncomenda.AnalisandoEncomenda:
+                                @*case EnumStatusEncomenda.AnalisandoEncomenda:
                                     <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
-                                    break;
+                                    break;*@
                                 case EnumStatusEncomenda.Recusada:
                                     <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
                                     break;
@@ -59,7 +59,6 @@
                                     break;
                             }
                         </p>
-                        <p class="card-text">@Model.Descricao</p>
                         <p class="card-text"><b>Solucionador: </b>@ViewData["NomeSolucionador"]</p>
                         <p class="card-text"><b>Empresa Demandante: </b>@ViewData["EmpresaDemandante"]</p>
                     </div>
@@ -69,6 +68,21 @@
                         <p class="card-text">
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
+                                @if (Model.StatusEncomenda == EnumStatusEncomenda.Inicial && Model.PossuiChamada == true)
+                                {
+                                    <a class="btn btn-outline-success" asp-action="AceitarEncomenda" asp-route-id="@Model.Id">
+                                        <i class="bi bi-check"></i> Aceitar
+                                    </a>
+                                    <a class="btn btn-outline-danger" asp-action="RecusarEncomenda" asp-route-id="@Model.Id">
+                                        <i class="bi bi-x"></i> Recusar
+                                    </a>
+                                }
+                                @if (Model.StatusEncomenda == EnumStatusEncomenda.Aberta && Model.PossuiChamada == true)
+                                {
+                                    <a class="btn btn-outline-secondary" asp-action="HabilitarStatusAguardandoAnaliseChamada" asp-route-id="@Model.Id">
+                                        <i class="bi bi-hourglass-split"></i> Desabilitar submissões
+                                    </a>
+                                }
                                 <a class="btn btn-outline-primary float-right" asp-action="Index">
                                     Voltar à lista
                                 </a>

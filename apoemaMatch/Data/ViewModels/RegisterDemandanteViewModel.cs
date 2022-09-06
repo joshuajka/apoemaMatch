@@ -28,6 +28,7 @@ namespace apoemaMatch.Data.ViewModels
 
         [Display(Name = "Nome da Empresa")]
         [Required(ErrorMessage = "Este campo é obrigatório")]
+        [RegularExpression(@"^[a-zA-ZÀ-ú''-'\s]{1,40}$", ErrorMessage = "O nome só pode conter letras")]
         public string NomeEmpresa { get; set; }
 
         [Display(Name = "Cargo do usuario")]
@@ -81,7 +82,7 @@ namespace apoemaMatch.Data.ViewModels
 
         [Display(Name = "Nome Completo")]
         [Required(ErrorMessage = "Nome Completo é obrigatório")]
-        [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$", ErrorMessage = "O nome só pode conter letras")]
+        [RegularExpression(@"^[a-zA-ZÀ-ú''-'\s]{1,40}$", ErrorMessage = "O nome só pode conter letras")]
         public string NomeCompleto { get; set; }
 
         [Required(ErrorMessage = "Email é obrigatório")]

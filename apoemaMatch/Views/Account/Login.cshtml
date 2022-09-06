@@ -1,11 +1,68 @@
 ﻿@using apoemaMatch.Data.ViewModels
-@model LoginViewModel; 
+@model LoginViewModel;
 
-@{ 
+@{
     ViewData["Title"] = "Login";
 }
 
-<div class="row">
+
+<div class="container text-center mt-5 mb-5">
+
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+    </style>
+    <div class="col-md-6 offset-3">
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="col-md-12 alert alert-danger">
+                <span><b>Desculpe </b> - @TempData["Error"] </span>
+            </div>
+        }
+    </div>
+
+
+    <form class="form-signin mx-auto" asp-action="Login">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <img class="mb-4" src="@Url.Content("~/img/apoemalogin.png")" alt="Logo Apoema Recortada">
+        <h1 class="h3 mb-3 font-weight-normal">Entre na sua conta</h1>
+
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div>
+            <p><a asp-action="ForgotPassword" asp-controller="Account">Esqueci a Senha</a></p>
+        </div>
+
+        <div class="form-group">
+            <a class="btn btn-outline-secondary" asp-controller="Demanda" asp-action="Index">Cancel</a>
+            <input class="btn btn-outline-success" type="submit" value="Log in" />
+        </div>
+
+        <p class="mt-5 mb-4 text-muted">&copy; 2022</p>
+    </form>
+</div>
+
+
+@*<div class="row">
     <div class="col-md-6 offset-3">
         <p>
             <h4>Entre na sua conta</h4>
@@ -45,4 +102,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@

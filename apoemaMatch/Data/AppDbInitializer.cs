@@ -85,7 +85,7 @@ namespace apoemaMatch.Data
                             Titulo = "Nova Encomenda",
                             TipoEncomenda = EnumTipoEncomenda.DesenvolvimentoTecnologico,
                             Descricao = "Essa é uma nova encomenda",
-                            StatusEncomenda = EnumStatusEncomenda.Inicial,
+                            StatusEncomenda = EnumStatusEncomenda.Aberta,
                             Demandante = context.Demandantes.First()
                         }
                     });

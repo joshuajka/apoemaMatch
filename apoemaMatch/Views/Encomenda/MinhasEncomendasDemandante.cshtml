@@ -7,14 +7,21 @@
 }
 <h2>Lista de Encomendas</h2>
 
-@if (Model.Count() == 0)
+@if (Model is not null && Model.Count() == 0)
 {
     <h4>Ainda não foi cadastrada nenhuma encomenda</h4>
 }
 
-<a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="Cadastrar">
-    Criar nova encomenda
-</a>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Demandante"))
+{
+    <div class="row justify-content-end">
+        <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
+            <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="Cadastrar">
+                Criar nova encomenda
+            </a>
+        </div>
+    </div>
+}
 
 <div class="row">
     @if (Model is not null)
@@ -28,25 +35,63 @@
                             <div class="card-header text-white cor-apoema">
                                 <p class="card-text">
                                     <h5 class="card-title">
-                                        @item.Titulo
+                                        Encomenda @item.Id
                                     </h5>
                                 </p>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="card-body">
-                                <p class="card-text">@item.Descricao</p>
-                                @*<p class="card-text"><b>Serviço buscado: </b>@Extensions.GetEnumDisplayName((EnumSegmentoDeMercado)item.SegmentoDeMercado)</p>
-                                <p class="card-text"><b>Área da solução buscada: </b>@Extensions.GetEnumDisplayName((EnumAreaSolucaoBuscada)item.AreaSolucaoBuscada)</p>*@
-                                <p class="card-text ">
-                                    <b>Status: </b>
-                                    @if (item.EncomendaAberta)
+                                <p class="card-text"><b>Título da encomenda: </b>@item.Titulo</p>
+                                <p class="card-text"><b>Tipo da encomenda: </b>@Extensions.GetEnumDisplayName((EnumTipoEncomenda)item.TipoEncomenda)</p>
+                                <p class="card-text">
+                                    <b>Possui chamada: </b>
+                                    @if (item.PossuiChamada)
                                     {
-                                        <span class="badge bg-success text-white">ABERTA</span>
+                                        <span>Sim</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-danger text-white">FECHADA</span>
+                                        <span>Não</span>
+                                    }
+                                </p>
+                                @*<p class="card-text">
+                                    <b>Status: </b>
+                                    @switch (item.StatusEncomenda)
+                                    {
+                                        case EnumStatusEncomenda.Aberta:
+                                            <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        case EnumStatusEncomenda.AguardandoAnaliseChamada:
+                                            <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        case EnumStatusEncomenda.Finalizada:
+                                            <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                    }
+                                </p>*@
+                                <p class="card-text ">
+                                    <b>Status: </b>
+                                    @switch (item.StatusEncomenda)
+                                    {
+                                        case EnumStatusEncomenda.Inicial:
+                                            <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        @*case EnumStatusEncomenda.AnalisandoEncomenda:
+                                            <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;*@
+                                        case EnumStatusEncomenda.Recusada:
+                                            <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        case EnumStatusEncomenda.Aberta:
+                                            <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        case EnumStatusEncomenda.AguardandoAnaliseChamada:
+                                            <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
+                                        case EnumStatusEncomenda.Finalizada:
+                                            <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                            break;
                                     }
                                 </p>
                             </div>
@@ -61,6 +106,12 @@
                                     {
                                         <a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
                                             <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
+                                        </a>
+                                    }
+                                    @if (item.PossuiChamada)
+                                    {
+                                        <a class="btn btn-outline-primary float-right" asp-action="VisualizarPropostas" asp-route-id="@item.Id">
+                                            <i class="bi bi-file-earmark-person"></i> Visualizar propostas
                                         </a>
                                     }
                                     <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">

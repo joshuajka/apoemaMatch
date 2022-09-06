@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using apoemaMatch.Data.Enums;
 
 namespace apoemaMatch.Controllers
 {
@@ -22,7 +24,7 @@ namespace apoemaMatch.Controllers
         private readonly ISolucionadorService _serviceSolucionador;
         private readonly IDemandanteService _serviceDemandante;
 
-        public EncomendaController(IEncomendaService service, UserManager<ApplicationUser> userManager,ISolucionadorService serviceSolucionador,
+        public EncomendaController(IEncomendaService service, UserManager<ApplicationUser> userManager, ISolucionadorService serviceSolucionador,
             IDemandanteService serviceDemandante)
         {
             _service = service;
@@ -31,6 +33,7 @@ namespace apoemaMatch.Controllers
             _serviceDemandante = serviceDemandante;
         }
 
+        [Authorize(Roles = PapeisUsuarios.Admin)]
         public async Task<IActionResult> Index()
         {
             IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
@@ -80,7 +83,7 @@ namespace apoemaMatch.Controllers
             {
                 return View(encomendaViewModel);
             }
-            
+
             if (User.IsInRole("Admin"))
             {
                 encomendaViewModel.IdDemandante = 1;
@@ -88,7 +91,7 @@ namespace apoemaMatch.Controllers
             else
             {
                 string userEmail = User.FindFirstValue(ClaimTypes.Email);
-                var userDemandante= await _userManager.FindByEmailAsync(userEmail);
+                var userDemandante = await _userManager.FindByEmailAsync(userEmail);
                 var demandante = await _serviceDemandante.GetDemandanteByIdUser(userDemandante.Id);
                 encomendaViewModel.IdDemandante = demandante.Id;
             }
@@ -106,7 +109,11 @@ namespace apoemaMatch.Controllers
             }
 
             encomendaViewModel.EncomendaAberta = true;
-            await _service.AddAsync(encomendaViewModel.Converta());
+
+            Encomenda encomenda = encomendaViewModel.Converta();
+            encomenda.DataCadastro = DateTime.Now;
+
+            await _service.AddAsync(encomenda);
             TempData["Sucesso"] = true;
             return RedirectToAction(nameof(Cadastrar));
         }
@@ -120,15 +127,21 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> Excluir(int Id)
         {
             await _service.DeleteAsync(Id);
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(
+                User.IsInRole("Admin") ?
+                    nameof(Index)
+                    : nameof(MinhasEncomendasDemandante));
         }
 
         [HttpGet]
         public async Task<IActionResult> Detalhes(int Id)
         {
-            Encomenda encomenda = await _service.GetByIdAsync(Id);
+            //Encomenda encomenda = await _service.GetByIdAsync(Id);
 
-            if(encomenda.IdSolucionador != null)
+            var encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
+
+            if (encomenda.IdSolucionador != null)
             {
                 var solucionador = await _serviceSolucionador.GetByIdAsync((int)encomenda.IdSolucionador);
                 ViewData["NomeSolucionador"] = solucionador.Nome;
@@ -148,7 +161,7 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> VincularSolucionador(int Id)
         {
             var encomenda = await _service.GetByIdAsync(Id);
-            
+
             if (encomenda == null)
             {
                 return View("NotFound");
@@ -205,11 +218,24 @@ namespace apoemaMatch.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
+        [Authorize(Roles = PapeisUsuarios.Solucionador)]
         public async Task<IActionResult> EmAberto()
         {
-            IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
-            return View(encomendas.Select(e => e.Converta()));
+            List<Encomenda> encomendas = await _service.GetAllEncomendasAsync();
+            List<EncomendaViewModel> encomendasViewModel = encomendas.ConvertAll(e => e.Converta());
+
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var userSolucionador = await _userManager.FindByEmailAsync(userEmail);
+            var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(userSolucionador.Id);
+
+            foreach (var encomendaViewModel in encomendasViewModel)
+            {
+                encomendaViewModel.SolucionadorLogadoPossuiPropostaNaEncomenda =
+                    encomendaViewModel.Propostas is not null && encomendaViewModel.Propostas.Any(p => p.SolucionadorId == solucionador.Id);
+            }
+
+            return View(encomendasViewModel);
         }
 
         public async Task<IActionResult> AlterarSolucionador(int Id)
@@ -272,6 +298,7 @@ namespace apoemaMatch.Controllers
 
             encomenda.IdSolucionador = null;
             encomenda.EncomendaAberta = true;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Inicial;
 
             await _service.AceitarRecusarEncomendaAsync(encomenda);
 
@@ -288,11 +315,126 @@ namespace apoemaMatch.Controllers
             }
 
             encomenda.EncomendaAberta = false;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Finalizada;
 
             await _service.AceitarRecusarEncomendaAsync(encomenda);
 
             return RedirectToAction(nameof(MinhasEncomendasSolucionador));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CadastrarProposta(int Id)
+        {
+            Encomenda encomenda = await _service.GetEncomendaAsync(new() { Id = Id });
+
+            return View(encomenda.Converta());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CadastrarProposta(EncomendaViewModel encomendaViewModel)
+        {
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var userSolucionador = await _userManager.FindByEmailAsync(userEmail);
+            var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(userSolucionador.Id);
+
+            encomendaViewModel.Proposta.SolucionadorId = solucionador.Id;
+            encomendaViewModel.Proposta.ChamadaId = encomendaViewModel.ChamadaId;
+            await _service.InsereProposta(encomendaViewModel.Proposta);
+
+            return RedirectToAction(nameof(EmAberto));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> VisualizarPropostas(int Id)
+        {
+            Encomenda encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
+            var encomendaViewModel = encomenda.Converta();
+            encomendaViewModel.Proposta = encomenda.Chamada.Propostas.FirstOrDefault();
+
+            return View(encomendaViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AnalisarProposta(int Id)
+        {
+            Encomenda encomenda = await _service.GetEncomendaByProposta(new Proposta { Id = Id });
+            var encomendaViewModel = encomenda.Converta();
+            encomendaViewModel.Proposta = encomenda.Chamada.Propostas.FirstOrDefault();
+
+            return View(encomendaViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SalvarNotasProposta(EncomendaViewModel encomendaViewModel)
+        {
+            await _service.UpdateNotasRespostasCriteriosProposta(encomendaViewModel.Proposta);
+            var encomenda = await _service.GetEncomendaByChamada(encomendaViewModel.ChamadaId);
+            return RedirectToAction(nameof(VisualizarPropostas), new { id = encomenda.Id });
+        }
+
+        //TODO
+        [HttpPost]
+        public async Task<IActionResult> FinalizeProcessoSeletivo(int Id)
+        {
+            Encomenda encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
+            List<Proposta> propostas_ordenadas = encomenda.Chamada.Propostas.OrderByDescending(o => o.Pontuacao).ToList();
+            encomenda.IdSolucionador = propostas_ordenadas[0].Solucionador.Id;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Finalizada;
+            await _service.AtualizaEncomendaAsync(encomenda);
+            return RedirectToAction(nameof(Detalhes), new { id = encomenda.Id });
+        }
+
+        [Authorize(Roles = PapeisUsuarios.Admin)]
+        public async Task<IActionResult> RecusarEncomenda(int Id)
+        {
+            var encomenda = await _service.GetByIdAsync(Id);
+
+            if (encomenda == null)
+            {
+                return View("NotFound");
+            }
+
+            //encomenda.IdSolucionador = null;
+            //encomenda.EncomendaAberta = true;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Recusada;
+
+            await _service.AceitarRecusarEncomendaAsync(encomenda);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> AceitarEncomenda(int Id)
+        {
+            var encomenda = await _service.GetByIdAsync(Id);
+
+            if (encomenda == null)
+            {
+                return View("NotFound");
+            }
+
+            //encomenda.EncomendaAberta = false;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.Aberta;
+
+            await _service.AceitarRecusarEncomendaAsync(encomenda);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> HabilitarStatusAguardandoAnaliseChamada(int Id)
+        {
+            var encomenda = await _service.GetByIdAsync(Id);
+
+            if (encomenda == null)
+            {
+                return View("NotFound");
+            }
+
+            //encomenda.EncomendaAberta = false;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
+
+            await _service.AceitarRecusarEncomendaAsync(encomenda);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

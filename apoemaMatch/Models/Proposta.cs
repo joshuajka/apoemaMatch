@@ -16,6 +16,8 @@ namespace apoemaMatch.Models
         
         public EnumStatusProposta StatusProposta { get; set; }
         
+        public int SolucionadorId { get; set; }
+
         public Solucionador Solucionador { get; set; }
         
         public List<RespostaCriterio> RespostasCriterios { get; set; }

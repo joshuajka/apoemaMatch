@@ -1,0 +1,61 @@
+﻿@using apoemaMatch.Data.Enums
+@model EncomendaViewModel
+
+@{
+    ViewData["Title"] = "Lista de Propostas";
+}
+
+<h2>Lista de Propostas</h2>
+
+@if (Model is null || Model.Propostas.Count() == 0)
+{
+    <h4>Ainda não foi cadastrada nenhuma proposta</h4>
+}
+<form asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo" asp-route-id="@Model.Id">
+    <div class="row justify-content-end">
+        <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
+            <button @(Model is null || Model.Propostas.Count() == 0 || Model.StatusEncomenda != EnumStatusEncomenda.AguardandoAnaliseChamada ? "disabled" : "") type="submit" class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo">
+                Finalizar processo seletivo
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    @if (Model is not null)
+    {
+        @foreach (var item in Model.Propostas)
+        {
+            <div class="col-md-4 col-xs-6 border-primary mb-3">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-12">
+                            <div class="card-header text-white cor-apoema">
+                                <p class="card-text">
+                                    <h5 class="card-title">
+                                        Proposta @item.Id
+                                    </h5>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <p class="card-text"><b>Pontuação: </b>@item.Pontuacao</p>
+                                <p class="card-text"><b>Nome solucionador: </b>@item.Solucionador.Nome</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-footer ">
+                                <p class="card-text">
+                                    <a class="btn btn-outline-primary float-right" asp-action="AnalisarProposta" asp-route-id="@item.Id">
+                                        <i class="bi bi-eye-fill"></i> Analisar proposta
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

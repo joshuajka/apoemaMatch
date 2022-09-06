@@ -5,8 +5,8 @@ namespace apoemaMatch.Data.Enums
     public enum EnumStatusEncomenda
     {
         Inicial,  // Demandante criou a encomenda, //Quando a encomenda foi publicada porém ainda falta o agenciador do APOEMA validar
-        [Display(Name = "Analisando encomenda")]
-        AnalisandoEncomenda, //Agenciador está analisando a encomenda
+        //[Display(Name = "Analisando encomenda")]
+        //AnalisandoEncomenda, //Agenciador está analisando a encomenda
         Recusada, // Agenciador recusou a encomenda,
         Aberta, // Encomenda disponível para os solucionaores, //Já foi validado pelo agenciador do APOEMA e está diponível para receber as propostas
         [Display(Name = "Aguardando análise da chamada")]

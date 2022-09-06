@@ -59,8 +59,8 @@ function crieLinha(index) {
 
     let colunaTexto = document.createElement('td');
     let inputTexto = document.createElement('input');
-    inputTexto.setAttribute('id', `CriterioBase_OpcoesCriterioBase_${index}__Texto`);
-    inputTexto.setAttribute('name', `CriterioBase.OpcoesCriterioBase[${index}].Texto`);
+    inputTexto.setAttribute('id', `CriterioBase_OpcoesCriterioBase_${index}_`);
+    inputTexto.setAttribute('name', `CriterioBase.OpcoesCriterioBase[${index}]`);
     inputTexto.classList.add('form-control');
     let spanTexto = document.createElement('span');
     spanTexto.setAttribute('id', `spanOpcaoCriterioTexto${index}`);
@@ -91,8 +91,8 @@ function reordeneTabela() {
         let span = r.querySelector('span');
         let idOpcao = r.rowIndex - 1;
 
-        input.setAttribute('id', `CriterioBase_OpcoesCriterioBase_${idOpcao}__Texto`);
-        input.setAttribute('name', `CriterioBase.OpcoesCriterioBase[${idOpcao}].Texto`);
+        input.setAttribute('id', `CriterioBase_OpcoesCriterioBase_${idOpcao}`);
+        input.setAttribute('name', `CriterioBase.OpcoesCriterioBase[${idOpcao}]`);
         span.setAttribute('id', `spanOpcaoCriterioTexto${idOpcao}`);
     })
 }
@@ -156,11 +156,7 @@ function adicioneCriterio() {
     Array.from(tabelaOpcoesCorpo.rows).forEach(r => {
         debugger;
         let input = r.querySelector('input');
-        let indexOpcao = r.rowIndex;
-        opcoes.push({
-            Ordem: indexOpcao,
-            Texto: input.value
-        })
+        opcoes.push(input.value);
     });
 
     let criteriosAdicionados = JSON.parse(inputCriterios.value || '[]');
@@ -248,23 +244,27 @@ function removaCriterio(ordem) {
 
 function visualizeCriterio(ordem) {
     debugger
+    reseteCorpoTabela();
     let criteriosAdicionados = JSON.parse(inputCriterios.value || '[]');
     let criterioBuscado = criteriosAdicionados.find(q => q.Ordem == ordem);
 
     inputDescricaoCriterio.value = criterioBuscado.Descricao;
     tipoCriterio.value = criterioBuscado.TipoCriterio;
 
+    let i = 0;
     criterioBuscado.OpcoesCriterios?.forEach(op => {
-        if (op.Ordem <= 2) {
-            let linha = tabelaOpcoesCorpo.rows[op.Ordem - 1];
+        if (i <= 1) {
+            let linha = tabelaOpcoesCorpo.rows[i];
             let input = linha.querySelector('input');
-            input.value = op.Texto;
+            input.value = op;
         }
         else {
-            let novaLinha = crieLinha(op.Ordem);
-            // TODO: Cria linhas das opcoes do criterio selecionado
-            // e atribuir o valor aos inputs
+            let novaLinha = crieLinha(i);
+            let input = novaLinha.querySelector('input');
+            input.value = op;
+            tabelaOpcoesCorpo.appendChild(novaLinha);
         }
+        i++;
     })
 
     tipoCriterio.dispatchEvent(new Event('change'));
@@ -274,16 +274,16 @@ function limpeCamposCadastroCriterio() {
     debugger
     inputDescricaoCriterio.value = '';
     tipoCriterio.value = 1;
-
     reseteCorpoTabela();
+    tipoCriterio.dispatchEvent(new Event('change'));
 }
 
 function reseteCorpoTabela() {
-    for (let i = 0; i < tabelaOpcoesCorpo.rows.length; i++) {
-        let r = tabelaOpcoesCorpo.rows[i];
+    let i = 0;
+    Array.from(tabelaOpcoesCorpo.rows).forEach(r => {
         let input = r.querySelector('input');
-
         if (i <= 1) input.value = '';
         else r.remove();
-    }
+        i++
+    });
 }

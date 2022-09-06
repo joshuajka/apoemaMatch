@@ -1,0 +1,151 @@
+﻿@using apoemaMatch.Data.Enums
+@using apoemaMatch.Data.ViewModels
+@model EncomendaViewModel
+@{
+    ViewData["Title"] = "Analisar proposta";
+    int indexRespostaCriterio = 0;
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Analisar proposta</h4>
+        </p>
+
+        <form asp-action="SalvarNotasProposta">
+            <input type="hidden" asp-for="@Model.ChamadaId" value="@Model.ChamadaId" />
+            <input type="hidden" asp-for="@Model.Proposta.Id" value="@Model.Proposta.Id" />
+
+            @if (Model is not null)
+            {
+                @foreach (var criterio in Model.Criterios)
+                {
+                    var descricao = $"{indexRespostaCriterio + 1}" + ". " + criterio.Descricao;
+                    if (Equals(criterio.TipoCriterio, EnumTipoCriterio.Textual))
+                    {
+                        <div class="col-md-12 d-flex">
+                            <div class="col-md-8">
+                                <label class="control-label">@descricao</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Digite a nota</label>
+                                <input onkeyup="valideNota(this)" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].Nota" type="number" min="0" max="10" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <input type="text" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaTextual" class="form-control" disabled />
+                            <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
+                        </div>
+                    }
+
+                    if (Equals(criterio.TipoCriterio, EnumTipoCriterio.SelecaoUnica))
+                    {
+                        <div class="col-md-12 d-flex">
+                            <div class="col-md-8">
+                                <label class="control-label">@descricao</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Digite a nota</label>
+                                <input onkeyup="valideNota(this)" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].Nota" type="number" min="0" max="10" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            @foreach (var opcao in criterio.OpcoesCriterios)
+                            {
+                                <div class="col-md-12 mb-3">
+                                    @if (Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0] == opcao)
+                                    {
+                                        <input type="radio" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0]" value="@opcao" checked disabled />
+                                        <label asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0]" class="control-label">@opcao</label>
+                                        <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0]" value="@opcao" disabled />
+                                        <label asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0]" class="control-label">@opcao</label>
+                                        <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    if (Equals(criterio.TipoCriterio, EnumTipoCriterio.MultiplaSelecao))
+                    {
+                        <div class="col-md-12 d-flex">
+                            <div class="col-md-8">
+                                <label class="control-label">@descricao</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Digite a nota</label>
+                                <input onkeyup="valideNota(this)" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].Nota" type="number" min="0" max="10" />
+                            </div>
+                        </div>
+
+                        var indexMultiplaSelecao = 0;
+                        <div class="col-md-12 mb-3">
+                            @foreach (var opcao in criterio.OpcoesCriterios)
+                            {
+                                @if (Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[indexMultiplaSelecao] == opcao)
+                                {
+                                    Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[indexMultiplaSelecao] = "true";
+                                    <div class="col-md-12 mb-3">
+                                        <input type="checkbox" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[indexMultiplaSelecao]" value="@opcao" checked disabled />
+                                        <label asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[indexMultiplaSelecao]" class="control-label">@opcao</label>
+                                        <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-12 mb-3">
+                                        <input type="checkbox" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[indexMultiplaSelecao]" value="@opcao" disabled />
+                                        <label asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[indexMultiplaSelecao]" class="control-label">@opcao</label>
+                                        <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
+                                    </div>
+                                }
+
+                                indexMultiplaSelecao++;
+                            }
+                        </div>
+
+                    }
+
+                    if (Equals(criterio.TipoCriterio, EnumTipoCriterio.Upload))
+                    {
+                        <div class="col-md-12 d-flex">
+                            <div class="col-md-8">
+                                <label class="control-label">@descricao</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Digite a nota</label>
+                                <input onkeyup="valideNota(this)" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].Nota" type="number" min="0" max="10" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <a onclick="window.open('@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaUpload')" class="btn btn-outline-primary">Donwload</a>
+                            <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
+                        </div>
+                    }
+
+                    <hr />
+                    indexRespostaCriterio++;
+                }
+                <div class="col text-center">
+                    <button @(Model.StatusEncomenda != EnumStatusEncomenda.AguardandoAnaliseChamada  ? "disabled" : "") type="submit" class="btn btn-outline-success" asp-controller="Encomenda" asp-action="SalvarNotasProposta">Enviar análise</button>
+                </div>
+            }
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function valideNota(input) {
+        if (input.value < 0 || !input.value) input.value = 0;
+        else if (input.value > 10) input.value = 10;
+    }
+
+</script>
