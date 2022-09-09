@@ -92,7 +92,7 @@
             try {
                 let span = input.parentElement.querySelector('span');
                 if (inputEstaValido(input) && !input.value.startsWith('https://')) {
-                    valideInput(false, span, "Link precisar começar com \'https://\'");
+                    valideInput(false, span, "Link precisa começar com \'https://\'");
                     resolve(false);
                 }
                 else if (inputEstaValido(input)) {
