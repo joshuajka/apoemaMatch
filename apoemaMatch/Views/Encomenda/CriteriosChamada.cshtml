@@ -3,8 +3,12 @@
 
 <div class="row d-none" id="criteriosChamada">
     <div class="col-md-8 offset-2">
+        <div class="col-md-12 mb-3 d-none" id="div_alertAviso">
+
+        </div>
+
         <div class="col-md-12 mb-3">
-            <h2 style="text-align: center;">Quais critérios e atributos você gostaria de avaliar para sua encomenda?</h2>
+            <h2 style="text-align: center;">Descreva aqui os critérios que você gostaria de avaliar na sua chamada</h2>
         </div>
 
         <div class="col-md-12 mb-3">
@@ -21,6 +25,7 @@
         </div>
 
         <div class="col-md-12 mb-3 d-none" id="div_opcoes_criterio">
+            <h6 style="text-align: center;">Obs.: Mínimo 2 e máximo 10 opções</h6>
             <table class="table" id="tabela_opcoes_criterio">
                 <thead>
                     <tr>
@@ -70,9 +75,13 @@
         <div class="row mb-3 d-none" id="div_criterios">
         </div>
 
-        @*TODO: Validar se tem pelo menos um criterio*@
         <div class="col text-center">
-            <button type="submit" onclick="setPossuiChamada(true)" class="btn btn-outline-warning" asp-controller="Encomenda" asp-action="Cadastrar">Publicar encomenda</button>
+            <div class="float-left">
+                <button id="voltarDetalhes" type="button" class="btn btn-outline-secondary">Voltar</button>
+            </div>
+            <div class="float-right">
+                <button id="enviarCadastroChamada" type="submit" class="btn btn-outline-warning" asp-controller="Encomenda" asp-action="Cadastrar">Publicar encomenda</button>
+            </div>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 ﻿@model apoemaMatch.Data.ViewModels.EncomendaViewModel
-@using System 
+@using System
 @{
     ViewData["Title"] = "Inserir detalhes da Seleção";
 }
@@ -20,21 +20,25 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label asp-for="DataValidadeChamada" class="control-label"></label>
-                <input type="date" asp-for="DataValidadeChamada" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")"/>
+                <input type="date" asp-for="DataValidadeChamada" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <span id="spanDataValidadeChamada" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label asp-for="ArquivoDetalheChamada" class="control-label"></label>
-                <input asp-for="ArquivoDetalheChamada" class="form-control" placeholder="ex.: https://drive.google.com/..."/>
+                <input asp-for="ArquivoDetalheChamada" class="form-control" placeholder="ex.: https://drive.google.com/..." />
                 <span id="spanArquivoDetalhe" class="text-danger"></span>
             </div>
         </div>
 
-
         <div class="col text-center">
-            <button id="definirCriterios" type="button" class="btn btn-outline-secondary">Definir Critérios</button>
+            <div class="float-left">
+                <button id="voltarCadastroBase" type="button" class="btn btn-outline-secondary">Voltar</button>
+            </div>
+            <div class="float-right">
+                <button id="definirCriterios" type="button" class="btn btn-outline-secondary">Definir Critérios</button>
+            </div>
         </div>
     </div>
 </div>

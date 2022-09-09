@@ -11,7 +11,10 @@ window.addEventListener('load', () => {
     monteCardsCriterios();
 
     document.getElementById("botaoAdicionarCriterio").addEventListener('click', () => {
-        valideInput(descricaoCriterioEstaValida(), spanDescricaoCriterio, "Critério é obrigatório");
+        let descCriterioEstaValida = descricaoCriterioEstaValida();
+        valideInput(descCriterioEstaValida, spanDescricaoCriterio, "Critério é obrigatório");
+        if (!descCriterioEstaValida) inputDescricaoCriterio.focus();
+
         if (ehTipoCriterioComOpcoes()) {
             valideOpcoesCriterios();
         }
@@ -33,7 +36,42 @@ window.addEventListener('load', () => {
     document.getElementById("botaoAdicionarOpcaoCriterio").addEventListener('click', () => {
         adicioneOpcao();
     });
+
+    document.getElementById("enviarCadastroChamada").addEventListener('click', (ev) => {
+        if (!possuiCriterios()) {
+            mostreAlertaAviso();
+            ev.preventDefault();
+            ev.stopPropagation();
+            return false;
+        }
+
+        setPossuiChamada(true);
+    });
 })
+
+function possuiCriterios() {
+    return !!inputCriterios.value;
+}
+
+function mostreAlertaAviso() {
+    let alertaAviso = document.getElementById("alertAviso");
+    if (!alertaAviso) crieAlertAviso();
+    setTimeout(escondaAlertaAviso, 10000);
+    document.getElementById("div_alertAviso").classList.remove('d-none');
+}
+
+function escondaAlertaAviso() {
+    const alert = new bootstrap.Alert(document.getElementById("alertAviso"));
+    alert.close();
+    document.getElementById("div_alertAviso").classList.add('d-none');
+}
+
+function crieAlertAviso() {
+    document.getElementById("div_alertAviso").innerHTML =
+          '<div id="alertAviso" class="alert alert-warning fade show" role="alert">'
+        + '<span class="align-self-center"><b>Pelo menos um critério é necessário</b></span>'
+        + '</div>'
+}
 
 function removaOpcao(botao) {
     if (tabelaOpcoesCorpo.rows.length == 2) return; // Não pode ter menos de 2 opcoes
@@ -258,6 +296,7 @@ function visualizeCriterio(ordem) {
     })
 
     tipoCriterio.dispatchEvent(new Event('change'));
+    inputDescricaoCriterio.focus();
 }
 
 function limpeCamposCadastroCriterio() {
