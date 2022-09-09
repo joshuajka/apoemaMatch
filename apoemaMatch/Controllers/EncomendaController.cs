@@ -65,6 +65,15 @@ namespace apoemaMatch.Controllers
 
             var encomendasDemandante = encomendas.Where(n => n.IdDemandante == demamandante.Id);
 
+            foreach (var item in encomendasDemandante)
+            {
+                if (item.PossuiChamada == true)
+                {
+                    var propostas = await _service.GetPropostasByEncomenda(item.Id);
+                    ViewData[item.Id.ToString()] = propostas.Count();
+                }
+            }
+            
             return View(encomendasDemandante.Select(e => e.Converta()));
         }
 
