@@ -37,6 +37,16 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
+            
+            foreach (var item in encomendas)
+            {
+                if (item.PossuiChamada == true && item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
+                {
+                    item.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
+                    await _service.AtualizaEncomendaAsync(item);
+                }
+            }
+            
             return View(encomendas.Select(e => e.Converta()));
         }
 
@@ -71,6 +81,12 @@ namespace apoemaMatch.Controllers
                 {
                     var propostas = await _service.GetPropostasByEncomenda(item.Id);
                     ViewData[item.Id.ToString()] = propostas.Count();
+                    
+                    if (item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
+                    {
+                        item.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
+                        await _service.AtualizaEncomendaAsync(item);
+                    }
                 }
             }
             
@@ -232,6 +248,16 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> EmAberto()
         {
             List<Encomenda> encomendas = await _service.GetAllEncomendasAsync();
+            
+            foreach (var item in encomendas)
+            {
+                if (item.PossuiChamada == true && item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
+                {
+                    item.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
+                    await _service.AtualizaEncomendaAsync(item);
+                }
+            }
+            
             List<EncomendaViewModel> encomendasViewModel = encomendas.ConvertAll(e => e.Converta());
 
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
