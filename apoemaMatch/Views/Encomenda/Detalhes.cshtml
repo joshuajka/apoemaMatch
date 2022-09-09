@@ -6,6 +6,29 @@
     ViewData["Title"] = "Detalhes Encomenda";
 }
 
+@if ((int?)ViewData["AlertEncomendaFinalizada"] == 1)
+{
+    <div class="row">
+        <div class="col-md-6 offset-3 alert alert-info text-center">
+            <i class="bi bi-check-circle" style="font-size:36px;"></i>
+            <h2>Parabéns sua chamada foi finalizada com sucesso!!!</h2>
+            <p>Dê as Boas-Vindas para <b>@ViewData["NomeSolucionador"]</b> através das informações disponibilizadas abaixo.</p>
+            <hr/>
+        </div>
+    </div>
+}else if ((int?)ViewData["AlertEncomendaFinalizada"] == 2)
+{
+    <div class="row">
+        <div class="col-md-6 offset-3 alert alert-info text-center">
+            <i class="bi bi-check-circle" style="font-size:36px;"></i>
+            <h2>Parabéns você foi selecionado para este projeto!!!</h2>
+            <p>Espere o contato de <b>@ViewData["EmpresaDemandante"]</b>, e boa sorte em sua nova trajetória.</p>
+            <hr/>
+        </div>
+    </div>
+}
+
+
 <div class="row">
     <div class="col-md-8 offset-2">
         <div class="card mb-12">

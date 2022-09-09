@@ -163,6 +163,10 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> Detalhes(int Id)
         {
             //Encomenda encomenda = await _service.GetByIdAsync(Id);
+            
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            var usersolucionador = await _serviceSolucionador.GetSolucionadorByIdUser(user.Id);
 
             var encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
 
@@ -189,7 +193,13 @@ namespace apoemaMatch.Controllers
                 ViewData["Anexo"] = encomenda.Chamada.ArquivoAnexo;
             }
 
-
+            if (User.Identity.IsAuthenticated && User.IsInRole("Demandante") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada)
+            {
+                ViewData["AlertEncomendaFinalizada"] = 1;
+            }else if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada && encomenda.IdSolucionador != null && encomenda.IdSolucionador == usersolucionador.Id)
+            {
+                ViewData["AlertEncomendaFinalizada"] = 2;
+            }
 
             return View(encomenda.Converta());
         }
