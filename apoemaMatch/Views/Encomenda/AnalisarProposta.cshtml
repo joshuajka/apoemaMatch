@@ -134,7 +134,15 @@
                     indexRespostaCriterio++;
                 }
                 <div class="col text-center">
-                    <button @(Model.StatusEncomenda != EnumStatusEncomenda.AguardandoAnaliseChamada  ? "disabled" : "") type="submit" class="btn btn-outline-success" asp-controller="Encomenda" asp-action="SalvarNotasProposta">Enviar análise</button>
+                    @if (Model.StatusEncomenda != EnumStatusEncomenda.AguardandoAnaliseChamada)
+                    {
+                        <button disabled type="submit" class="btn btn-outline-success" data-toggle="tooltip" title="Sua encomenda não está no período de análise" asp-controller="Encomenda" asp-action="SalvarNotasProposta">Enviar análise</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-outline-success" asp-controller="Encomenda" asp-action="SalvarNotasProposta">Enviar análise</button>
+                    }
+                    
                 </div>
             }
 
@@ -147,5 +155,9 @@
         if (input.value < 0 || !input.value) input.value = 0;
         else if (input.value > 10) input.value = 10;
     }
+    
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
 
 </script>
