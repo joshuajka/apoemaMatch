@@ -34,7 +34,7 @@ namespace apoemaMatch.Data.Services
 
         public async Task SendEmailForForgotPassword(UserEmailOptions userEmailOptions)
         {
-            userEmailOptions.Subject = UpdatePlaceHolders("Hello {{UserName}}, reset your password.", userEmailOptions.PlaceHolders);
+            userEmailOptions.Subject = UpdatePlaceHolders("Olá {{UserName}}, redefina sua senha.", userEmailOptions.PlaceHolders);
 
             userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("ForgotPassword"), userEmailOptions.PlaceHolders);
 
