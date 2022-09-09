@@ -125,7 +125,7 @@
             return tituloEstaValido && descricaoEstaValido && tipoEncomendaOutrosEstaValido;
         }
 
-        function valideDetalhesSelecao() {
+        async function valideDetalhesSelecao() {
             let descricaoChamada = document.getElementById("DescricaoChamada");
             let spanDescricaoChamada = document.getElementById("spanDescricaoChamada");
             let descricaoChamadaEstaValida = inputEstaValido(descricaoChamada);
@@ -137,7 +137,11 @@
             valideInput(descricaoChamadaEstaValida, spanDescricaoChamada, "Os detalhes da chamada são obrigatórios");
             valideInput(dataValidadeChamadaEstaValida, spanDataValidadeChamada, "A data de validade da chamada é obrigatoria");
 
-            return descricaoChamadaEstaValida && dataValidadeChamadaEstaValida;
+            let arquivoDetalhe = document.getElementById("ArquivoDetalheChamada");
+            let spanArquivoDetalhe = document.getElementById("spanArquivoDetalhe");
+            let linkEstaValido = !inputEstaValido(arquivoDetalhe) ? true : await checkUrl(arquivoDetalhe, spanArquivoDetalhe);
+
+            return descricaoChamadaEstaValida && dataValidadeChamadaEstaValida && linkEstaValido;
         }
 
         window.addEventListener('load', () => {
@@ -163,8 +167,8 @@
                 mostreDetalhesioSelecao();
             });
 
-            botaoDefinirCriterios.addEventListener('click', (ev) => {
-                if (!valideDetalhesSelecao()) {
+            botaoDefinirCriterios.addEventListener('click', async (ev) => {
+                if (!(await valideDetalhesSelecao())) {
                     ev.preventDefault();
                     ev.stopPropagation();
                     return;
@@ -176,7 +180,44 @@
                 if (ev.target.value < ev.target.getAttribute('min'))
                     ev.target.value = ev.target.getAttribute('min')
             })
+
+            ArquivoDetalheChamada.addEventListener('blur', async (ev) => {
+                await checkUrl(ev.target, document.getElementById("spanArquivoDetalhe"));
+            })
         })
+
+        function checkUrl(input, span) {
+            return new Promise(resolve => {
+                try {
+                    if (inputEstaValido(input) && !input.value.startsWith('https://')) {
+                        valideInput(false, span, "Link precisar começar com \'https://\'");
+                        resolve(false);
+                    }
+                    else if (inputEstaValido(input)) {
+                        valideInput(false, span, "Validando link ...");
+                        let elemScript = document.createElement('script');
+                        elemScript.type = 'text/javascript';
+                        elemScript.onerror = () => {
+                            valideInput(false, span, "Link inválido");
+                            elemScript.remove();
+                            resolve(false);
+                        };
+                        elemScript.onload = () => {
+                            valideInput(true, span);
+                            elemScript.remove();
+                            resolve(true);
+                        };
+                        elemScript.src = input.value;
+                        document.body.append(elemScript);
+                    }
+                    else {
+                        valideInput(true, span);
+                        resolve(true);
+                    }
+                }
+                catch (err) {}
+            });
+        }
     </script>
 
     <script src=@Url.Content("~/js/QuestionarioSelecao/criteriosChamada.js") asp-append-version="true"></script>
