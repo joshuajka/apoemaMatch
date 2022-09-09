@@ -12,7 +12,7 @@
             <h4>Cadastrar proposta</h4>
         </p>
 
-        <form asp-action="CadastrarProposta">
+        <form asp-action="CadastrarProposta" id="formCadastroProposta">
             <input type="hidden" asp-for="@Model.ChamadaId" value="@Model.ChamadaId" />
 
             @if (Model is not null)
@@ -67,7 +67,8 @@
                     {
                         <div class="col-md-12 mb-3">
                             <label class="control-label">@descricao</label>
-                            <input type="text" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaUpload" class="form-control" />
+                            <input onblur="checkUrl(this)" type="text" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaUpload" class="form-control upload" placeholder="ex.: https://drive.google.com/..." />
+                            <span class="text-danger"></span>
                             <input type="hidden" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].CriterioId" value="@criterio.Id" />
                         </div>
                     }
@@ -77,10 +78,81 @@
                 }
 
                 <div class="col text-center">
-                    <button type="submit" class="btn btn-outline-success" asp-controller="Encomenda" asp-action="CadastrarProposta">Enviar proposta</button>
+                    <button type="button" id="enviarProposta" class="btn btn-outline-success" asp-controller="Encomenda" asp-action="CadastrarProposta">Enviar proposta</button>
                 </div>
             }
 
         </form>
     </div>
 </div>
+
+<script>
+    function checkUrl(input) {
+        return new Promise(resolve => {
+            try {
+                let span = input.parentElement.querySelector('span');
+                if (inputEstaValido(input) && !input.value.startsWith('https://')) {
+                    valideInput(false, span, "Link precisa começar com \'https://\'");
+                    resolve(false);
+                }
+                else if (inputEstaValido(input)) {
+                    valideInput(false, span, "Validando link ...");
+                    let elemScript = document.createElement('script');
+                    elemScript.type = 'text/javascript';
+                    elemScript.onerror = () => {
+                        valideInput(false, span, "Link inválido");
+                        elemScript.remove();
+                        resolve(false);
+                    };
+                    elemScript.onload = () => {
+                        valideInput(true, span);
+                        elemScript.remove();
+                        resolve(true);
+                    };
+                    elemScript.src = input.value;
+                    document.body.append(elemScript);
+                }
+                else {
+                    valideInput(true, span);
+                    resolve(true);
+                }
+            }
+            catch (err) { }
+        });
+    }
+
+    function inputEstaValido(input) {
+        return !!input.value;
+    }
+
+    function valideInput(estaValido, span, textoValidacao) {
+        if (!estaValido) {
+            span.innerText = textoValidacao;
+        }
+        else {
+            span.innerText = "";
+        }
+    }
+
+    async function valideUrls() {
+        let inputs = document.querySelectorAll(".upload");
+        if (!inputs || !inputs.length) return true;
+
+        for (let i = 0; i < inputs.length; i++) {
+            let input = inputs[i];
+            let estaValido = await checkUrl(input);
+            if (!estaValido) return false;
+        }
+
+        return true;
+    }
+
+    window.addEventListener('load', () => {
+        document.getElementById("enviarProposta").addEventListener('click', async (ev) => {
+            let estaValido = await valideUrls();
+            if (estaValido) {
+                document.getElementById("formCadastroProposta").submit();
+            }
+        })
+    })
+</script>

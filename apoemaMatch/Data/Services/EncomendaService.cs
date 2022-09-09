@@ -228,5 +228,22 @@ namespace apoemaMatch.Data.Services
                 await _context.SaveChangesAsync();
             }
         }
+        
+        public async Task<List<Proposta>> GetPropostasByEncomenda(int id)
+        {
+            var chamada = await _context.Chamada.FirstOrDefaultAsync(c => c.EncomendaId == id);
+            List<Proposta> propostas = await _context.Proposta.Where(p => p.ChamadaId == chamada.Id).ToListAsync();
+            return propostas;
+        }
+        
+        public async Task<bool> CheckDateExpiration(int id)
+        {
+            var chamada = await _context.Chamada.FirstOrDefaultAsync(c => c.EncomendaId == id);
+            if (DateTime.Compare(chamada.DataValidade + TimeSpan.FromDays(1), DateTime.Now)<=0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

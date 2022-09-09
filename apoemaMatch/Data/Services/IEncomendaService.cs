@@ -27,5 +27,9 @@ namespace apoemaMatch.Data.Services
         Task<Encomenda> GetEncomendaByChamada(int Id);
         
         Task AtualizaEncomendaAsync(Encomenda encomenda);
+
+        Task<List<Proposta>> GetPropostasByEncomenda(int id);
+
+        Task<bool> CheckDateExpiration(int id);
     }
 }

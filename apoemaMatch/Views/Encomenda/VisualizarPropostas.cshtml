@@ -11,15 +11,28 @@
 {
     <h4>Ainda não foi cadastrada nenhuma proposta</h4>
 }
-<form asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo" asp-route-id="@Model.Id">
+
+@if (Model is null || Model.Propostas.Count() == 0 || Model.StatusEncomenda != EnumStatusEncomenda.AguardandoAnaliseChamada)
+{
     <div class="row justify-content-end">
         <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
-            <button @(Model is null || Model.Propostas.Count() == 0 || Model.StatusEncomenda != EnumStatusEncomenda.AguardandoAnaliseChamada ? "disabled" : "") type="submit" class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo">
+            <button disabled type="submit" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip" title="Sua encomenda não possui propostas ou não está no período de análise" asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo">
                 Finalizar processo seletivo
             </button>
         </div>
     </div>
-</form>
+}else
+{
+    <form asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo" asp-route-id="@Model.Id">
+        <div class="row justify-content-end">
+            <div class="col-md-4 col-xs-6 d-inline-flex justify-content-end mb-3">
+                <button type="submit" class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="FinalizeProcessoSeletivo">
+                    Finalizar processo seletivo
+                </button>
+            </div>
+        </div>
+    </form>
+}
 
 <div class="row">
     @if (Model is not null)
@@ -59,3 +72,9 @@
         }
     }
 </div>
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>

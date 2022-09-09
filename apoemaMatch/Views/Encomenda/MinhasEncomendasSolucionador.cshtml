@@ -63,7 +63,7 @@
                         <div class="col-md-12">
                             <div class="card-footer ">
                                 <p class="card-text">
-                                    @if (item.StatusEncomenda == EnumStatusEncomenda.Inicial)
+                                    @if (item.StatusEncomenda == EnumStatusEncomenda.Inicial || item.StatusEncomenda == EnumStatusEncomenda.Aberta)
                                     {
                                     <a class="btn btn-danger text-white" asp-action="Recusar" asp-route-id="@item.Id">
                                         Recusar

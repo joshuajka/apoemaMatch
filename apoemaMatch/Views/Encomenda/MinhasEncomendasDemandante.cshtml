@@ -112,6 +112,12 @@
                                     {
                                         <a class="btn btn-outline-primary float-right" asp-action="VisualizarPropostas" asp-route-id="@item.Id">
                                             <i class="bi bi-file-earmark-person"></i> Visualizar propostas
+                                            @if (item.StatusEncomenda == EnumStatusEncomenda.Aberta || item.StatusEncomenda == EnumStatusEncomenda.AguardandoAnaliseChamada)
+                                            {
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white px-2" style="font-size: medium">
+                                                    @ViewData[item.Id.ToString()]
+                                                </span>
+                                            }
                                         </a>
                                     }
                                     <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">

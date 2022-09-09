@@ -37,6 +37,16 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
+            
+            foreach (var item in encomendas)
+            {
+                if (item.PossuiChamada == true && item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
+                {
+                    item.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
+                    await _service.AtualizaEncomendaAsync(item);
+                }
+            }
+            
             return View(encomendas.Select(e => e.Converta()));
         }
 
@@ -65,6 +75,21 @@ namespace apoemaMatch.Controllers
 
             var encomendasDemandante = encomendas.Where(n => n.IdDemandante == demamandante.Id);
 
+            foreach (var item in encomendasDemandante)
+            {
+                if (item.PossuiChamada == true)
+                {
+                    var propostas = await _service.GetPropostasByEncomenda(item.Id);
+                    ViewData[item.Id.ToString()] = propostas.Count();
+                    
+                    if (item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
+                    {
+                        item.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
+                        await _service.AtualizaEncomendaAsync(item);
+                    }
+                }
+            }
+            
             return View(encomendasDemandante.Select(e => e.Converta()));
         }
 
@@ -138,6 +163,10 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> Detalhes(int Id)
         {
             //Encomenda encomenda = await _service.GetByIdAsync(Id);
+            
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            var usersolucionador = await _serviceSolucionador.GetSolucionadorByIdUser(user.Id);
 
             var encomenda = await _service.GetEncomendaAsync(new Encomenda { Id = Id });
 
@@ -145,6 +174,9 @@ namespace apoemaMatch.Controllers
             {
                 var solucionador = await _serviceSolucionador.GetByIdAsync((int)encomenda.IdSolucionador);
                 ViewData["NomeSolucionador"] = solucionador.Nome;
+                ViewData["SolucionadorEmail"] = solucionador.Email;
+                ViewData["SolucionadorTelefone"] = solucionador.Telefone;
+                ViewData["SolucionadorLattes"] = solucionador.CurriculoLattes;
             }
             else
             {
@@ -153,7 +185,21 @@ namespace apoemaMatch.Controllers
             var demandante = await _serviceDemandante.GetByIdAsync((int)encomenda.IdDemandante);
             ViewData["EmpresaDemandante"] = demandante.NomeEmpresa;
 
+            if (encomenda.PossuiChamada == true)
+            {
+                ViewData["DescricaoChamada"] = encomenda.Chamada.DescricaoChamada;
+                ViewData["DataCriacao"] = encomenda.DataCadastro;
+                ViewData["DataValidade"] = encomenda.Chamada.DataValidade + TimeSpan.FromDays(1);
+                ViewData["Anexo"] = encomenda.Chamada.ArquivoAnexo;
+            }
 
+            if (User.Identity.IsAuthenticated && User.IsInRole("Demandante") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada)
+            {
+                ViewData["AlertEncomendaFinalizada"] = 1;
+            }else if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada && encomenda.IdSolucionador != null && encomenda.IdSolucionador == usersolucionador.Id)
+            {
+                ViewData["AlertEncomendaFinalizada"] = 2;
+            }
 
             return View(encomenda.Converta());
         }
@@ -223,6 +269,16 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> EmAberto()
         {
             List<Encomenda> encomendas = await _service.GetAllEncomendasAsync();
+            
+            foreach (var item in encomendas)
+            {
+                if (item.PossuiChamada == true && item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
+                {
+                    item.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
+                    await _service.AtualizaEncomendaAsync(item);
+                }
+            }
+            
             List<EncomendaViewModel> encomendasViewModel = encomendas.ConvertAll(e => e.Converta());
 
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
