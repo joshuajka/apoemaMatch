@@ -170,6 +170,9 @@ namespace apoemaMatch.Controllers
             {
                 var solucionador = await _serviceSolucionador.GetByIdAsync((int)encomenda.IdSolucionador);
                 ViewData["NomeSolucionador"] = solucionador.Nome;
+                ViewData["SolucionadorEmail"] = solucionador.Email;
+                ViewData["SolucionadorTelefone"] = solucionador.Telefone;
+                ViewData["SolucionadorLattes"] = solucionador.CurriculoLattes;
             }
             else
             {
@@ -177,6 +180,14 @@ namespace apoemaMatch.Controllers
             }
             var demandante = await _serviceDemandante.GetByIdAsync((int)encomenda.IdDemandante);
             ViewData["EmpresaDemandante"] = demandante.NomeEmpresa;
+
+            if (encomenda.PossuiChamada == true)
+            {
+                ViewData["DescricaoChamada"] = encomenda.Chamada.DescricaoChamada;
+                ViewData["DataCriacao"] = encomenda.DataCadastro;
+                ViewData["DataValidade"] = encomenda.Chamada.DataValidade + TimeSpan.FromDays(1);
+                ViewData["Anexo"] = encomenda.Chamada.ArquivoAnexo;
+            }
 
 
 

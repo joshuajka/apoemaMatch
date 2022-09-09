@@ -61,6 +61,24 @@
                         </p>
                         <p class="card-text"><b>Solucionador: </b>@ViewData["NomeSolucionador"]</p>
                         <p class="card-text"><b>Empresa Demandante: </b>@ViewData["EmpresaDemandante"]</p>
+                        
+                        @if (Model.PossuiChamada == true)
+                        {
+                            <br/>
+                            <h5 class="card-text">Detalhes da Chamada</h5>
+                            <p class="card-text"><b>&emsp; Decrição da Chamada: </b>@ViewData["DescricaoChamada"]</p>
+                            <p class="card-text"><b>&emsp; Data de criação da chamada: </b>@ViewData["DataCriacao"]</p>
+                            <p class="card-text"><b>&emsp; Data limite para submissão: </b>@ViewData["DataValidade"]</p>
+                            <p class="card-text"><b>&emsp; Anexo: </b><a href=@ViewData["Anexo"] type="button" target="_blank" class="btn btn-dark btn-sm text-white">Abrir <i class="bi bi-arrow-right-short"></i></a></p>
+                        }
+                        @if (User.Identity.IsAuthenticated && !User.IsInRole("Solucionador") && @ViewData["NomeSolucionador"] != "Não possui")
+                        {
+                            <br/>
+                            <h5 class="card-text">Detalhes do Solucionador</h5>
+                            <p class="card-text"><b>&emsp; Email: </b>@ViewData["SolucionadorEmail"]</p>
+                            <p class="card-text"><b>&emsp; Telefone: </b>@ViewData["SolucionadorTelefone"]</p>
+                            <p class="card-text"><b>&emsp; Currículo Lattes: </b>@ViewData["SolucionadorLatted"]</p>
+                        }
                     </div>
                 </div>
                 <div class="col-md-12">
