@@ -11,7 +11,6 @@ window.addEventListener('load', () => {
     monteCardsCriterios();
 
     document.getElementById("botaoAdicionarCriterio").addEventListener('click', () => {
-        debugger
         valideInput(descricaoCriterioEstaValida(), spanDescricaoCriterio, "Critério é obrigatório");
         if (ehTipoCriterioComOpcoes()) {
             valideOpcoesCriterios();
@@ -37,7 +36,6 @@ window.addEventListener('load', () => {
 })
 
 function removaOpcao(botao) {
-    debugger
     if (tabelaOpcoesCorpo.rows.length == 2) return; // Não pode ter menos de 2 opcoes
     let indexRow = botao.parentElement.parentElement.rowIndex - 1;
 
@@ -46,7 +44,6 @@ function removaOpcao(botao) {
 }
 
 function adicioneOpcao() {
-    debugger
     if (tabelaOpcoesCorpo.rows.length == 10) return; // Não pode ter mais de 10 opcoes
     let indexNovo = tabelaOpcoesCorpo.rows.length;
     let linha = crieLinha(indexNovo);
@@ -86,7 +83,6 @@ function crieLinha(index) {
 
 function reordeneTabela() {
     Array.from(tabelaOpcoesCorpo.rows).forEach(r => {
-        debugger;
         let input = r.querySelector('input');
         let span = r.querySelector('span');
         let idOpcao = r.rowIndex - 1;
@@ -108,7 +104,6 @@ function valideInput(estaValido, span, textoValidacao) {
 
 function valideOpcoesCriterios(marcarComoValidos) {
     Array.from(tabelaOpcoesCorpo.rows).forEach(r => {
-        debugger;
         let input = r.querySelector('input');
         let span = r.querySelector('span');
         let indexOpcao = r.rowIndex;
@@ -150,11 +145,9 @@ function criterioEstaValido() {
 }
 
 function adicioneCriterio() {
-    debugger
     let opcoes = [];
 
     Array.from(tabelaOpcoesCorpo.rows).forEach(r => {
-        debugger;
         let input = r.querySelector('input');
         opcoes.push(input.value);
     });
@@ -177,7 +170,6 @@ function adicioneCriterio() {
 }
 
 function monteCardsCriterios() {
-    debugger
     divCriterios.innerHTML = "";
     let criteriosAtuais = JSON.parse(inputCriterios.value || '[]');
 
@@ -229,7 +221,6 @@ function monteCardsCriterios() {
 }
 
 function removaCriterio(ordem) {
-    debugger
     let criteriosAdicionados = JSON.parse(inputCriterios.value || '[]');
     criteriosAdicionados = criteriosAdicionados.filter(q => q.Ordem != ordem);
 
@@ -243,7 +234,6 @@ function removaCriterio(ordem) {
 }
 
 function visualizeCriterio(ordem) {
-    debugger
     reseteCorpoTabela();
     let criteriosAdicionados = JSON.parse(inputCriterios.value || '[]');
     let criterioBuscado = criteriosAdicionados.find(q => q.Ordem == ordem);
@@ -271,7 +261,6 @@ function visualizeCriterio(ordem) {
 }
 
 function limpeCamposCadastroCriterio() {
-    debugger
     inputDescricaoCriterio.value = '';
     tipoCriterio.value = 1;
     reseteCorpoTabela();
