@@ -147,6 +147,7 @@ namespace apoemaMatch.Controllers
         {
             return View();
         }
+        
         [Authorize(Roles = PapeisUsuarios.Demandante + "," + PapeisUsuarios.Admin)]
         [HttpGet]
         public async Task<IActionResult> Excluir(int Id)
