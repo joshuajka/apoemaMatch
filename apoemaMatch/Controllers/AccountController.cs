@@ -419,6 +419,19 @@ namespace apoemaMatch.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (User.IsInRole("Demandante"))
+                    {
+                        var demandante = await _serviceDemandante.GetDemandanteByIdUser(user.Id);
+                        demandante.Email = model.NewEmail;
+                        _serviceDemandante.UpdateAsync(demandante.Id, demandante);
+                    }
+                    else if (User.IsInRole("Solucionador"))
+                    {
+                        var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(user.Id);
+                        solucionador.Email = model.NewEmail;
+                        _serviceSolucionador.UpdateAsync(solucionador.Id, solucionador);
+                    }
+
                     ViewBag.IsSuccess = true;
                     ModelState.Clear();
                     await _signInManager.SignOutAsync();
