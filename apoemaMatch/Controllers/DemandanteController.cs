@@ -52,7 +52,11 @@ namespace apoemaMatch.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Detalhes(int Id)
         {
-            var demandanteDetalhes = await _service.GetDemandanteByIdAsync(Id);
+            var demandanteDetalhes = await _service.GetByIdAsync(Id);
+            if (demandanteDetalhes == null)
+            {
+                return View("NotFound");
+            }
             return View(demandanteDetalhes);
         }
 
@@ -175,6 +179,10 @@ namespace apoemaMatch.Controllers
             await _service.UpdateDemandanteAsync(demandanteAlterado);
 
 
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Demandante");
+            }
             return RedirectToAction("MeuPerfilDemandante", "Account");
         }
 

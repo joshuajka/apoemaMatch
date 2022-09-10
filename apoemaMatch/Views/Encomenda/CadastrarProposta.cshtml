@@ -136,7 +136,7 @@
 
     async function valideUrls() {
         let inputs = document.querySelectorAll(".upload");
-        if (!inputs || !inputs.length) return;
+        if (!inputs || !inputs.length) return true;
 
         for (let i = 0; i < inputs.length; i++) {
             let input = inputs[i];

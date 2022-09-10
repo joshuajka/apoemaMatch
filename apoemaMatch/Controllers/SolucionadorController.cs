@@ -102,6 +102,7 @@ namespace apoemaMatch.Controllers
                 Formacao = solucionador.Formacao,
                 AreaDePesquisa = solucionador.AreaDePesquisa,
                 CurriculoLattes = solucionador.CurriculoLattes,
+                Disponivel = solucionador.Disponivel
             };
 
             return View(response);
@@ -122,6 +123,8 @@ namespace apoemaMatch.Controllers
                 return View(solucionador);
             }
 
+            var solucionadorBanco = await _service.GetByIdAsync(id);
+
             var solucionadorAlterado = new SolucionadorViewModel()
             {
                 Id = solucionador.Id,
@@ -134,9 +137,14 @@ namespace apoemaMatch.Controllers
                 Formacao = solucionador.Formacao,
                 AreaDePesquisa = solucionador.AreaDePesquisa,
                 CurriculoLattes = solucionador.CurriculoLattes,
+                Disponivel = solucionadorBanco.Disponivel
         };
 
             await _service.UpdateSolucionadorAsync(solucionadorAlterado);
+            if(User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Solucionador");
+            }
             return RedirectToAction("MeuPerfilSolucionador", "Account");
         }
 
