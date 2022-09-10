@@ -284,6 +284,12 @@ namespace apoemaMatch.Controllers
             {
                 encomendaViewModel.SolucionadorLogadoPossuiPropostaNaEncomenda =
                     encomendaViewModel.Propostas is not null && encomendaViewModel.Propostas.Any(p => p.SolucionadorId == solucionador.Id);
+
+                if (encomendaViewModel.SolucionadorLogadoPossuiPropostaNaEncomenda == true)
+                {
+                    encomendaViewModel.Proposta =
+                        encomendaViewModel.Propostas.First(p => p.SolucionadorId == solucionador.Id);
+                }
             }
 
             return View(encomendasViewModel);
@@ -486,6 +492,13 @@ namespace apoemaMatch.Controllers
             await _service.AceitarRecusarEncomendaAsync(encomenda);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> ExcluirProposta(int Id)
+        {
+            await _service.ExcluirProposta(Id);
+
+            return RedirectToAction(nameof(EmAberto));
         }
     }
 }

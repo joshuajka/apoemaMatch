@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace apoemaMatch.Data.Services
 {
@@ -244,6 +246,14 @@ namespace apoemaMatch.Data.Services
                 return true;
             }
             return false;
+        }
+
+        public async Task ExcluirProposta(int Id)
+        {
+            var entity = await _context.Set<Proposta>().FirstOrDefaultAsync(n => n.Id == Id);
+            EntityEntry entityEntry = _context.Entry<Proposta>(entity);
+            entityEntry.State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
     }
 }

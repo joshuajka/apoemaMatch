@@ -49,6 +49,10 @@
                         <b>Status: </b>
                         <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
                     </p>
+                    @if (item.SolucionadorLogadoPossuiPropostaNaEncomenda)
+                    {
+                        <span class="badge bg-danger text-white" style="font-size: 12pt">Proposta já enviada</span>
+                    }
                 </div>
             </div>
             <div class="col-md-12">
@@ -62,7 +66,9 @@
                         }
                         else
                         {
-                            <button type="button" class="btn btn-danger" disabled>Proposta já Enviada</button>
+                            <a class="btn btn-outline-danger" asp-action="ExcluirProposta" asp-route-id="@item.Proposta.Id">
+                                <i class="bi bi-trash"></i> Excluir
+                            </a>
                         }
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {

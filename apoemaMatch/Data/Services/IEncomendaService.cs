@@ -31,5 +31,7 @@ namespace apoemaMatch.Data.Services
         Task<List<Proposta>> GetPropostasByEncomenda(int id);
 
         Task<bool> CheckDateExpiration(int id);
+
+        Task ExcluirProposta(int Id);
     }
 }
