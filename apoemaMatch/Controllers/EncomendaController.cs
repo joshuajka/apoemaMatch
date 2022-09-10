@@ -142,11 +142,6 @@ namespace apoemaMatch.Controllers
             TempData["Sucesso"] = true;
             return RedirectToAction(nameof(Cadastrar));
         }
-
-        public IActionResult FormularioAvaliacao()
-        {
-            return View();
-        }
         
         [Authorize(Roles = PapeisUsuarios.Demandante + "," + PapeisUsuarios.Admin)]
         [HttpGet]
