@@ -279,7 +279,7 @@ namespace apoemaMatch.Controllers
             return View(solucionadorView);
         }
 
-        [Authorize(Roles = PapeisUsuarios.Admin + "," + PapeisUsuarios.Solucionador)]
+        [Authorize(Roles = PapeisUsuarios.Admin + "," + PapeisUsuarios.Demandante)]
         public async Task<IActionResult> MeuPerfilDemandante()
         {
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
