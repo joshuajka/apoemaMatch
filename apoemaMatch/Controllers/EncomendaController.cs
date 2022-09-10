@@ -143,11 +143,6 @@ namespace apoemaMatch.Controllers
             return RedirectToAction(nameof(Cadastrar));
         }
 
-        public IActionResult FormularioAvaliacao()
-        {
-            return View();
-        }
-
         [HttpGet]
         public async Task<IActionResult> Excluir(int Id)
         {
