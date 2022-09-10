@@ -143,15 +143,22 @@ namespace apoemaMatch.Controllers
             return RedirectToAction(nameof(Cadastrar));
         }
 
+        public IActionResult FormularioAvaliacao()
+        {
+            return View();
+        }
+        
+        [Authorize(Roles = PapeisUsuarios.Demandante + "," + PapeisUsuarios.Admin)]
         [HttpGet]
         public async Task<IActionResult> Excluir(int Id)
         {
             await _service.DeleteAsync(Id);
 
-            return RedirectToAction(
-                User.IsInRole("Admin") ?
-                    nameof(Index)
-                    : nameof(MinhasEncomendasDemandante));
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Encomenda");
+            }
+            return RedirectToAction("MeuPerfilDemandante", "Account");
         }
 
         [HttpGet]
