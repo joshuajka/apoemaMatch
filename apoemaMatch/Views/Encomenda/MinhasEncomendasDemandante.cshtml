@@ -99,7 +99,7 @@
                         <div class="col-md-12">
                             <div class="card-footer ">
                                 <p class="card-text">
-                                    <a class="btn btn-danger text-white" asp-action="Excluir" asp-route-id="@item.Id">
+                                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#staticBackdrop">
                                         <i class="bi bi-trash"></i>Excluir
                                     </a>
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -125,6 +125,23 @@
                                     </a>
                                 </p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Exclusão</h5>
+                        </div>
+                        <div class="modal-body">
+                            Tem certeza que deseja excluir esse item?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                            <a class="btn btn-primary" asp-action="Excluir" asp-route-id="@item.Id">Confirmar</a>
                         </div>
                     </div>
                 </div>
