@@ -55,7 +55,7 @@
                             @foreach (var opcao in criterio.OpcoesCriterios)
                             {
                                 <div class="col-md-12 mb-3">
-                                    @if (Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0] == opcao)
+                                    @if (Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas != null && Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0] == opcao)
                                     {
                                         <input type="radio" asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0]" value="@opcao" checked disabled />
                                         <label asp-for="@Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0]" class="control-label">@opcao</label>
