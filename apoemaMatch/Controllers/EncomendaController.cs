@@ -203,7 +203,17 @@ namespace apoemaMatch.Controllers
                 ViewData["Justificativa"] = encomenda.JustificativaRecusa;
             }
 
-            return View(encomenda.Converta());
+            EncomendaViewModel encomendaViewModel = encomenda.Converta();
+            encomendaViewModel.SolucionadorLogadoPossuiPropostaNaEncomenda =
+                usersolucionador != null && encomendaViewModel.Propostas is not null && encomendaViewModel.Propostas.Any(p => p.SolucionadorId == usersolucionador.Id);
+            
+            if (encomendaViewModel.SolucionadorLogadoPossuiPropostaNaEncomenda == true)
+            {
+                encomendaViewModel.Proposta =
+                    encomenda.Chamada.Propostas.First(p => p.SolucionadorId == usersolucionador.Id);
+            }
+            
+            return View(encomendaViewModel);
         }
 
         public async Task<IActionResult> VincularSolucionador(int Id)
