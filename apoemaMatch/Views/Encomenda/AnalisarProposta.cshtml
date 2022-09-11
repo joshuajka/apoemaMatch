@@ -136,7 +136,9 @@
                 <div class="col text-center">
                     @if (Model.StatusEncomenda != EnumStatusEncomenda.AguardandoAnaliseChamada)
                     {
-                        <button disabled type="submit" class="btn btn-outline-success" data-toggle="tooltip" title="Sua encomenda não está no período de análise" asp-controller="Encomenda" asp-action="SalvarNotasProposta">Enviar análise</button>
+                        <div class="d-inline-block" tabindex="0" data-toggle="popover" data-trigger="hover focus" data-title="Enviar análise" data-content="Sua encomenda não está no período de análise.">
+                            <button type="button" class="btn btn-outline-success disabled">Enviar análise</button>
+                        </div>    
                     }
                     else
                     {
@@ -150,14 +152,16 @@
     </div>
 </div>
 
-<script>
-    function valideNota(input) {
-        if (input.value < 0 || !input.value) input.value = 0;
-        else if (input.value > 10) input.value = 10;
-    }
-    
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-    });
+@section Scripts{
+    <script>
+        function valideNota(input) {
+            if (input.value < 0 || !input.value) input.value = 0;
+            else if (input.value > 10) input.value = 10;
+        }
+        
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+        });
 
-</script>
+    </script>
+}
