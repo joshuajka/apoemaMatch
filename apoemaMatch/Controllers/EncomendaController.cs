@@ -198,6 +198,11 @@ namespace apoemaMatch.Controllers
                 ViewData["AlertEncomendaFinalizada"] = 2;
             }
 
+            if (encomenda.StatusEncomenda == EnumStatusEncomenda.Recusada)
+            {
+                ViewData["Justificativa"] = encomenda.JustificativaRecusa;
+            }
+
             return View(encomenda.Converta());
         }
 
@@ -444,7 +449,8 @@ namespace apoemaMatch.Controllers
         }
 
         [Authorize(Roles = PapeisUsuarios.Admin)]
-        public async Task<IActionResult> RecusarEncomenda(int Id)
+        [HttpPost]
+        public async Task<IActionResult> RecusarEncomenda(int Id, EncomendaViewModel encomendaViewModel)
         {
             var encomenda = await _service.GetByIdAsync(Id);
 
@@ -456,8 +462,9 @@ namespace apoemaMatch.Controllers
             //encomenda.IdSolucionador = null;
             //encomenda.EncomendaAberta = true;
             encomenda.StatusEncomenda = EnumStatusEncomenda.Recusada;
+            encomenda.JustificativaRecusa = encomendaViewModel.JustificativaRecusa;
 
-            await _service.AceitarRecusarEncomendaAsync(encomenda);
+            await _service.AtualizaEncomendaAsync(encomenda);
 
             return RedirectToAction(nameof(Index));
         }
@@ -474,7 +481,7 @@ namespace apoemaMatch.Controllers
             //encomenda.EncomendaAberta = false;
             encomenda.StatusEncomenda = EnumStatusEncomenda.Aberta;
 
-            await _service.AceitarRecusarEncomendaAsync(encomenda);
+            await _service.AtualizaEncomendaAsync(encomenda);
 
             return RedirectToAction(nameof(Index));
         }
@@ -491,7 +498,7 @@ namespace apoemaMatch.Controllers
             //encomenda.EncomendaAberta = false;
             encomenda.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
 
-            await _service.AceitarRecusarEncomendaAsync(encomenda);
+            await _service.AtualizaEncomendaAsync(encomenda);
 
             return RedirectToAction(nameof(Index));
         }

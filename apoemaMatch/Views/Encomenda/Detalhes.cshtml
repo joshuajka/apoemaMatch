@@ -82,6 +82,11 @@
                                     break;
                             }
                         </p>
+                        
+                        @if (Model.StatusEncomenda == EnumStatusEncomenda.Recusada)
+                        {
+                            <p class="card-text"><b>Justificativa de Rejeição: </b>@ViewData["Justificativa"]</p>
+                        }
                         <p class="card-text"><b>Solucionador: </b>@ViewData["NomeSolucionador"]</p>
                         <p class="card-text"><b>Empresa Demandante: </b>@ViewData["EmpresaDemandante"]</p>
                         
@@ -115,9 +120,9 @@
                                     <a class="btn btn-outline-success" asp-action="AceitarEncomenda" asp-route-id="@Model.Id">
                                         <i class="bi bi-check"></i> Aceitar
                                     </a>
-                                    <a class="btn btn-outline-danger" asp-action="RecusarEncomenda" asp-route-id="@Model.Id">
+                                    <button class="btn btn-outline-danger" data-toggle="modal" data-target="#staticBackdrop">
                                         <i class="bi bi-x"></i> Recusar
-                                    </a>
+                                    </button>
                                 }
                                 @if (Model.StatusEncomenda == EnumStatusEncomenda.Aberta && Model.PossuiChamada == true)
                                 {
@@ -149,6 +154,27 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Justificativa de recusa</h5>
+            </div>
+            <form asp-action="VincularSolucionador" asp-action="RecusarEncomenda" asp-route-id="@Model.Id">
+                <div class="modal-body">
+                    Por favor insira uma justificativa para a rejeição da encomenda:
+                    <hr/>
+                    <textarea asp-for="JustificativaRecusa" class="form-control" id="message-text"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" asp-action="RecusarEncomenda" asp-route-id="@Model.Id">Confirmar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

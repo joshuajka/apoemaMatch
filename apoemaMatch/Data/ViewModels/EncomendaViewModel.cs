@@ -33,6 +33,8 @@ namespace apoemaMatch.Data.ViewModels
         public bool PossuiChamada { get; set; }
         
         public EnumStatusEncomenda StatusEncomenda { get; set; }
+        
+        public string JustificativaRecusa { get; set; }
 
         #endregion
 
