@@ -58,6 +58,10 @@
                                 <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="EmAberto">
                                     Chamadas em Aberto
                                 </a>
+                                <span style="padding: 5px;"></span>
+                                <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Encomenda" asp-action="ChamadasComMinhasPropostas">
+                                    Chamadas com Minhas Propostas
+                                </a>
                             }
 
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Demandante"))

@@ -502,5 +502,44 @@ namespace apoemaMatch.Controllers
 
             return RedirectToAction(nameof(EmAberto));
         }
+        
+        public async Task<IActionResult> ExcluirPropostaTelaMinhasPropostas(int Id)
+        {
+            await _service.ExcluirProposta(Id);
+
+            return RedirectToAction(nameof(ChamadasComMinhasPropostas));
+        }
+        
+        [Authorize(Roles = PapeisUsuarios.Solucionador)]
+        public async Task<IActionResult> ChamadasComMinhasPropostas()
+        {
+            List<Encomenda> encomendas = await _service.GetAllEncomendasAsync();
+            
+            foreach (var item in encomendas)
+            {
+                if (item.PossuiChamada == true && item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
+                {
+                    item.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
+                    await _service.AtualizaEncomendaAsync(item);
+                }
+            }
+            
+            List<EncomendaViewModel> encomendasViewModel = encomendas.ConvertAll(e => e.Converta());
+
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var userSolucionador = await _userManager.FindByEmailAsync(userEmail);
+            var solucionador = await _serviceSolucionador.GetSolucionadorByIdUser(userSolucionador.Id);
+
+            encomendasViewModel = encomendasViewModel.Where(e =>
+                e.Propostas is not null && e.Propostas.Any(p => p.SolucionadorId == solucionador.Id)).ToList();
+            
+            foreach (var encomendaViewModel in encomendasViewModel)
+            {
+                encomendaViewModel.Proposta =
+                        encomendaViewModel.Propostas.First(p => p.SolucionadorId == solucionador.Id);
+            }
+
+            return View(encomendasViewModel);
+        }
     }
 }
