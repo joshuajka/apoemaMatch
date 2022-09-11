@@ -185,8 +185,8 @@ namespace apoemaMatch.Controllers
             if (encomenda.PossuiChamada == true)
             {
                 ViewData["DescricaoChamada"] = encomenda.Chamada.DescricaoChamada;
-                ViewData["DataCriacao"] = encomenda.DataCadastro;
-                ViewData["DataValidade"] = encomenda.Chamada.DataValidade + TimeSpan.FromDays(1);
+                ViewData["DataCriacao"] = encomenda.DataCadastro.ToString("dd/MM/yyyy");
+                ViewData["DataValidade"] = encomenda.Chamada.DataValidade.ToString("dd/MM/yyyy");
                 ViewData["Anexo"] = encomenda.Chamada.ArquivoAnexo;
             }
 
