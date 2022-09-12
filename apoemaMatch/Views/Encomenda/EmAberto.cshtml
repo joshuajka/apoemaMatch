@@ -6,9 +6,9 @@
     ViewData["Title"] = "Lista de Chamadas em aberto";
 }
 
-<div class="text-center">
-    <h2>Chamadas em aberto</h2>
-</div>
+
+<h2>Chamadas em aberto</h2>
+
 
 <div class="row">
     @if (Model is not null)
@@ -33,7 +33,6 @@
                     <div class="card-body">
                         <p class="card-text"><b>Título da encomenda: </b>@item.Titulo</p>
                         <p class="card-text"><b>Tipo encomenda: </b>@Extensions.GetEnumDisplayName((EnumTipoEncomenda)item.TipoEncomenda)</p>
-                        <p class="card-text"><b>Descrição da encomenda: </b>@item.Descricao</p>
                         <p class="card-text">
                             <b>Realiza processo seletivo: </b>
                             @if (item.PossuiChamada)

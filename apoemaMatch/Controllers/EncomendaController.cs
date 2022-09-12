@@ -196,6 +196,9 @@ namespace apoemaMatch.Controllers
             }else if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada && encomenda.IdSolucionador != null && encomenda.IdSolucionador == usersolucionador.Id)
             {
                 ViewData["AlertEncomendaFinalizada"] = 2;
+            }else if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada && encomenda.IdSolucionador != null && encomenda.IdSolucionador != usersolucionador.Id)
+            {
+                ViewData["AlertEncomendaFinalizada"] = 3;
             }
 
             if (encomenda.StatusEncomenda == EnumStatusEncomenda.Recusada)
