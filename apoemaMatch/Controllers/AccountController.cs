@@ -166,7 +166,7 @@ namespace apoemaMatch.Controllers
                     MiniBio = registerViewModel.MiniBio,
                 };
 
-                UserEmailOptions dados = DadosEmail(novoSolucionador.Email, novoSolucionador.Nome);
+                UserEmailOptions dados = DadosEmail(novoSolucionador.Email, novoSolucionador.Nome, "Solucionador");
                 await _emailService.SendForConfirmationRegistrationEmail(dados);
                 await _serviceSolucionador.AddAsync(novoSolucionador);
                 return View("RegisterCompleted");
@@ -228,7 +228,7 @@ namespace apoemaMatch.Controllers
                     Descricao = registerViewModel.Descricao
                 };
 
-                UserEmailOptions dados = DadosEmail(novoDemandante.Email, novoDemandante.NomeDemandante);
+                UserEmailOptions dados = DadosEmail(novoDemandante.Email, novoDemandante.NomeDemandante, "Demandante");
                 await _emailService.SendForConfirmationRegistrationEmail(dados);
                 await _serviceDemandante.AddAsync(novoDemandante);
                 return View("RegisterCompleted");
@@ -519,14 +519,15 @@ namespace apoemaMatch.Controllers
             return View(model);
         }
 
-        public UserEmailOptions DadosEmail(string Email, string Nome)
+        public UserEmailOptions DadosEmail(string Email, string Nome, string TipoUsuario)
         {
             UserEmailOptions dados = new UserEmailOptions
             {
                 ToEmails = new List<string>() { Email },
                 PlaceHolders = new List<KeyValuePair<string, string>>()
                     {
-                        new KeyValuePair<string, string>("{{UserName}}", Nome)
+                        new KeyValuePair<string, string>("{{UserName}}", Nome),
+                        new KeyValuePair<string, string>("{{UserType}}", TipoUsuario)
                     }
             };
             return dados;
