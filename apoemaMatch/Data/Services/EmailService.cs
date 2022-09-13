@@ -43,7 +43,7 @@ namespace apoemaMatch.Data.Services
 
         public async Task SendForConfirmationRegistrationEmail(UserEmailOptions userEmailOptions)
         {
-            userEmailOptions.Subject = UpdatePlaceHolders(" Olá, {{UserName}}, boas vindas à nossa plataforma ApoemaMatch!", userEmailOptions.PlaceHolders);
+            userEmailOptions.Subject = UpdatePlaceHolders(" Olá, {{UserName}}, boas-vindas à nossa plataforma ApoemaMatch", userEmailOptions.PlaceHolders);
 
             userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("ConfirmacaoCadastro"), userEmailOptions.PlaceHolders);
 
