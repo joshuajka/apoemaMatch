@@ -7,7 +7,7 @@ namespace apoemaMatch.Data.MetodosExtensao
 {
     public static class ConversaoViewModelModel
     {
-        public static Encomenda Converta(this EncomendaViewModel encomendaViewModel, EnumStatusEncomenda statusEncomenda = EnumStatusEncomenda.Inicial)
+        public static Encomenda Converta(this EncomendaViewModel encomendaViewModel, EnumStatusEncomenda statusEncomenda = EnumStatusEncomenda.AnalisandoEncomenda)
         {
             return new()
             {

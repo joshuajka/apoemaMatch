@@ -377,7 +377,7 @@ namespace apoemaMatch.Controllers
 
             encomenda.IdSolucionador = null;
             encomenda.EncomendaAberta = true;
-            encomenda.StatusEncomenda = EnumStatusEncomenda.Inicial;
+            encomenda.StatusEncomenda = EnumStatusEncomenda.AnalisandoEncomenda;
 
             await _service.AceitarRecusarEncomendaAsync(encomenda);
 

@@ -74,7 +74,7 @@
                             <b>Status: </b>
                             @switch (Model.StatusEncomenda)
                             {
-                                case EnumStatusEncomenda.Inicial:
+                                case EnumStatusEncomenda.AnalisandoEncomenda:
                                     <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
                                     break;
                                 @*case EnumStatusEncomenda.AnalisandoEncomenda:
@@ -200,7 +200,7 @@
                         <p class="card-text">
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
-                                @if (Model.StatusEncomenda == EnumStatusEncomenda.Inicial)
+                                @if (Model.StatusEncomenda == EnumStatusEncomenda.AnalisandoEncomenda)
                                 {
                                     <a class="btn btn-outline-success" asp-action="AceitarEncomenda" asp-route-id="@Model.Id">
                                         <i class="bi bi-check"></i> Aceitar
