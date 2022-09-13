@@ -200,7 +200,7 @@
                         <p class="card-text">
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                             {
-                                @if (Model.StatusEncomenda == EnumStatusEncomenda.Inicial && Model.PossuiChamada == true)
+                                @if (Model.StatusEncomenda == EnumStatusEncomenda.Inicial)
                                 {
                                     <a class="btn btn-outline-success" asp-action="AceitarEncomenda" asp-route-id="@Model.Id">
                                         <i class="bi bi-check"></i> Aceitar

@@ -37,7 +37,7 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Encomenda> encomendas = await _service.GetAllAsync();
-            
+
             foreach (var item in encomendas)
             {
                 if (item.PossuiChamada == true && item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
@@ -46,7 +46,7 @@ namespace apoemaMatch.Controllers
                     await _service.AtualizaEncomendaAsync(item);
                 }
             }
-            
+
             return View(encomendas.Select(e => e.Converta()));
         }
 
@@ -81,7 +81,7 @@ namespace apoemaMatch.Controllers
                 {
                     var propostas = await _service.GetPropostasByEncomenda(item.Id);
                     ViewData[item.Id.ToString()] = propostas.Count();
-                    
+
                     if (item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
                     {
                         item.StatusEncomenda = EnumStatusEncomenda.AguardandoAnaliseChamada;
@@ -89,7 +89,7 @@ namespace apoemaMatch.Controllers
                     }
                 }
             }
-            
+
             return View(encomendasDemandante.Select(e => e.Converta()));
         }
 
@@ -142,7 +142,7 @@ namespace apoemaMatch.Controllers
             TempData["Sucesso"] = true;
             return RedirectToAction(nameof(Cadastrar));
         }
-        
+
         [Authorize(Roles = PapeisUsuarios.Demandante + "," + PapeisUsuarios.Admin)]
         [HttpGet]
         public async Task<IActionResult> Excluir(int Id)
@@ -160,7 +160,7 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> Detalhes(int Id)
         {
             //Encomenda encomenda = await _service.GetByIdAsync(Id);
-            
+
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
             var user = await _userManager.FindByEmailAsync(userEmail);
             var usersolucionador = await _serviceSolucionador.GetSolucionadorByIdUser(user.Id);
@@ -193,10 +193,12 @@ namespace apoemaMatch.Controllers
             if (User.Identity.IsAuthenticated && User.IsInRole("Demandante") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada)
             {
                 ViewData["AlertEncomendaFinalizada"] = 1;
-            }else if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada && encomenda.IdSolucionador != null && encomenda.IdSolucionador == usersolucionador.Id)
+            }
+            else if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada && encomenda.IdSolucionador != null && encomenda.IdSolucionador == usersolucionador.Id)
             {
                 ViewData["AlertEncomendaFinalizada"] = 2;
-            }else if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada && encomenda.IdSolucionador != null && encomenda.IdSolucionador != usersolucionador.Id)
+            }
+            else if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && encomenda.StatusEncomenda == EnumStatusEncomenda.Finalizada && encomenda.IdSolucionador != null && encomenda.IdSolucionador != usersolucionador.Id)
             {
                 ViewData["AlertEncomendaFinalizada"] = 3;
             }
@@ -209,13 +211,13 @@ namespace apoemaMatch.Controllers
             EncomendaViewModel encomendaViewModel = encomenda.Converta();
             encomendaViewModel.SolucionadorLogadoPossuiPropostaNaEncomenda =
                 usersolucionador != null && encomendaViewModel.Propostas is not null && encomendaViewModel.Propostas.Any(p => p.SolucionadorId == usersolucionador.Id);
-            
+
             if (encomendaViewModel.SolucionadorLogadoPossuiPropostaNaEncomenda == true)
             {
                 encomendaViewModel.Proposta =
                     encomenda.Chamada.Propostas.First(p => p.SolucionadorId == usersolucionador.Id);
             }
-            
+
             return View(encomendaViewModel);
         }
 
@@ -284,7 +286,7 @@ namespace apoemaMatch.Controllers
         public async Task<IActionResult> EmAberto()
         {
             List<Encomenda> encomendas = await _service.GetAllEncomendasAsync();
-            
+
             foreach (var item in encomendas)
             {
                 if (item.PossuiChamada == true && item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
@@ -293,7 +295,7 @@ namespace apoemaMatch.Controllers
                     await _service.AtualizaEncomendaAsync(item);
                 }
             }
-            
+
             List<EncomendaViewModel> encomendasViewModel = encomendas.ConvertAll(e => e.Converta());
 
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -522,19 +524,19 @@ namespace apoemaMatch.Controllers
 
             return RedirectToAction(nameof(EmAberto));
         }
-        
+
         public async Task<IActionResult> ExcluirPropostaTelaMinhasPropostas(int Id)
         {
             await _service.ExcluirProposta(Id);
 
             return RedirectToAction(nameof(ChamadasComMinhasPropostas));
         }
-        
+
         [Authorize(Roles = PapeisUsuarios.Solucionador)]
         public async Task<IActionResult> ChamadasComMinhasPropostas()
         {
             List<Encomenda> encomendas = await _service.GetAllEncomendasAsync();
-            
+
             foreach (var item in encomendas)
             {
                 if (item.PossuiChamada == true && item.StatusEncomenda == EnumStatusEncomenda.Aberta && await _service.CheckDateExpiration(item.Id))
@@ -543,7 +545,7 @@ namespace apoemaMatch.Controllers
                     await _service.AtualizaEncomendaAsync(item);
                 }
             }
-            
+
             List<EncomendaViewModel> encomendasViewModel = encomendas.ConvertAll(e => e.Converta());
 
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -552,7 +554,7 @@ namespace apoemaMatch.Controllers
 
             encomendasViewModel = encomendasViewModel.Where(e =>
                 e.Propostas is not null && e.Propostas.Any(p => p.SolucionadorId == solucionador.Id)).ToList();
-            
+
             foreach (var encomendaViewModel in encomendasViewModel)
             {
                 encomendaViewModel.Proposta =
