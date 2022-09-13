@@ -153,7 +153,7 @@ namespace apoemaMatch.Controllers
             {
                 return RedirectToAction("Index", "Encomenda");
             }
-            return RedirectToAction("MeuPerfilDemandante", "Account");
+            return RedirectToAction(nameof(MinhasEncomendasDemandante));
         }
 
         [HttpGet]
