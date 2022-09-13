@@ -38,6 +38,22 @@ namespace apoemaMatch.Controllers
             return View();
         }
 
+        public IActionResult Logado()
+        {
+            if (User.IsInRole("Demandante"))
+            {
+                return RedirectToAction("MinhasEncomendasDemandante", "Encomenda");
+            }
+            else if (User.IsInRole("Solucionador"))
+            {
+                return RedirectToAction("MinhasEncomendasSolucionador", "Encomenda");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Encomenda");
+            }
+        }
+
         public async Task<IActionResult> Privacy()
         {
 

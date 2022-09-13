@@ -60,7 +60,7 @@ namespace apoemaMatch.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Logado", "Home");
                     }
                 }
                 TempData["Error"] = "Credenciais incorretas, tente novamente";
