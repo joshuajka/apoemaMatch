@@ -17,8 +17,8 @@ namespace apoemaMatch.Data.ViewModels
 
         public bool Disponivel { get; set; }
 
-        [Display(Name = "CPF")]
-        [Required(ErrorMessage = "CPF é obrigatório")]
+        [Display(Name = "CPF/CNPJ")]
+        [Required(ErrorMessage = "CPF/CNPJ é obrigatório")]
         public string Cpf { get; set; }
 
         [Required(ErrorMessage = "Email é obrigatório")]

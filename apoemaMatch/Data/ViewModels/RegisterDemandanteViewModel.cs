@@ -15,8 +15,8 @@ namespace apoemaMatch.Data.ViewModels
         [Required(ErrorMessage = "Este campo é obrigatório")]
         public string ImagemURL { get; set; }
 
-        [Display(Name = "CNPJ")]
-        [Required(ErrorMessage = "CNPJ é obrigatório")]
+        [Display(Name = "CPF/CNPJ")]
+        [Required(ErrorMessage = "CPF/CNPJ é obrigatório")]
         public string Cnpj { get; set; }
 
         [Display(Name = "Telefone (Com DDD)")]
