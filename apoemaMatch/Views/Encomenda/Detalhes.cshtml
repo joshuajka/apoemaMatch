@@ -120,69 +120,74 @@
                             <p class="card-text"><b>&emsp; Telefone: </b>@ViewData["SolucionadorTelefone"]</p>
                             <p class="card-text"><b>&emsp; Currículo Lattes: </b>@ViewData["SolucionadorLattes"]</p>
                         }
-                        
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && @Model.SolucionadorLogadoPossuiPropostaNaEncomenda)
+                        @if (Model.Criterios != null)
                         {
-                            <hr/>
-                            <h5 class="card-text">Critérios e minhas respostas</h5>
-                            <p class="text-danger">&emsp; &emsp;* Itens destacados em vermelho representam as respostas fornecidas</p>
-                            @foreach (var criterio in Model.Criterios)
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && @Model.SolucionadorLogadoPossuiPropostaNaEncomenda)
                             {
-                                <p class="card-text"><b>&emsp; @criterio.Descricao</b></p>
-                                if (Equals(criterio.TipoCriterio, EnumTipoCriterio.Textual))
+                                <hr/>
+                                <h5 class="card-text">Critérios e minhas respostas</h5>
+                                <p class="text-danger">&emsp; &emsp;* Itens destacados em vermelho representam as respostas fornecidas</p>
+
+                                @foreach (var criterio in Model.Criterios)
                                 {
-                                    <p class="card-text text-danger">&emsp; &emsp;@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaTextual</p>
+                                    <p class="card-text"><b>&emsp; @criterio.Descricao</b></p>
+                                    if (Equals(criterio.TipoCriterio, EnumTipoCriterio.Textual))
+                                    {
+                                        <p class="card-text text-danger">&emsp; &emsp;@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaTextual</p>
+                                    }
+
+                                    if (Equals(criterio.TipoCriterio, EnumTipoCriterio.SelecaoUnica))
+                                    {
+                                        @foreach (var opcao in criterio.OpcoesCriterios)
+                                        {
+                                            @if (Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas != null && Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0] == opcao)
+                                            {
+                                                <p class="card-text text-danger">&emsp; &emsp;@opcao <i class="bi bi-check"></i></p>
+                                            }
+                                            else
+                                            {
+                                                <p class="card-text">&emsp; &emsp;@opcao</p>
+                                            }
+                                        }
+                                    }
+                                    var indexMultiplaSelecao = 0;
+                                    if (Equals(criterio.TipoCriterio, EnumTipoCriterio.MultiplaSelecao))
+                                    {
+                                        @foreach (var opcao in criterio.OpcoesCriterios)
+                                        {
+                                            @if (Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[indexMultiplaSelecao] == opcao)
+                                            {
+                                                <p class="card-text text-danger">&emsp; &emsp;@opcao<i class="bi bi-check"></i></p>
+                                            }
+                                            else
+                                            {
+                                                <p class="card-text">&emsp; &emsp;@opcao</p>
+                                            }
+                                            indexMultiplaSelecao++;
+                                        }
+                                    }
+                                    if (Equals(criterio.TipoCriterio, EnumTipoCriterio.Upload))
+                                    {
+                                        <p class="card-text"><b>&emsp; &emsp;Anexo: </b><a onclick="window.open('@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaUpload')" type="button" target="_blank" class="btn btn-danger btn-sm text-white">Abrir <i class="bi bi-arrow-right-short"></i></a></p>
+                                    }
+                                    indexRespostaCriterio++;
                                 }
 
-                                if (Equals(criterio.TipoCriterio, EnumTipoCriterio.SelecaoUnica))
-                                {
-                                    @foreach (var opcao in criterio.OpcoesCriterios)
-                                    {
-                                        @if (Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas != null && Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[0] == opcao)
-                                        {
-                                            <p class="card-text text-danger">&emsp; &emsp;@opcao <i class="bi bi-check"></i></p>
-                                        }
-                                        else
-                                        {
-                                            <p class="card-text">&emsp; &emsp;@opcao</p>
-                                        }
-                                    }
-                                }
-                                var indexMultiplaSelecao = 0;
-                                if (Equals(criterio.TipoCriterio, EnumTipoCriterio.MultiplaSelecao))
-                                {
-                                    @foreach (var opcao in criterio.OpcoesCriterios)
-                                    {
-                                        @if (Model.Proposta.RespostasCriterios[indexRespostaCriterio].OpcoesSelecionadas[indexMultiplaSelecao] == opcao)
-                                        {
-                                            <p class="card-text text-danger">&emsp; &emsp;@opcao<i class="bi bi-check"></i></p>
-                                        }
-                                        else
-                                        {
-                                            <p class="card-text">&emsp; &emsp;@opcao</p>
-                                        }
-                                        indexMultiplaSelecao++;
-                                    }
-                                }
-                                if (Equals(criterio.TipoCriterio, EnumTipoCriterio.Upload))
-                                {
-                                    <p class="card-text"><b>&emsp; &emsp;Anexo: </b><a onclick="window.open('@Model.Proposta.RespostasCriterios[indexRespostaCriterio].RespostaUpload')" type="button" target="_blank" class="btn btn-danger btn-sm text-white">Abrir <i class="bi bi-arrow-right-short"></i></a></p>
-                                }
-                                indexRespostaCriterio++;
+
                             }
-                        }
-                        else
-                        {
-                            <hr/>
-                            <h5 class="card-text">Critérios da encomenda</h5>
-                            @foreach (var item in Model.Criterios)
+                            else
                             {
-                                <p class="card-text"><b>&emsp; @item.Descricao</b></p>
-                                @if (item.OpcoesCriterios != null)
+                                <hr/>
+                                <h5 class="card-text">Critérios da encomenda</h5>
+                                @foreach (var item in Model.Criterios)
                                 {
-                                    @foreach (var opt in item.OpcoesCriterios)
+                                    <p class="card-text"><b>&emsp; @item.Descricao</b></p>
+                                    @if (item.OpcoesCriterios != null)
                                     {
-                                        <p class="card-text">&emsp; &emsp; @opt</p>
+                                        @foreach (var opt in item.OpcoesCriterios)
+                                        {
+                                            <p class="card-text">&emsp; &emsp; @opt</p>
+                                        }
                                     }
                                 }
                             }
