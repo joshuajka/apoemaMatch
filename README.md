@@ -15,6 +15,8 @@ Demandante | Um indivíduo que tenha uma encomenda/demanda/necessidade/problema 
 Solucionador | Um indivíduo que está apto a solucionar as encomendas/demandas cadastradas na plataforma
 Encomenda | Uma necessidade, um problema ou uma demanda tecnológica por parte do demandante
 Agenciador | O Administrador da plataforma, que gerencia todo o processo de matchmaking.
+Vinculação Indireta | Processo de Matching em que os solucionadores se candidatam a encomenda e o próprio demandante tem o poder de escolher qual demandante ele deseja para atuar na sua encomenda (*De forma similar a um edital*)
+Vinculação Direta | Processo de Matching em que o agenciador da plataforma elege o solucionador mais apto para atuar na encomenda
 
 <h1 align="center"> :page_facing_up: Descrição do projeto </h1>
 Esse é um projeto em desenvolvimento para a disciplina RESIDÊNCIA TÉCNICA EM SISTEMAS DE INFORMAÇÃO do curso de Sistemas de Informação da Universidade Federal de Goiás (UFG). 
@@ -77,7 +79,7 @@ Por fim, clique em *Criar* e aguarde a sua instância ser criada.
 
 Na coluna IP Externo, você verá o IP da sua máquina virtual, que as outras pessoas terão acesso. Já na coluna Conectar, você verá o botão SSH. Clique nele para abrir o terminal da sua VM.
 
-<h5>Fazendo o Update e Upgrade</h5>
+<h4>Fazendo o Update e Upgrade</h4>
 
 ```bash
 sudo apt update
@@ -85,7 +87,7 @@ sudo apt upgrade -y
 sudo apt install wget
 ```
 
-<h5>Instalando o SDK do .NET</h5>
+<h4>Instalando o SDK do .NET</h4>
 
 Baixando pacotes necessários
 
@@ -101,7 +103,7 @@ sudo apt-get update && \
   sudo apt-get install -y dotnet-sdk-5.0
 ```
 
-<h5>Instalando e configurando o Postgresql</h5>
+<h4>Instalando e configurando o Postgresql</h4>
 
 ```bash
 sudo apt -y install postgresql
@@ -119,7 +121,7 @@ Digite “root” quando aparecer a mensagem “Enter new password for user "pos
 \q
 ```
 
-<h5>Instalando e configurando o NGINX</h5>
+<h4>Instalando e configurando o NGINX</h4>
 
 ```bash
 sudo apt-get install nginx -y
@@ -161,7 +163,7 @@ sudo systemctl stop nginx
 sudo systemctl status nginx 
 ```
 
-<h5>Clonando o repositório</h5>
+<h4>Clonando o repositório</h4>
 
 
 Para deixar o tutorial mais automático, usamos ```$USER``` para recuperar o seu nome de usuário no comandos abaixo. Você pode visualizar seu nome de usuário usando ```echo $USER```
@@ -180,7 +182,7 @@ cd apoemaMatch/apoemaMatch/
 Testando se está tudo ok
 ```dotnet build```
 
-<h5>Criando um serviço para o serviço se reiniciar</h5>
+<h4>Criando um serviço para o serviço se reiniciar</h4>
 
 Digite o comando para criar um arquivo e cole o bloco abaixo nele, trocando ‘digite-seu-usuario-aqui’pelo seu usuário. Caso o diretório seja diferente, altere conforme necessário.
 ```sudo nano /etc/systemd/system/apoema.service```
@@ -216,7 +218,7 @@ cat index.html
 rm -rf index.html
 ```
 
-<h5>Ainda está aparecendo a página de “Welcome to nginx!”?</h5>
+<h4>Ainda está aparecendo a página de “Welcome to nginx!”?</h4>
 
 Utilize o comando ```nano Startup.cs``` 
 procure a linha app.UseHttpsRedirection(); e comente-a, então a linha ficará assim:
@@ -261,3 +263,36 @@ dotnet build
 sudo systemctl restart apoema.service 
 sudo systemctl status apoema.service 
 ```
+
+<h4>Como autenticar como Agenciador</h4>
+
+O usuário padrão para o Agenciador é:
+
+usuário: apoema@inf.ufg.br
+
+senha: Coding@1234?
+
+<h4>Configurando o banner de cookies</h4>
+
+Para a geração do banner de cookies, estamos utilizando CookieFirst.com. Para a sua configuração, acesse o site [https://app.cookiefirst.com/login](https://app.cookiefirst.com/login) com as seguintes credenciais: 
+
+usuário: apoema@inf.ufg.br 
+
+senha: Coding@1234?
+	
+Após feito o login, clique em "Settings" no domínio já cadastrado. Se necessário, altere o seu domínio nos campos: "Site URL" e "Domain's privacy policy URL" e clique em "Save" no final da página
+
+A próxima parte é clicar em "Your embed script" no menu lateral e copiar o código abaixo do texto "Copie este script como o primeiro elemento dentro do <head> modelo do seu site para ativar o banner de consentimento:" Então, dentro da pasta do projeto, navegue para a página Views, e adicione o código copiado no documento "_ViewStart.cshtml"
+  
+Logo após, você precisará parar o serviço, fazer o build e restartar o serviço novamente:
+```
+sudo systemctl stop apoema.service 
+dotnet build
+sudo systemctl restart apoema.service 
+sudo systemctl status apoema.service 
+```
+ 
+Para ter visualização de todos os consentimentos, ainda no site CookieFirst.com, clique em Consents no menu lateral esquerdo, e em seguida clique em "Download CSV"
+  
+ 
+  
