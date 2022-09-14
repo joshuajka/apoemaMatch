@@ -1,9 +1,5 @@
 ﻿using apoemaMatch.Data.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace apoemaMatch.Data.ViewModels
 {
@@ -22,8 +18,8 @@ namespace apoemaMatch.Data.ViewModels
         [Display(Name = "Telefone (Com DDD)")]
         [MaxLength(11)]
         [Required(ErrorMessage = "Este campo é obrigatório")]
-        [RegularExpression(@"^\(?([0-9]{2})\)?[-. ]?([0-9]{5})[-. ]?([0-9]{4})$",
-                   ErrorMessage = "O número de telefone inserido não é válido. Exemplo: (12) 9 1234-5678 (Insira somente números)")]
+        [RegularExpression(@"^\(?([0-9]{2})\)?[-. ]?([0-9]{4,5})[-. ]?([0-9]{4})$",
+                   ErrorMessage = "O número de telefone inserido não é válido. Exemplo: (12) 9 1234-5678 ou (12) 1234-5678 (Insira somente números)")]
         public string Telefone { get; set; }
 
         [Display(Name = "Nome da Empresa")]
