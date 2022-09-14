@@ -292,7 +292,14 @@ sudo systemctl restart apoema.service
 sudo systemctl status apoema.service 
 ```
  
-Para ter visualização de todos os consentimentos, ainda no site CookieFirst.com, clique em Consents no menu lateral esquerdo, e em seguida clique em "Download CSV"
+Para ter visualização de todos os consentimentos, ainda no site CookieFirst.com, clique em Consents no menu lateral esquerdo, e em seguida clique em "Download CSV" 
+
+<h4>Configurando o domínio da aplicação para funcionamento do link de redefinição de senha</h4>
+
+Acesse o arquivo appsettings.json e no campo : 
+"AppDomain": "http://localhost/" 
+
+substitua o 'localhost' pela url do domínio que a aplicação ficará hospedada.
   
  
   
