@@ -42,6 +42,11 @@ namespace apoemaMatch.Controllers
             return View(response);
         }
 
+        public IActionResult Relogar()
+        {
+            return View("EmailAlterado");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -435,7 +440,7 @@ namespace apoemaMatch.Controllers
                     ViewBag.IsSuccess = true;
                     ModelState.Clear();
                     await _signInManager.SignOutAsync();
-                    return View("EmailAlterado");
+                    return RedirectToAction("Relogar", "Account");
                 }
 
                 foreach (var error in result.Errors)
