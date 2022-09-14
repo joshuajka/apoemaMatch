@@ -435,7 +435,7 @@ namespace apoemaMatch.Controllers
                     ViewBag.IsSuccess = true;
                     ModelState.Clear();
                     await _signInManager.SignOutAsync();
-                    return RedirectToAction("Index", "Home");
+                    return View("EmailAlterado");
                 }
 
                 foreach (var error in result.Errors)

@@ -50,48 +50,48 @@ namespace apoemaMatch.Data
                     });
                     context.SaveChanges();
                 }
-                //Solucionador
-                if (!context.Solucionadores.Any())
-                {
-                    context.Solucionadores.AddRange(new List<Solucionador>()
-                    {
-                        new Solucionador()
-                        {
-                            Disponivel = true,
-                            ImagemURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Marie_Curie_c1920.jpg/200px-Marie_Curie_c1920.jpg",
-                            Email = "marie@mail.com",
-                            Nome = "Marie Curie",
-                            Telefone = "+68925647897",
-                            Formacao = "Química",
-                            AreaDePesquisa = EnumAreaSolucaoBuscada.Inteligencia_Artificial_Aplicada,
-                            CurriculoLattes = "Lattes",
-                            MiniBio = "Solucionador teste"
-                        }
-                    });
+            //    //Solucionador
+            //    if (!context.Solucionadores.Any())
+            //    {
+            //        context.Solucionadores.AddRange(new List<Solucionador>()
+            //        {
+            //            new Solucionador()
+            //            {
+            //                Disponivel = true,
+            //                ImagemURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Marie_Curie_c1920.jpg/200px-Marie_Curie_c1920.jpg",
+            //                Email = "marie@mail.com",
+            //                Nome = "Marie Curie",
+            //                Telefone = "+68925647897",
+            //                Formacao = "Química",
+            //                AreaDePesquisa = EnumAreaSolucaoBuscada.Inteligencia_Artificial_Aplicada,
+            //                CurriculoLattes = "Lattes",
+            //                MiniBio = "Solucionador teste"
+            //            }
+            //        });
 
-                    context.SaveChanges();
+            //        context.SaveChanges();
 
-                }
+            //    }
 
-                //Encomenda
-                if (!context.Encomendas.Any())
-                {
-                    context.Encomendas.AddRange(new List<Encomenda>()
-                    {
-                        new Encomenda()
-                        {
-                            IdDemandante = 1,
-                            EncomendaAberta = true,
-                            Titulo = "Nova Encomenda",
-                            TipoEncomenda = EnumTipoEncomenda.DesenvolvimentoTecnologico,
-                            Descricao = "Essa é uma nova encomenda",
-                            StatusEncomenda = EnumStatusEncomenda.Aberta,
-                            Demandante = context.Demandantes.First()
-                        }
-                    });
+            //    //Encomenda
+            //    if (!context.Encomendas.Any())
+            //    {
+            //        context.Encomendas.AddRange(new List<Encomenda>()
+            //        {
+            //            new Encomenda()
+            //            {
+            //                IdDemandante = 1,
+            //                EncomendaAberta = true,
+            //                Titulo = "Nova Encomenda",
+            //                TipoEncomenda = EnumTipoEncomenda.DesenvolvimentoTecnologico,
+            //                Descricao = "Essa é uma nova encomenda",
+            //                StatusEncomenda = EnumStatusEncomenda.Aberta,
+            //                Demandante = context.Demandantes.First()
+            //            }
+            //        });
 
-                    context.SaveChanges();
-                }
+            //        context.SaveChanges();
+            //    }
 
             }
         }
