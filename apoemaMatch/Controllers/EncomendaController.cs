@@ -563,5 +563,18 @@ namespace apoemaMatch.Controllers
 
             return View(encomendasViewModel);
         }
+
+        //TODO
+        [HttpPost]
+        [Authorize(Roles = PapeisUsuarios.Demandante)]
+        public async Task<IActionResult> AvaliarSolucao(EncomendaViewModel encomendaViewModel)
+        {
+             //Converter nota avaliacao e texto avaliacao da view model para model
+             //Atualizar encomenda com a avaliacao final
+
+
+            return View(nameof(MinhasEncomendasDemandante));
+        }
+
     }
 }

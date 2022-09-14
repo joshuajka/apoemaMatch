@@ -23,6 +23,8 @@ namespace apoemaMatch.Models
 
         public EnumTipoEncomenda TipoEncomenda { get; set; }
 
+        public string TipoEncomendaOutros { get; set; }
+
         public string Descricao { get; set; }
 
         public EnumStatusEncomenda StatusEncomenda { get; set; }
@@ -34,6 +36,9 @@ namespace apoemaMatch.Models
         public Chamada Chamada { get; set; }
         
         public DateTime DataCadastro { get; set; }
-        
+
+        public string AvaliacaoSolucionarSelecionadoChamada { get; set; }
+
+        public int NotaSolucionarSelecionadoChamada { get; set; }
     }
 }

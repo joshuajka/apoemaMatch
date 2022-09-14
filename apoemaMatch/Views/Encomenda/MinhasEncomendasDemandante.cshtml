@@ -56,20 +56,20 @@
                                     }
                                 </p>
                                 @*<p class="card-text">
-                                    <b>Status: </b>
-                                    @switch (item.StatusEncomenda)
-                                    {
-                                        case EnumStatusEncomenda.Aberta:
-                                            <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                            break;
-                                        case EnumStatusEncomenda.AguardandoAnaliseChamada:
-                                            <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                            break;
-                                        case EnumStatusEncomenda.Finalizada:
-                                            <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                            break;
-                                    }
-                                </p>*@
+                                        <b>Status: </b>
+                                        @switch (item.StatusEncomenda)
+                                        {
+                                            case EnumStatusEncomenda.Aberta:
+                                                <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                                break;
+                                            case EnumStatusEncomenda.AguardandoAnaliseChamada:
+                                                <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                                break;
+                                            case EnumStatusEncomenda.Finalizada:
+                                                <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
+                                                break;
+                                        }
+                                    </p>*@
                                 <p class="card-text ">
                                     <b>Status: </b>
                                     @switch (item.StatusEncomenda)
@@ -102,12 +102,6 @@
                                     <a class="btn btn-danger text-white" data-toggle="modal" data-target="#staticBackdrop">
                                         <i class="bi bi-trash"></i>Excluir
                                     </a>
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                    {
-                                        <a class="btn btn-outline-primary float-right" asp-action="VincularSolucionador" asp-route-id="@item.Id">
-                                            <i class="bi bi-file-earmark-person"></i> Vincular Solucionador
-                                        </a>
-                                    }
                                     @if (item.PossuiChamada)
                                     {
                                         <a class="btn btn-outline-primary float-right" asp-action="VisualizarPropostas" asp-route-id="@item.Id">
@@ -119,6 +113,12 @@
                                                 </span>
                                             }
                                         </a>
+                                        @if (item.StatusEncomenda == EnumStatusEncomenda.Finalizada && item.IdSolucionador > 0)
+                                        {
+                                            <a class="btn btn-outline-primary float-right">
+                                                <i class="bi bi-file-earmark-person"></i> Avaliar solução
+                                            </a>
+                                        }
                                     }
                                     <a class="btn btn-outline-primary float-right" asp-action="Detalhes" asp-route-id="@item.Id">
                                         <i class="bi bi-eye-fill"></i> Detalhes
@@ -129,7 +129,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -146,6 +146,31 @@
                     </div>
                 </div>
             </div>
+
+            <form asp-controller="Encomenda" asp-action="AvaliarSolucao">
+                <input type="hidden" asp-for="@item.Id" value="@item.Id" />
+                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Faça aquui sua avaliação final da solução recebida</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-12">
+                                    <input type="number" asp-for="@item.NotaSolucionarSelecionadoChamada" />
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="text" asp-for="@item.AvaliacaoSolucionarSelecionadoChamada" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary" asp-action="AvaliarSolucao">Confirmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         }
     }
 </div>

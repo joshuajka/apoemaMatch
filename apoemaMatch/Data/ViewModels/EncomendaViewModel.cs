@@ -75,5 +75,8 @@ namespace apoemaMatch.Data.ViewModels
 
         #endregion
 
+        public string AvaliacaoSolucionarSelecionadoChamada { get; set; }
+
+        public int NotaSolucionarSelecionadoChamada { get; set; }
     }
 }
