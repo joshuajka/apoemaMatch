@@ -71,6 +71,8 @@ namespace apoemaMatch.Data.ViewModels
 
         public bool SolucionadorLogadoPossuiPropostaNaEncomenda { get; set; }
 
+        public bool SolucionadorLogadoEstaDisponivel { get; set; }
+
         #endregion
 
         #endregion

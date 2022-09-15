@@ -313,6 +313,8 @@ namespace apoemaMatch.Controllers
                     encomendaViewModel.Proposta =
                         encomendaViewModel.Propostas.First(p => p.SolucionadorId == solucionador.Id);
                 }
+
+                encomendaViewModel.SolucionadorLogadoEstaDisponivel = solucionador.Disponivel;
             }
 
             return View(encomendasViewModel);
