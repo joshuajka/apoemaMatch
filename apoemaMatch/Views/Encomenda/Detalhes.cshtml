@@ -78,8 +78,8 @@
                                     <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
                                     break;
                                 @*case EnumStatusEncomenda.AnalisandoEncomenda:
-                                    <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
-                                    break;*@
+                <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
+                break;*@
                                 case EnumStatusEncomenda.Recusada:
                                     <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)Model.StatusEncomenda)</span>
                                     break;
@@ -94,18 +94,18 @@
                                     break;
                             }
                         </p>
-                        
+
                         @if (Model.StatusEncomenda == EnumStatusEncomenda.Recusada)
                         {
                             <p class="card-text"><b>Justificativa de Rejeição: </b>@ViewData["Justificativa"]</p>
                         }
                         <p class="card-text"><b>Solucionador: </b>@ViewData["NomeSolucionador"]</p>
                         <p class="card-text"><b>Empresa Demandante: </b>@ViewData["EmpresaDemandante"]</p>
-                        
-                        
+
+
                         @if (Model.PossuiChamada == true)
                         {
-                            <hr/>
+                            <hr />
                             <h5 class="card-text">Detalhes da Chamada</h5>
                             <p class="card-text"><b>&emsp; Decrição da Chamada: </b>@ViewData["DescricaoChamada"]</p>
                             <p class="card-text"><b>&emsp; Data de criação da chamada: </b>@ViewData["DataCriacao"]</p>
@@ -114,7 +114,7 @@
                         }
                         @if (User.Identity.IsAuthenticated && !User.IsInRole("Solucionador") && @ViewData["NomeSolucionador"] != "Não possui")
                         {
-                            <hr/>
+                            <hr />
                             <h5 class="card-text">Detalhes do Solucionador</h5>
                             <p class="card-text"><b>&emsp; Email: </b>@ViewData["SolucionadorEmail"]</p>
                             <p class="card-text"><b>&emsp; Telefone: </b>@ViewData["SolucionadorTelefone"]</p>
@@ -124,7 +124,7 @@
                         {
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Solucionador") && @Model.SolucionadorLogadoPossuiPropostaNaEncomenda)
                             {
-                                <hr/>
+                                <hr />
                                 <h5 class="card-text">Critérios e minhas respostas</h5>
                                 <p class="text-danger">&emsp; &emsp;* Itens destacados em vermelho representam as respostas fornecidas</p>
 
@@ -177,7 +177,7 @@
                             }
                             else
                             {
-                                <hr/>
+                                <hr />
                                 <h5 class="card-text">Critérios da encomenda</h5>
                                 @foreach (var item in Model.Criterios)
                                 {
@@ -192,7 +192,20 @@
                                 }
                             }
                         }
-                        
+                        @if (!string.IsNullOrEmpty(Model.AvaliacaoSolucionarSelecionadoChamada))
+                        {
+                            <hr />
+                            <h5 class="card-text">Avaliação final da solução</h5>
+                            <div class="col-md-12">
+                                <label class="control-label">Nota</label>
+                                <input disabled asp-for="@Model.NotaSolucionarSelecionadoChamada" value="@Model.NotaSolucionarSelecionadoChamada" class="form-control"/>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="control-label">Descrição da avaliação</label>
+                                <textarea disabled asp-for="@Model.AvaliacaoSolucionarSelecionadoChamada" value="@Model.AvaliacaoSolucionarSelecionadoChamada" class="form-control"></textarea>
+                            </div>
+                        }
+
                     </div>
                 </div>
                 <div class="col-md-12">

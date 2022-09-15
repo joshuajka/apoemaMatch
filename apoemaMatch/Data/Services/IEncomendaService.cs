@@ -33,5 +33,7 @@ namespace apoemaMatch.Data.Services
         Task<bool> CheckDateExpiration(int id);
 
         Task ExcluirProposta(int Id);
+
+        Task AtualizaAvaliacaoFinalEncomenda(Encomenda encomenda);
     }
 }

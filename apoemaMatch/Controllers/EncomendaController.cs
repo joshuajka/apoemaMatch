@@ -14,6 +14,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using apoemaMatch.Data.Enums;
+using Microsoft.Extensions.Primitives;
 
 namespace apoemaMatch.Controllers
 {
@@ -564,17 +565,35 @@ namespace apoemaMatch.Controllers
             return View(encomendasViewModel);
         }
 
-        //TODO
         [HttpPost]
         [Authorize(Roles = PapeisUsuarios.Demandante)]
-        public async Task<IActionResult> AvaliarSolucao(EncomendaViewModel encomendaViewModel)
+        public async Task<IActionResult> AvaliarSolucao()
         {
-             //Converter nota avaliacao e texto avaliacao da view model para model
-             //Atualizar encomenda com a avaliacao final
+            var itensRequisicao = HttpContext.Request.Form.Keys;
+            Encomenda encomenda = new();
+            foreach(var item in itensRequisicao)
+            {
+                StringValues auxiliar;
+                if (item.StartsWith("item"))
+                {
+                    HttpContext.Request.Form.TryGetValue(item, out auxiliar);
+                    encomenda.Id = Convert.ToInt32(auxiliar);
+                }
+                if (item.StartsWith("NotaSolucionarSelecionadoChamada"))
+                {
+                    HttpContext.Request.Form.TryGetValue(item, out auxiliar);
+                    encomenda.NotaSolucionarSelecionadoChamada = Convert.ToInt32(auxiliar);
+                }
+                if (item.StartsWith("AvaliacaoSolucionarSelecionadoChamada"))
+                {
+                    HttpContext.Request.Form.TryGetValue(item, out auxiliar);
+                    encomenda.AvaliacaoSolucionarSelecionadoChamada = Convert.ToString(auxiliar);
+                }
+            }
 
+            await _service.AtualizaAvaliacaoFinalEncomenda(encomenda);
 
-            return View(nameof(MinhasEncomendasDemandante));
+            return RedirectToAction(nameof(MinhasEncomendasDemandante));
         }
-
     }
 }

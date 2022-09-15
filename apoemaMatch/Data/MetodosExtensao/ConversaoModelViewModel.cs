@@ -20,6 +20,9 @@ namespace apoemaMatch.Data.MetodosExtensao
                 Criterios = encomenda.Chamada?.Criterios,
                 Propostas = encomenda.Chamada?.Propostas,
                 NumeroChamada = encomenda.Chamada?.NumeroChamada,
+                IdSolucionador = encomenda.IdSolucionador,
+                AvaliacaoSolucionarSelecionadoChamada = encomenda.AvaliacaoSolucionarSelecionadoChamada,
+                NotaSolucionarSelecionadoChamada = encomenda.NotaSolucionarSelecionadoChamada
             };
         }
     }

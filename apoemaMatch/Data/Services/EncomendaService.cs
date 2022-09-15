@@ -255,5 +255,13 @@ namespace apoemaMatch.Data.Services
             entityEntry.State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
+
+        public async Task AtualizaAvaliacaoFinalEncomenda(Encomenda encomenda)
+        {
+            var encomendaBanco = await _context.Encomendas.FirstOrDefaultAsync(n => n.Id == encomenda.Id);
+            encomendaBanco.NotaSolucionarSelecionadoChamada = encomenda.NotaSolucionarSelecionadoChamada;
+            encomendaBanco.AvaliacaoSolucionarSelecionadoChamada = encomenda.AvaliacaoSolucionarSelecionadoChamada;
+            await _context.SaveChangesAsync();
+        }
     }
 }

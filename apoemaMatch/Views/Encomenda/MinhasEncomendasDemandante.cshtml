@@ -55,21 +55,6 @@
                                         <span>Não</span>
                                     }
                                 </p>
-                                @*<p class="card-text">
-                                        <b>Status: </b>
-                                        @switch (item.StatusEncomenda)
-                                        {
-                                            case EnumStatusEncomenda.Aberta:
-                                                <span class="badge bg-success text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                                break;
-                                            case EnumStatusEncomenda.AguardandoAnaliseChamada:
-                                                <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                                break;
-                                            case EnumStatusEncomenda.Finalizada:
-                                                <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                                break;
-                                        }
-                                    </p>*@
                                 <p class="card-text ">
                                     <b>Status: </b>
                                     @switch (item.StatusEncomenda)
@@ -77,9 +62,6 @@
                                         case EnumStatusEncomenda.AnalisandoEncomenda:
                                             <span class="badge bg-primary text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
                                             break;
-                                        @*case EnumStatusEncomenda.AnalisandoEncomenda:
-                                            <span class="badge bg-warning text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
-                                            break;*@
                                         case EnumStatusEncomenda.Recusada:
                                             <span class="badge bg-danger text-white">@Extensions.GetEnumDisplayName((EnumStatusEncomenda)item.StatusEncomenda)</span>
                                             break;
@@ -113,10 +95,10 @@
                                                 </span>
                                             }
                                         </a>
-                                        @if (item.StatusEncomenda == EnumStatusEncomenda.Finalizada && item.IdSolucionador > 0)
+                                        @if (item.StatusEncomenda == EnumStatusEncomenda.Finalizada && item.IdSolucionador > 0 && string.IsNullOrEmpty(item.AvaliacaoSolucionarSelecionadoChamada))
                                         {
-                                            <a class="btn btn-outline-primary float-right">
-                                                <i class="bi bi-file-earmark-person"></i> Avaliar solução
+                                            <a class="btn btn-outline-primary float-right" data-toggle="modal" data-target="#staticBackdropAvaliacao_@item.Id">
+                                                <i class="bi bi-arrow-right-circle-fill"></i> Avaliar solução
                                             </a>
                                         }
                                     }
@@ -147,25 +129,29 @@
                 </div>
             </div>
 
-            <form asp-controller="Encomenda" asp-action="AvaliarSolucao">
-                <input type="hidden" asp-for="@item.Id" value="@item.Id" />
-                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <form asp-controller="Encomenda" asp-action="AvaliarSolucao" id="formAvaliarSolucao_@item.Id">
+                <input type="hidden" id="item.@item.Id" name="item_@item.Id" value="@item.Id" />
+                <div class="modal fade" id="staticBackdropAvaliacao_@item.Id" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelAvaliacao_@item.Id" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Faça aquui sua avaliação final da solução recebida</h5>
+                                <h5 class="modal-title" id="staticBackdropLabelAvaliacao_@item.Id">Faça aqui sua avaliação final da solução recebida</h5>
                             </div>
                             <div class="modal-body">
                                 <div class="col-md-12">
-                                    <input type="number" asp-for="@item.NotaSolucionarSelecionadoChamada" />
+                                    <label class="control-label">Dê uma nota (0 a 10)</label>
+                                    <input onkeyup="valideNota(this)" type="number" id="@(nameof(item.NotaSolucionarSelecionadoChamada) + "." + item.Id)" name="@(nameof(item.NotaSolucionarSelecionadoChamada) + "_" + item.Id)" class="form-control" min="0" max="10" />
+                                    <span id="@("span" + nameof(item.NotaSolucionarSelecionadoChamada) + "." + item.Id)" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-12">
-                                    <input type="text" asp-for="@item.AvaliacaoSolucionarSelecionadoChamada" />
+                                    <label class="control-label">Descreva sua avaliação</label>
+                                    <textarea type="text" id="@(nameof(item.AvaliacaoSolucionarSelecionadoChamada) + "." + item.Id)" name="@(nameof(item.AvaliacaoSolucionarSelecionadoChamada) + "_" + item.Id)" class="form-control"></textarea>
+                                    <span id="@("span" + nameof(item.AvaliacaoSolucionarSelecionadoChamada) + "." + item.Id)" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary" asp-action="AvaliarSolucao">Confirmar</button>
+                                <button type="button" onclick="enviarAvaliacaoFinal(@item.Id)" class="btn btn-primary" asp-action="AvaliarSolucao">Confirmar</button>
                             </div>
                         </div>
                     </div>
@@ -174,3 +160,40 @@
         }
     }
 </div>
+
+<script>
+    function valideNota(input) {
+        if (input.value < 0 || !input.value) input.value = 0;
+        else if (input.value > 10) input.value = 10;
+    }
+
+    function enviarAvaliacaoFinal(itemId) {
+        let input = document.getElementById(`NotaSolucionarSelecionadoChamada.${itemId}`);
+        let spanInput = document.getElementById(`spanNotaSolucionarSelecionadoChamada.${itemId}`);
+        let inputEstaValido = informouValor(input);
+        valideCampo(inputEstaValido, spanInput, "Nota é obrigatória");
+
+        let textArea = document.getElementById(`AvaliacaoSolucionarSelecionadoChamada.${itemId}`);
+        let spanTextArea = document.getElementById(`spanAvaliacaoSolucionarSelecionadoChamada.${itemId}`);
+        let textAreaEstaValido = informouValor(textArea);
+        valideCampo(textAreaEstaValido, spanTextArea, "Descrição é obrigatória");
+
+        if (inputEstaValido && textAreaEstaValido) {
+            document.getElementById(`formAvaliarSolucao_${itemId}`).submit();
+        }
+
+    }
+
+    function informouValor(elemento) {
+        return !!elemento.value;
+    }
+
+    function valideCampo(estaValido, span, textoValidacao) {
+        if (!estaValido) {
+            span.innerText = textoValidacao;
+        }
+        else {
+            span.innerText = "";
+        }
+    }
+</script>
