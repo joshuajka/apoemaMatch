@@ -95,11 +95,6 @@ namespace apoemaMatch.Data.Services
             return response;
         }*/
 
-        public async Task UpdateAsync(int id, Demandante entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task UpdateDemandanteAsync(DemandanteViewModel demandante)
         {
             var dbDemandante = await _context.Demandantes.FirstOrDefaultAsync(n => n.Id == demandante.Id);
