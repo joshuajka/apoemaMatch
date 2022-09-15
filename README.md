@@ -14,9 +14,12 @@ Termo| Descrição
 Demandante | Um indivíduo que tenha uma encomenda/demanda/necessidade/problema tecnológico a ser resolvido.
 Solucionador | Um indivíduo que está apto a solucionar as encomendas/demandas cadastradas na plataforma
 Encomenda | Uma necessidade, um problema ou uma demanda tecnológica por parte do demandante
+Status da Encomenda | Analisando encomenda, Recusada, Aberta, Aguardando análise da chamada e Finalizada
 Agenciador | O Administrador da plataforma, que gerencia todo o processo de matchmaking.
 Vinculação Indireta | Processo de Matching em que os solucionadores se candidatam a encomenda e o próprio demandante tem o poder de escolher qual demandante ele deseja para atuar na sua encomenda (*De forma similar a um edital*)
 Vinculação Direta | Processo de Matching em que o agenciador da plataforma elege o solucionador mais apto para atuar na encomenda
+Proposta | É a forma que o solucionador utiliza para concorrer em uma chamada para uma vinculação indireta
+Critério | São os critérios, perguntas ou questionamentos que o demandante cadastra na encomenda para que o solucionador os responda/preencha para o demandante avaliar posteriormente
 
 <h1 align="center"> :page_facing_up: Descrição do projeto </h1>
 Esse é um projeto em desenvolvimento para a disciplina RESIDÊNCIA TÉCNICA EM SISTEMAS DE INFORMAÇÃO do curso de Sistemas de Informação da Universidade Federal de Goiás (UFG). 
