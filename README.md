@@ -43,6 +43,12 @@ Funcionalidade| Descrição
 10| A capacidade do agenciador de listar, filtrar, alterar os dados e alterar o status dos solucionadores 
 11| A capacidade do agenciador de listar, filtrar e alterar os dados dos demandantes 
 
+<h1 align="center"> :hammer: Tutoriais </h1>
+
+Descrição| link
+:---------: | :------:
+Tutorial De Uso da Plataforma para encomendas com vinculação indireta|[Acessar](https://drive.google.com/file/d/1QxDMfpK-dDSD2eKvvVy3lKFbzRVWdZTo/view?usp=sharing)
+
 <h1 align="center"> :file_folder: Acesso ao projeto </h1>
 
 Você pode [acessar o código fonte do projeto inicial](https://github.com/joshuajka/apoemaMatch), clonar o repositório digitando `git clone https://github.com/joshuajka/apoemaMatch.git` no seu terminal ou [baixá-lo](https://github.com/joshuajka/apoemaMatch/archive/refs/heads/master.zip).
