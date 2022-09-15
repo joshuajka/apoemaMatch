@@ -85,7 +85,7 @@
                         <div class="col-md-12">
                             <div class="card-footer ">
                                 <p class="card-text">
-                                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#staticBackdrop">
+                                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#staticBackdrop_@item.Id">
                                         <i class="bi bi-trash"></i>Excluir
                                     </a>
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") && !item.PossuiChamada && (item.StatusEncomenda == EnumStatusEncomenda.AnalisandoEncomenda || item.StatusEncomenda == EnumStatusEncomenda.Aberta))
@@ -104,11 +104,11 @@
                 </div>
             </div>
             
-            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="staticBackdrop_@item.Id" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel_@item.Id" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Exclusão</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel_@item.Id">Exclusão</h5>
                         </div>
                         <div class="modal-body">
                             Tem certeza que deseja excluir esse item?

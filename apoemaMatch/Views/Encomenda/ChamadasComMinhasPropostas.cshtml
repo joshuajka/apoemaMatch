@@ -68,7 +68,7 @@
                                 <p class="card-text">
                                     @if(item.StatusEncomenda == EnumStatusEncomenda.Aberta)
                                     {
-                                        <button class="btn btn-outline-danger"  data-toggle="modal" data-target="#staticBackdrop">
+                                        <button class="btn btn-outline-danger"  data-toggle="modal" data-target="#staticBackdrop_@item.Id">
                                             <i class="bi bi-trash"></i> Excluir Proposta
                                         </button>
                                     }
@@ -82,11 +82,11 @@
                 </div>
             </div>
             
-            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="staticBackdrop_@item.Id" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel_@item.Id" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Exclusão</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel_@item.Id">Exclusão</h5>
                         </div>
                         <div class="modal-body">
                             Tem certeza que deseja excluir esse item?
