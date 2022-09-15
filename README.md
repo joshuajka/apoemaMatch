@@ -42,6 +42,14 @@ Funcionalidade| Descrição
 09| A visualização por parte do solucionador das encomendas em que ele foi atribuido e a possibilidade de ele aceitar ou recusar a encomenda
 10| A capacidade do agenciador de listar, filtrar, alterar os dados e alterar o status dos solucionadores 
 11| A capacidade do agenciador de listar, filtrar e alterar os dados dos demandantes 
+12| Cadastro de Encomendas por parte do Demandante
+13| Definição dos Critérios de seleção em Encomendas com Vinculação Indireta por parte do Demandante
+14| Listagem e visualização dos detalhes da Encomenda por parte do Solucionador, demandante e Agenciador
+15| Aprovação ou rejeição de Encomenda pelo Agenciador
+16| Envio de Propostas para Encomendas com processo seletivo vigente por parte do Solucionador
+17| Visualização e avaliação de Propostas pelo Demandante
+18| Finalização do processo seletivo e vinculação de Solucionador por parte do Demandante
+19| Avaliação de acompanhamento do projeto por parte do Demandante
 
 <h1 align="center"> :hammer: Tutoriais </h1>
 
